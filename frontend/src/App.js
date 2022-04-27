@@ -1,10 +1,14 @@
-import logo from './logo.svg';
-import './App.scss';
+import React from "react";
+import "./App.scss";
+import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register/Register";
 
 function App() {
   return (
     <div className="App">
-      <h1>This is App</h1>
+      <Routes>
+        <Route path='register' element={<Register />} />
+      </Routes>
     </div>
   );
 }
