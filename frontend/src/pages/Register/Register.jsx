@@ -1,5 +1,6 @@
 import React from "react";
-import RegisterForm from "./RegisterForm/RegisterForm";
+import RegisterForm from "../../components/Register/RegisterForm";
+import '../../styles/scss/main.scss';
 
 
 const Register = () => {
