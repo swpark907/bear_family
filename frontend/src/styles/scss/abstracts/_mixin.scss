@@ -1,0 +1,6 @@
+@import './variables';
+
+@mixin fontSize($fs: $font-size-sm2, $fw: 800) {
+  font-size: $fs;
+  font-weight: $fw;
+}
