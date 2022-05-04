@@ -1,7 +1,13 @@
 @import "./variables";
+@import "./mixin";
+
 /*------------------------------------*\
     default 값 설정
 \*------------------------------------*/
+
+*{
+  box-sizing: border-box;
+}
 
 html {
   -webkit-tap-highlight-color: transparent;
@@ -75,7 +81,6 @@ section {
 h1,
 h2,
 h3 {
-  border: solid 1px $color-black; // 지울 예정
   margin: 0 0 10px 0;
 }
 
@@ -92,9 +97,15 @@ h3 {
   line-height: 1.4;
 }
 
-p {
-  margin-top: 0;
-  margin-bottom: 1rem;
+p, label {
+  // margin-top: 0;
+  // margin-bottom: 1rem;
+  margin: 0.5em 0;
+  display: block;
+}
+
+label{
+  @include fontSize;
 }
 
 span {
@@ -120,8 +131,7 @@ input {
 
 input {
   outline: none;
-  padding: 0.5rem;
-  border: none;
+  padding: 0.6rem;
   border: solid 2px $color-light-blue;
   margin-right: 1em;
 }
@@ -133,7 +143,6 @@ input:focus {
 button {
   color: $color-white;
   outline: none;
-  border: none;
   border: solid 1px $color-button;
   background-color: $color-button;
   padding: 0.5rem 1rem;
