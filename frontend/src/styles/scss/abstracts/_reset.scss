@@ -5,7 +5,7 @@
     default 값 설정
 \*------------------------------------*/
 
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -80,8 +80,9 @@ section {
 
 h1,
 h2,
-h3 {
-  margin: 0 0 10px 0;
+h3,
+h4 {
+  margin: 0 0 0.4em 0;
 }
 
 h1 {
@@ -96,15 +97,19 @@ h3 {
   font-size: $font-size-h3;
   line-height: 1.4;
 }
+h4 {
+  font-size: $font-size-md;
+}
 
-p, label {
+p,
+label {
   // margin-top: 0;
   // margin-bottom: 1rem;
   margin: 0.5em 0;
   display: block;
 }
 
-label{
+label {
   @include fontSize;
 }
 
@@ -119,7 +124,7 @@ ol {
 
 li {
   list-style: none;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.4em;
 }
 
 button,
