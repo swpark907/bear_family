@@ -149,8 +149,27 @@
       }
     }
 
-    
+    .pw-form {
+      width: 100%;
+      .pw-input {
+        .pw-input__input {
+          width: 100%;
+        }
+        .pw-input__info {
+          display: none;
+          @include validation();
+        }
+      }
 
-    
+      .pw-match-input {
+        .pw-match-input__input {
+          width: 100%;
+        }
+        .pw-match-input__info {
+          @include validation();
+        }
+      }
+    }
+
   }
 }
