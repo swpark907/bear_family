@@ -75,14 +75,14 @@ span {
 }
 
 section {
-  padding: 20px; // 변수로 수정요망
+  padding: $padding02; // 변수로 수정요망
 }
 
 h1,
 h2,
 h3,
 h4 {
-  margin: 0 0 0.4em 0;
+  margin-bottom: 0.4em;
 }
 
 h1 {
@@ -103,8 +103,6 @@ h4 {
 
 p,
 label {
-  // margin-top: 0;
-  // margin-bottom: 1rem;
   margin: 0.5em 0;
   display: block;
 }
@@ -132,6 +130,7 @@ input {
   border-radius: 5px; // 변수로 수정요망
   line-height: 1.2;
   font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 input {
