@@ -68,5 +68,73 @@
       }
     }
 
+    .email-form {
+      .email-input {
+        margin-bottom: $margin-bottom01;
+        .email-input__input-box {
+          display: flex;
+          justify-content: space-between;
+          .input-box__input {
+            width: 100%;
+            // flex-shrink: 0;
+          }
+
+          .input-box__button {
+            flex-shrink: 0;
+            margin-right: 0;
+            @include buttonSecondary();
+          }
+        }
+        .email-input__validation {
+          
+          display: none;
+          @include validation();
+        }
+      }
+
+      .code-input {
+        display: flex;
+        justify-content: space-between;
+        .code-input__input-box {
+          position: relative;
+          width: 100%;
+          
+          .input-box__input{
+            width: 100%;
+          }
+
+          .input-box__timer {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: $color-red;
+            font-size: $font-size-sm2;
+          }
+        }
+        .code-input__check {
+          min-width: 200px;
+          display: none;
+          &.invalid {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: $color-red;
+          }
+          &.valid {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: $color-green;
+          }
+        }
+      }
+    }
+
+    
+
+    
+
+    
   }
 }
