@@ -131,7 +131,23 @@
       }
     }
 
-    
+    .id-form {
+      .id-input {
+        display: flex;
+        justify-content: space-between;
+      }
+      .id-input__input {
+        width: 100%;
+      }
+      .id-input__button {
+        flex-shrink: 0;
+        margin-right: 0;
+        @include buttonSecondary();
+      }
+      .id-form__info {
+        @include validation();
+      }
+    }
 
     
 
