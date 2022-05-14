@@ -43,23 +43,23 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-        }
-
-        .terms__terms-title {
-          width: 100%;
-        }
-
-        .terms__more-btn {
-          flex-shrink: 0;
-          background-color: transparent;
-          color: $color-grey02;
-          border: none;
-          margin-right: 0;
+          .terms__terms-title {
+            width: 100%;
+            margin: 0;
+          }
+          .terms__more-btn {
+            flex-shrink: 0;
+            background-color: transparent;
+            color: $color-grey02;
+            border: none;
+            margin-right: 0;
+            padding: 3px;
+          }
         }
 
         .terms__content {
           font-size: $font-size-sm2;
-          padding: 5px 0;
+          padding: $padding01 0;
           display: none;
           &.active {
             display: block;
@@ -86,7 +86,6 @@
           }
         }
         .email-input__validation {
-          
           display: none;
           @include validation();
         }
@@ -98,8 +97,8 @@
         .code-input__input-box {
           position: relative;
           width: 100%;
-          
-          .input-box__input{
+
+          .input-box__input {
             width: 100%;
           }
 
@@ -135,10 +134,14 @@
       .id-input {
         display: flex;
         justify-content: space-between;
+        .id-input__input {
+          width: 100%;
+        }
+        .id-input__id-check-button{
+          margin-right: 0;
+        }
       }
-      .id-input__input {
-        width: 100%;
-      }
+      
       .id-input__button {
         flex-shrink: 0;
         margin-right: 0;
@@ -171,5 +174,10 @@
       }
     }
 
+    .nick-name-input {
+      .nick-name-input__input {
+        width: 100%;
+      }
+    }
   }
 }
