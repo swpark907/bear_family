@@ -117,7 +117,7 @@ span {
 ul,
 ol {
   margin: 0;
-  padding: 0.5em;
+  padding: $padding-em02;
 }
 
 li {
@@ -135,7 +135,7 @@ input {
 
 input {
   outline: none;
-  padding: 0.6rem;
+  padding: $padding-rem01;
   border: solid 2px $color-light-blue;
   margin-right: 1em;
 }
@@ -149,7 +149,7 @@ button {
   outline: none;
   border: solid 1px $color-button;
   background-color: $color-button;
-  padding: 0.5rem 1rem;
+  padding: $padding-rem01 $padding-rem02;
   margin: 0 1rem 0 0;
 }
 
