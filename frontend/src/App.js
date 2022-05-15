@@ -1,5 +1,7 @@
-import logo from './logo.svg';
-import './App.scss';
+import React from "react";
+import "./App.scss";
+import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register/Register";
 import axios from 'axios';
 
 function App() {
@@ -7,19 +9,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>This is App</h1>
-
-      <input type="text" name="username" placeholder="아이디"/>
-      <input type="password" name="password" placeholder="비밀번호"/>
-      <input type="text" name="email" placeholder="이메일"/>
-      <input type="text" name="name" placeholder="닉네임"/>
-      <button id="signon" >회원가입</button>
-
-      <h3>token : <span id="token"></span></h3>
-
-      <input type="text" name="username" placeholder="아이디"/>
-      <input type="text" name="password" placeholder="비밀번호"/>
-      <button id="authenticate" >로그인</button>
+      <Routes>
+        <Route path='register' element={<Register />} />
+      </Routes>
     </div>
   );
 }
@@ -38,15 +30,15 @@ async function READ() {
   return payload;
 }
 
-function Authenticate(username, password){
-  var token = axios.post('/authenticate', {
-      username,
-      password
-  })
-}
+// function Authenticate(username, password){
+//   var token = axios.post('/authenticate', {
+//       username,
+//       password
+//   })
+// }
 
-function SignOn(){
+// function SignOn(){
 
-}
+// }
 
 export default App;

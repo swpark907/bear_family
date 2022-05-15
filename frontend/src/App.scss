@@ -1,3 +1,5 @@
+@import './styles/scss/main.scss';
+
 .App{
-  background-color: aqua;
+  background-color: $color-bg;
 }

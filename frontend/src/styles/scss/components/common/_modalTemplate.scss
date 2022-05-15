@@ -1,0 +1,36 @@
+@import "../../abstracts/variables";
+@import "../../abstracts/mixin";
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba($color-black, 0.5);
+  z-index: 9999;
+
+  &.hide {
+    display: none;
+  }
+
+  &.active {
+    display: block;
+  }
+
+  .modal-content-box {
+    @include positionAbsoluteCenter();
+    @include flexCenter();
+    flex-direction: column;
+    background-color: $color-white;
+    border-radius: $border-radius02;
+    padding: $padding02;
+    width: 300px;
+    .modal-content {
+      margin-bottom: $margin-bottom04;
+    }
+    .modal-button {
+      width: 100%;
+    }
+  }
+}

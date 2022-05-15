@@ -1,0 +1,163 @@
+@import "./variables";
+@import "./mixin";
+
+/*------------------------------------*\
+    default 값 설정
+\*------------------------------------*/
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+
+  /* 글꼴 크기 조정을 방지 */
+  -webkit-text-size-adjust: 100%;
+
+  /* 폰트를 부드럽게 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-size: 16px;
+}
+
+/* default margin 제거 */
+body {
+  margin: 0;
+  font-family: "Noto Sans Korean";
+  line-height: 1;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+header,
+section,
+article,
+aside,
+footer,
+main,
+a,
+button,
+input,
+textarea,
+img,
+nav,
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+span {
+  margin: 0;
+  padding: 0;
+  /* 폰트 크기 상속 */
+  font-size: inherit;
+}
+
+section {
+  padding: $padding02; // 변수로 수정요망
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.4em;
+}
+
+h1 {
+  font-size: $font-size-h1;
+  line-height: 1.2;
+}
+h2 {
+  font-size: $font-size-h2;
+  line-height: 1.3;
+}
+h3 {
+  font-size: $font-size-h3;
+  line-height: 1.4;
+}
+h4 {
+  font-size: $font-size-md;
+}
+
+p,
+label {
+  margin: 0.5em 0;
+  display: block;
+}
+
+label {
+  @include fontSize;
+}
+
+span {
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: $padding-em02;
+}
+
+li {
+  list-style: none;
+  margin-bottom: 0.4em;
+}
+
+button,
+input {
+  border-radius: 5px; // 변수로 수정요망
+  line-height: 1.2;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+input {
+  outline: none;
+  padding: $padding-rem01;
+  border: solid 2px $color-light-blue;
+  margin-right: 1em;
+}
+
+input:focus {
+  border: solid 2px $color-grey03;
+}
+
+button {
+  color: $color-white;
+  outline: none;
+  border: solid 1px $color-button;
+  background-color: $color-button;
+  padding: $padding-rem01 $padding-rem02;
+  margin: 0 1rem 0 0;
+}
+
+* + button {
+  margin-left: 1rem;
+}
+
+button:active {
+  background-color: $color-button-active;
+}
+//line height, letter spacing
