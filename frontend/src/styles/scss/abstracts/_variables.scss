@@ -1,0 +1,81 @@
+/*------------------------------------*\
+    #COLORS
+\*------------------------------------*/
+// 가격: $color-dark-grey, $color-light-grey
+
+// 테마, 기본 배경 색
+$color-bg: #F4F9FF;
+
+// 무채색
+$color-white: #fff;
+$color-grey01: #E9E9E9;
+$color-grey02: #8D8D8D;
+$color-grey03: #606060;
+$color-black: #000;
+
+// 유채색
+$color-red: #FF5050;
+$color-light-red: #FD7B7B;
+$color-blue: #4356FF;
+$color-light-blue: #97aaff;
+$color-green: #38AE00;
+
+// 버튼
+$color-button: #4356FF;
+$color-button-active: #C8CDFF;
+
+
+// 카테고리 (필요시 추가)
+$color-tag-black: #000;
+$color-tag-red: #FF0000;
+$color-tag-purple: #AD00FF;
+$color-tag-orange: #FFB800;
+$color-tag-light-green: #7AC26D;
+$color-tag-etc: #B6B6B6;
+// $color-tag-skyblue: #00E0FF;
+
+
+
+/*------------------------------------*\
+    #TYPOGRAPHY
+\*------------------------------------*/
+
+/* 1rem === 16px 기준 */
+
+$font-family: 'Roboto';
+
+$font-size-sm: 0.7rem;
+$font-size-sm2: 0.8rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.1rem;
+
+$font-size-h1: 1.875rem; // 30px
+$font-size-h2: 1.375rem; // 22px
+$font-size-h3: 1.065rem; // 17px;
+
+/*------------------------------------*\
+    #SIZES
+\*------------------------------------*/
+// border-radius
+$border-radius01: 5px;
+$border-radius02: 10px;
+
+// padding
+$padding01: 10px;
+$padding02: 20px;
+$padding-em01: 0.4em;
+$padding-em02: 0.5em;
+$padding-em03: 0.6em;
+$padding-em04: 1em;
+$padding-rem01: 0.5rem;
+$padding-rem02: 1rem;
+
+$padding-left01: 15px;
+
+// margin
+$margin-right01: 5px;
+
+$margin-bottom01: 5px;
+$margin-bottom02: 10px;
+$margin-bottom03: 15px;
+$margin-bottom04: 20px;
