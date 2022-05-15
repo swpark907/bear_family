@@ -9,5 +9,5 @@ import dragonb.bearfamily.backend.model.User;
  
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-	public List<User> findAllByOrderByIdDesc();
+	public List<User> findAllByOrderByIdentityDesc();
 }

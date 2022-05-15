@@ -35,9 +35,9 @@ public class UserRestController {
 		return result;
 	}
 
-	@GetMapping("/{id}")
-	public Result retrieveUser(@PathVariable String id) {
-		Result result = userService.retrieveUser(id);
+	@GetMapping("/{identity}")
+	public Result retrieveUser(@PathVariable String identity) {
+		Result result = userService.retrieveUser(identity);
 		return result;
 	}
 	
@@ -54,8 +54,8 @@ public class UserRestController {
 	}
 	
 	@DeleteMapping
-	public Result deleteUser(@RequestParam String id) {
-		Result result = userService.deleteUser(id);
+	public Result deleteUser(@RequestParam String identity) {
+		Result result = userService.deleteUser(identity);
 		return result;
 	}
 	

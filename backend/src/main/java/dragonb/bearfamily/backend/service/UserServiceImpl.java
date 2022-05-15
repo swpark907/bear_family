@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
 	
 	public Result updateUser(User user) {
 
-		Optional<User> search = repository.findById(user.getId());
+		Optional<User> search = repository.findById(user.getIdentity());
 		Result result = new Result();
 		if(search.isPresent()) {
 			user = repository.save(user);
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 	
-	public Result deleteUser(String id) {
+	public Result deleteUser(String identity) {
 		Result result = new Result();
-		boolean isPresent = repository.findById(id).isPresent();
+		boolean isPresent = repository.findById(identity).isPresent();
 		if(!isPresent) {
 		}else {
-			repository.deleteById(id);
+			repository.deleteById(identity);
 		}
 		return result;
 	}
@@ -51,15 +51,15 @@ public class UserServiceImpl implements UserService{
  
 	@Override
 	public Result retrieveUserList() {
-		List<User> list = repository.findAllByOrderByIdDesc();
+		List<User> list = repository.findAllByOrderByIdentityDesc();
 		Result result = new Result();
 		result.setPayload(list);
 		return result;
 	}
  
 	@Override
-	public Result retrieveUser(String id) {
-		Optional<User> optionalUser = repository.findById(id);
+	public Result retrieveUser(String identity) {
+		Optional<User> optionalUser = repository.findById(identity);
 		Result result = new Result();
 		if(optionalUser.isPresent()) {
 			result.setPayload(optionalUser.get());
