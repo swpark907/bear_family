@@ -604,3 +604,7 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,node,windows,macos,react
+backend/build/resources/main/static/application.properties
+backend/src/main/resources/application.properties
+.vscode/launch.json
+.vscode/settings.json
