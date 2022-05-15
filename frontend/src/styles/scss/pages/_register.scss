@@ -37,32 +37,44 @@
         .optional__terms {
           position: relative;
           @include bottomLine();
-        }
 
-        .terms__header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          .terms__terms-title {
-            width: 100%;
+
+
+          .terms__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .terms__terms-title {
+              width: 100%;
+              margin: 0;
+            }
+            .terms__more-btn {
+              flex-shrink: 0;
+              background-color: transparent;
+              color: $color-grey02;
+              border: none;
+              margin-right: 0;
+              padding: 5px 10px;
+              &:active{
+                background-color: $color-grey01;
+              }
+            }
+          }
+
+          .terms__content {
+            font-size: $font-size-sm2;
+            transition: all 200ms;
+            overflow: scroll;
+            height: 70px;
+            max-height: 0;
+            white-space: normal;
+            word-wrap: break-word;
+            padding: 0 5px;
             margin: 0;
-          }
-          .terms__more-btn {
-            flex-shrink: 0;
-            background-color: transparent;
-            color: $color-grey02;
-            border: none;
-            margin-right: 0;
-            padding: 3px;
-          }
-        }
-
-        .terms__content {
-          font-size: $font-size-sm2;
-          padding: $padding01 0;
-          display: none;
-          &.active {
-            display: block;
+            &.active {
+              max-height: 70px;
+              padding: 5px 5px 10px 5px;
+            }
           }
         }
       }
@@ -137,17 +149,21 @@
         .id-input__input {
           width: 100%;
         }
-        .id-input__id-check-button{
+        .id-input__id-check-button {
           margin-right: 0;
         }
       }
-      
+
       .id-input__button {
         flex-shrink: 0;
         margin-right: 0;
         @include buttonSecondary();
       }
       .id-form__info {
+        @include validation();
+      }
+      .id-form__valid {
+        display: none;
         @include validation();
       }
     }
