@@ -38,8 +38,6 @@
           position: relative;
           @include bottomLine();
 
-
-
           .terms__header {
             display: flex;
             justify-content: space-between;
@@ -55,7 +53,7 @@
               border: none;
               margin-right: 0;
               padding: 5px 10px;
-              &:active{
+              &:active {
                 background-color: $color-grey01;
               }
             }
@@ -104,25 +102,31 @@
       }
 
       .code-input {
-        display: flex;
-        justify-content: space-between;
-        .code-input__input-box {
-          position: relative;
-          width: 100%;
-
-          .input-box__input {
+        .code-input__header {
+          display: flex;
+          justify-content: space-between;
+          .code-input__input-box {
+            position: relative;
             width: 100%;
-          }
 
-          .input-box__timer {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: $color-red;
-            font-size: $font-size-sm2;
+            .input-box__input {
+              width: 100%;
+            }
+
+            .input-box__timer {
+              position: absolute;
+              right: 0;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              color: $color-red;
+              font-size: $font-size-sm2;
+            }
+          }
+          .code-input__button{
+            margin-right: 0;
           }
         }
+
         .code-input__check {
           min-width: 200px;
           display: none;
