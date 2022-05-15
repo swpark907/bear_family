@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EmailInput = ({setEmail, btnOnClick, email, emailCheck}) => {
+const EmailInput = ({setEmail, sendCodeHandler, email, emailCheck}) => {
   return (
     <div className="email-input">
         <div className="email-input__input-box">
@@ -14,7 +14,7 @@ const EmailInput = ({setEmail, btnOnClick, email, emailCheck}) => {
             }}
           />
 
-          <button className="input-box__button" onClick={btnOnClick}>
+          <button className="input-box__button" onClick={sendCodeHandler}>
             인증번호 전송
           </button>
         </div>
