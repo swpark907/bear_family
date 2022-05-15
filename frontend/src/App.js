@@ -37,8 +37,8 @@ async function READ() {
 //   })
 // }
 
-// function SignOn(){
+function SignOn(){
 
-// }
+}
 
 export default App;
