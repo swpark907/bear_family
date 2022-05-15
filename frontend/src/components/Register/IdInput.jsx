@@ -4,7 +4,7 @@ import { Title, Button } from "../common";
 import { ID_REGEX } from "../../constants/regex.js";
 
 const IdInput = () => {
-  const [중복확인문구, set중복확인문구] = useState("");
+  const [validErrMsg, setValidErrMsg] = useState("");
   const [validChecked, setValidChecked] = useState(false);
   const [is사용가능, setIs사용가능] = useState(false);
   const [userId, setUserId] = useState("");
@@ -13,7 +13,7 @@ const IdInput = () => {
   useEffect(() => {
     const result = ID_REGEX.test(userId);
     result ? setValidUserId(true) : setValidUserId(false);
-    console.log(validUserId);
+    console.log({validUserId, validErrMsg});
   }, [userId]);
 
   const onClickHandler = (e) => {
@@ -21,7 +21,7 @@ const IdInput = () => {
     // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
     if(!validUserId){
-      set중복확인문구("아이디 형식에 맞지 않습니다.")
+      setValidErrMsg("아이디 형식에 맞지 않습니다.")
       setIs사용가능(false);
       return;
     }
@@ -29,10 +29,10 @@ const IdInput = () => {
     const result = true;
     setValidChecked(true);
     if (result) {
-      set중복확인문구("사용 가능한 아이디입니다.");
+      setValidErrMsg("사용 가능한 아이디입니다.");
       setIs사용가능(true);
     } else {
-      set중복확인문구("중복된 아이디입니다.");
+      setValidErrMsg("중복된 아이디입니다.");
       setIs사용가능(false);
     }
   };
@@ -68,7 +68,7 @@ const IdInput = () => {
           (validChecked && is사용가능 ? " valid" : " invalid")
         }
       >
-        {중복확인문구}
+        {validErrMsg}
       </label>
     </div>
   );
