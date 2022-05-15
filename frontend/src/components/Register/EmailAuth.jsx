@@ -11,6 +11,28 @@ const EmailAuth = () => {
   const [codeCheck, setCodeCheck] = useState(false);
   const [인증번호모달, set인증번호모달] = useState(false);
 
+  // 인증 시간이 만료되었습니다.
+  // 인증번호가 맞지 않습니다.
+  // 인증되었습니다. ==> 인증번호 전송 버튼 비활성화
+  const errMsgHandler = (sign) => {
+    switch (sign) {
+      case "tiemOut":
+        setErrMsg("인증시간이 만료되었습니다.");
+        setCodeCheck(false);
+        return;
+      case "invalid":
+        setErrMsg("인증번호가 맞지 않습니다.");
+        setCodeCheck(false);
+        return;
+      case "valid":
+        setErrMsg("인증되었습니다.");
+        setCodeCheck(true);
+      default:
+        throw new Error("인증번호 오류");
+        return;
+    }
+  };
+
   const btnOnClick = (e) => {
     e.preventDefault();
     set인증번호모달(true);
