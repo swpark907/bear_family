@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import useToggle from "../../hooks/useToggle";
 
 const Terms = ({ term, key, type }) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [is더보기, setIs더보기] = useState(false);
 
+  const [value, onToggle, setValue] = useToggle();
+  const [isChecked, setIsChecked] = useState(false);
+  
   const moreBtnHandler = (e) => {
     e.preventDefault();
-    setIs더보기(!is더보기);
-    console.log("clicked");
+    onToggle();
   };
 
   return (
@@ -26,7 +27,7 @@ const Terms = ({ term, key, type }) => {
           약관 보기
         </button>
       </div>
-      <p className={"terms__content" + (!is더보기 ? "" : " active")}>
+      <p className={"terms__content" + (!value ? "" : " active")}>
         {term.termsContent}
       </p>
     </li>
