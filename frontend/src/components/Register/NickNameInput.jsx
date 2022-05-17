@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Title } from "../common";
 
-const NickNameInput = () => {
-  const [nickName, setNickName] = useState("");
-  useEffect(() => {console.log(nickName)}, [nickName])
+const NickNameInput = ({ userInfo, setUserInfo }) => {
+  const nickNameInputHandler = ({ target }) => {
+    setUserInfo({ ...userInfo, userName: target.value });
+  };
 
   return (
     <div className="nick-name-form">
@@ -12,9 +13,7 @@ const NickNameInput = () => {
         <input
           className="nick-name-input__input"
           type="text"
-          onChange={(e) => {
-            setNickName(e.target.value);
-          }}
+          onChange={nickNameInputHandler}
         />
       </div>
     </div>
