@@ -64,7 +64,6 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     result
       ? setValidCheck({ ...validCheck, email: true })
       : setValidCheck({ ...validCheck, email: false });
-      console.log(validCheck);
   }, [userInfo.email]);
 
   return (
