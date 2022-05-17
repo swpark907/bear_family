@@ -1,39 +1,43 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Title, Button } from "../common";
 import { ID_REGEX } from "../../constants/regex.js";
 
-const IdInput = () => {
+const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [validErrMsg, setValidErrMsg] = useState("");
-  const [validChecked, setValidChecked] = useState(false);
-  const [is사용가능, setIs사용가능] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [validUserId, setValidUserId] = useState(false);
+  const [유효성검사, set유효성검사] = useState(false);
+
+  const idRef = useRef();
 
   useEffect(() => {
-    const result = ID_REGEX.test(userId);
-    result ? setValidUserId(true) : setValidUserId(false);
-    console.log({validUserId, validErrMsg});
-  }, [userId]);
+    const result = ID_REGEX.test(userInfo.id);
+    result
+      ? set유효성검사(true)
+      : set유효성검사(false);
+  }, [userInfo.id]);
+
+  const idInputHandler = ({ target }) => {
+    setUserInfo({ ...userInfo, id: target.value });
+  };
 
   const onClickHandler = (e) => {
     e.preventDefault();
     // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
-    if(!validUserId){
-      setValidErrMsg("아이디 형식에 맞지 않습니다.")
-      setIs사용가능(false);
+    if (!유효성검사) {
+      setValidErrMsg("아이디 형식에 맞지 않습니다.");
+      setValidCheck({ ...validCheck, id: false });
       return;
     }
 
-    const result = true;
-    setValidChecked(true);
-    if (result) {
+    const 중복확인통과 = false; // 중복확인 통과 로직 추가
+
+    if (중복확인통과) {
       setValidErrMsg("사용 가능한 아이디입니다.");
-      setIs사용가능(true);
+      setValidCheck({ ...validCheck, id: true });
     } else {
       setValidErrMsg("중복된 아이디입니다.");
-      setIs사용가능(false);
+      setValidCheck({ ...validCheck, id: false });
     }
   };
 
@@ -46,9 +50,8 @@ const IdInput = () => {
           className="id-input__input"
           id="idInput"
           placeholder="로그인 시 아이디 설정"
-          onChange={(e) => {
-            setUserId(e.target.value);
-          }}
+          ref={idRef}
+          onChange={idInputHandler}
         />
         <Button
           className={"id-input__id-check-button"}
@@ -65,7 +68,7 @@ const IdInput = () => {
         htmlFor="idInput"
         className={
           "id-form__valid" +
-          (validChecked && is사용가능 ? " valid" : " invalid")
+          (validCheck.id ? " valid" : " invalid")
         }
       >
         {validErrMsg}
