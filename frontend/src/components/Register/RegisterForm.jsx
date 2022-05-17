@@ -19,12 +19,21 @@ const RegisterForm = () => {
 
   const [validCheck, setValidCheck] = useState({
     email: false,
+    reqTerms: {
+      개인정보동의: false,
+    },
+    opTerms: {
+      광고성마케팅: false,
+    },
     emailCode: false,
     id: false,
     userName: false,
     pw: false,
     matchPw: false,
   });
+
+  const props = { userInfo, setUserInfo, validCheck, setValidCheck };
+
   const [submitErrMsg, setSubmitErrMsg] = useState("form 제출 에러 메시지");
   const [isSubmitErr, setIsSubmitErr] = useState(false);
 
@@ -44,36 +53,11 @@ const RegisterForm = () => {
       >
         state check in console
       </button>
-      <TermsForm
-        validCheck={validCheck}
-        setValidCheck={setValidCheck}
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-      />
-      <EmailAuth
-        validCheck={validCheck}
-        setValidCheck={setValidCheck}
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-      />
-      <IdInput
-        validCheck={validCheck}
-        setValidCheck={setValidCheck}
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-      />
-      <NickNameInput
-        validCheck={validCheck}
-        setValidCheck={setValidCheck}
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-      />
-      <PwInput
-        validCheck={validCheck}
-        setValidCheck={setValidCheck}
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-      />
+      <TermsForm {...props} />
+      <EmailAuth {...props} />
+      <IdInput {...props} />
+      <NickNameInput {...props} />
+      <PwInput {...props} />
       <Button
         className="form-submit-button"
         variant="primary"
