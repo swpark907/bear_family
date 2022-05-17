@@ -102,6 +102,14 @@
       }
 
       .code-input {
+
+        &.hide{
+          display: none;
+        }
+        &.active{
+          display: block;
+        }
+
         .code-input__header {
           display: flex;
           justify-content: space-between;
@@ -126,22 +134,8 @@
             margin-right: 0;
           }
         }
-
-        .code-input__check {
-          min-width: 200px;
-          display: none;
-          &.invalid {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            color: $color-red;
-          }
-          &.valid {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            color: $color-green;
-          }
+        .code-input__info{
+          @include validation();
         }
       }
     }
