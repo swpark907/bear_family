@@ -4,13 +4,10 @@ import { ModalTemplate, Title } from "../common";
 import CodeInput from "./CodeInput";
 import EmailInput from "./EmailInput";
 
-const EmailAuth = () => {
-  const [emailCheck, setEmailCheck] = useState(false);
+const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [timer, setTimer] = useState(false);
-  const [email, setEmail] = useState("");
   const [inputActivate, setInputActivate] = useState(false);
   const [errMsg, setErrMsg] = useState("인증시간이 만료되었습니다.");
-  const [codeCheck, setCodeCheck] = useState(false);
   const [인증번호모달, set인증번호모달] = useState(false);
 
   // 인증 시간이 만료되었습니다.
@@ -20,15 +17,16 @@ const EmailAuth = () => {
     switch (sign) {
       case "tiemOut":
         setErrMsg("인증시간이 만료되었습니다.");
-        setCodeCheck(false);
+        setValidCheck({ ...validCheck, emailCode: false });
         return;
       case "invalid":
         setErrMsg("인증번호가 맞지 않습니다.");
-        setCodeCheck(false);
+        setValidCheck({ ...validCheck, emailCode: false });
         return;
       case "valid":
         setErrMsg("인증되었습니다.");
-        setCodeCheck(true);
+        setValidCheck({ ...validCheck, emailCode: true });
+        return;
       default:
         throw new Error("인증번호 오류");
         return;
@@ -40,8 +38,9 @@ const EmailAuth = () => {
   const sendCodeHandler = (e) => {
     e.preventDefault();
     set인증번호모달(true);
-    
-    if (!emailCheck) {
+
+    if (!validCheck.email) {
+      console.log('이메일 오류') // 오류처리 로직으로 변경
       return;
     }
     setInputActivate(true);
@@ -56,25 +55,29 @@ const EmailAuth = () => {
     // 인증번호가 맞다면
     // codCheck를 true로 만든다.
     // 그리고 input을 다시 disable로 만든다
-    setCodeCheck(!codeCheck);
+    const emailCode = validCheck.emailCode;
+    setValidCheck({ ...validCheck, emailCode: !emailCode });
   };
 
   useEffect(() => {
-    const result = EMAIL_REGEX.test(email);
-    result ? setEmailCheck(true) : setEmailCheck(false);
-  }, [email]);
+    const result = EMAIL_REGEX.test(userInfo.email);
+    result
+      ? setValidCheck({ ...validCheck, email: true })
+      : setValidCheck({ ...validCheck, email: false });
+      console.log(validCheck);
+  }, [userInfo.email]);
 
   return (
     <div className="email-form">
       <Title variant="secondary">이메일</Title>
       <EmailInput
-        setEmail={setEmail}
-        email={email}
+        setUserInfo={setUserInfo}
+        userInfo={userInfo}
+        validCheck={validCheck}
         sendCodeHandler={sendCodeHandler}
-        emailCheck={emailCheck}
       />
       <CodeInput
-        codeCheck={codeCheck}
+        validCheck={validCheck}
         errMsg={errMsg}
         inputActivate={inputActivate}
       />
@@ -83,7 +86,7 @@ const EmailAuth = () => {
         state={인증번호모달}
         setState={set인증번호모달}
       >
-        {emailCheck
+        {validCheck.email
           ? "인증번호가 전송되었습니다"
           : "이메일 형식에 맞게 다시 입력해주세요."}
       </ModalTemplate>
