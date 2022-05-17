@@ -102,11 +102,10 @@
       }
 
       .code-input {
-
-        &.hide{
+        &.hide {
           display: none;
         }
-        &.active{
+        &.active {
           display: block;
         }
 
@@ -130,11 +129,11 @@
               font-size: $font-size-sm2;
             }
           }
-          .code-input__button{
+          .code-input__button {
             margin-right: 0;
           }
         }
-        .code-input__info{
+        .code-input__info {
           @include validation();
         }
       }
@@ -168,22 +167,30 @@
 
     .pw-form {
       width: 100%;
-      .pw-input {
-        .pw-input__input {
-          width: 100%;
-        }
-        .pw-input__info {
-          display: none;
-          @include validation();
+      .pw,
+      .pw-match {
+        margin-bottom: $margin-bottom01;
+      }
+      .pw {
+        .pw-input {
+          .pw-input__input {
+            width: 100%;
+          }
+          .pw-input__info {
+            display: none;
+            @include validation();
+          }
         }
       }
 
-      .pw-match-input {
-        .pw-match-input__input {
-          width: 100%;
-        }
-        .pw-match-input__info {
-          @include validation();
+      .pw-match {
+        .pw-match-input {
+          .pw-match-input__input {
+            width: 100%;
+          }
+          .pw-match-input__info {
+            @include validation();
+          }
         }
       }
     }
