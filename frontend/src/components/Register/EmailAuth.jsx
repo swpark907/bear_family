@@ -6,15 +6,14 @@ import EmailInput from "./EmailInput";
 
 const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [timer, setTimer] = useState(false);
-  const [inputActivate, setInputActivate] = useState(false);
-  const [errMsg, setErrMsg] = useState("인증시간이 만료되었습니다.");
+  const [codeInputActivate, setCodeInputActivate] = useState(false);
+  const [errCode, setErrCode] = useState("hide");
+  const [errMsg, setErrMsg] = useState("인증코드 관련 메시지");
   const [인증번호모달, set인증번호모달] = useState(false);
 
-  // 인증 시간이 만료되었습니다.
-  // 인증번호가 맞지 않습니다.
-  // 인증되었습니다. ==> 인증번호 전송 버튼 비활성화
-  const errMsgHandler = (sign) => {
-    switch (sign) {
+  const errMsgHandler = (errCode) => {
+    setErrCode(errCode);
+    switch (errCode) {
       case "tiemOut":
         setErrMsg("인증시간이 만료되었습니다.");
         setValidCheck({ ...validCheck, emailCode: false });
@@ -27,23 +26,22 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
         setErrMsg("인증되었습니다.");
         setValidCheck({ ...validCheck, emailCode: true });
         return;
+      case "hide":
+        return;
       default:
         throw new Error("인증번호 오류");
-        return;
     }
   };
-
-  const timerHandler = () => {};
 
   const sendCodeHandler = (e) => {
     e.preventDefault();
     set인증번호모달(true);
 
     if (!validCheck.email) {
-      console.log('이메일 오류') // 오류처리 로직으로 변경
+      console.log("이메일 오류"); // 오류처리 로직으로 변경
       return;
     }
-    setInputActivate(true);
+    setCodeInputActivate(true);
     // 인증번호 전송 요청
     // 요청 완료 후,
     // 인증번호 전송이 완료가 백에서 확인되면 true를 리턴하는 로직 추가
@@ -51,12 +49,25 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   };
 
   const checkCodeHandler = (e) => {
+    e.preventDefault();
+
     // 사용자에게 입력받은 인증번호 백엔드에 전송
     // 인증번호가 맞다면
-    // codCheck를 true로 만든다.
+    // validCheck.emailCode를 true
     // 그리고 input을 다시 disable로 만든다
-    const emailCode = validCheck.emailCode;
-    setValidCheck({ ...validCheck, emailCode: !emailCode });
+
+    const result = true; // 인증번호 확인 결과
+
+    if (result) {
+      // 성공했다면
+      setValidCheck({ ...validCheck, emailCode: true });
+      errMsgHandler("valid");
+      return;
+    }
+    // 실패했다면
+    // setErrCode 전달
+    const code = "invalid"; // 전달 받은 코드가 들어감
+    errMsgHandler(code);
   };
 
   useEffect(() => {
@@ -77,8 +88,10 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
       />
       <CodeInput
         validCheck={validCheck}
+        errCode={errCode}
         errMsg={errMsg}
-        inputActivate={inputActivate}
+        codeInputActivate={codeInputActivate}
+        checkCodeHandler={checkCodeHandler}
       />
       <ModalTemplate
         btnContent={"닫기"}
