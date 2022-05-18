@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Title, Button } from "../common";
 import { ID_REGEX } from "../../constants/regex.js";
 
@@ -7,20 +7,16 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [validErrMsg, setValidErrMsg] = useState("");
   const [유효성검사, set유효성검사] = useState(false);
 
-  const idRef = useRef();
-
   useEffect(() => {
     const result = ID_REGEX.test(userInfo.id);
-    result
-      ? set유효성검사(true)
-      : set유효성검사(false);
+    result ? set유효성검사(true) : set유효성검사(false);
   }, [userInfo.id]);
 
   const idInputHandler = ({ target }) => {
     setUserInfo({ ...userInfo, id: target.value });
   };
 
-  const onClickHandler = (e) => {
+  const idCheckHandler = (e) => {
     e.preventDefault();
     // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
@@ -30,7 +26,7 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
       return;
     }
 
-    const 중복확인통과 = false; // 중복확인 통과 로직 추가
+    const 중복확인통과 = false; // 중복확인 통신 로직 추가
 
     if (중복확인통과) {
       setValidErrMsg("사용 가능한 아이디입니다.");
@@ -50,13 +46,12 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
           className="id-input__input"
           id="idInput"
           placeholder="로그인 시 아이디 설정"
-          ref={idRef}
           onChange={idInputHandler}
         />
         <Button
           className={"id-input__id-check-button"}
           variant={"secondary"}
-          onClick={onClickHandler}
+          onClick={idCheckHandler}
         >
           아이디 중복 확인
         </Button>
@@ -66,10 +61,7 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
       </label>
       <label
         htmlFor="idInput"
-        className={
-          "id-form__valid" +
-          (validCheck.id ? " valid" : " invalid")
-        }
+        className={"id-form__valid" + (validCheck.id ? " valid" : " invalid")}
       >
         {validErrMsg}
       </label>
