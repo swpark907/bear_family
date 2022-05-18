@@ -18,13 +18,8 @@ const RegisterForm = () => {
   });
 
   const [validCheck, setValidCheck] = useState({
+    reqTerms: false,
     email: false,
-    reqTerms: {
-      개인정보동의: false,
-    },
-    opTerms: {
-      광고성마케팅: false,
-    },
     emailCode: false,
     id: false,
     userName: false,
@@ -39,8 +34,34 @@ const RegisterForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // validCheck 위에서부터 차례대로 false인 부분에 관한 에러메시지
-    setIsSubmitErr(true);
+    const validCheckToArray = Object.entries(validCheck);
+    const item = validCheckToArray.find((element) => element[1] === false);
+
+    if (item) {
+      setIsSubmitErr(true);
+      switch (item[0]) {
+        case "reqTerms":
+          setSubmitErrMsg("필수약관에 동의해주세요.");
+          return;
+        case "email":
+          setSubmitErrMsg("이메일을 입력해주세요.");
+          return;
+        case "emailCode":
+          setSubmitErrMsg("이메일 인증을 완료해주세요.");
+          return;
+        case "id":
+          setSubmitErrMsg("아이디를 입력해주세요.");
+          return;
+        case "userName":
+          setSubmitErrMsg("닉네임을 입력해주세요.");
+          return;
+        case "pw" || "matchPw":
+          setSubmitErrMsg("비밀번호를 확인해주세요.");
+        default:
+          return;
+      }
+    }
+    // 서버에 정보 전달 후 가입 완료 페이지
   };
 
   return (
