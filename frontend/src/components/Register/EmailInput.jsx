@@ -17,6 +17,7 @@ const EmailInput = ({
           onChange={({ target }) => {
             setUserInfo({...userInfo, email: target.value});
           }}
+          disabled={validCheck.emailCode? true : false}
         />
 
         <button className="input-box__button" onClick={sendCodeHandler}>
@@ -26,8 +27,8 @@ const EmailInput = ({
       <label
         htmlFor="emailInput"
         className={
-          "email-input__validation " +
-          (userInfo.email && !validCheck.email ? "invalid" : "hide")
+          "email-input__validation" +
+          (userInfo.email && !validCheck.email ? " invalid" : " hide")
         }
       >
         이메일 형식에 맞게 입력해주세요.
