@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.*;
 
 @Entity
-@Table(name="user2", schema = "public")
+@Table(name="user", schema = "public")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
