@@ -179,7 +179,7 @@
             width: 100%;
           }
           .pw-input__info {
-            display: none;
+            display: block;
             @include validation();
           }
         }
@@ -196,10 +196,15 @@
         }
       }
     }
-
-    .nick-name-input {
-      .nick-name-input__input {
-        width: 100%;
+    .nick-name-form {
+      .nick-name-input {
+        .nick-name-input__input {
+          width: 100%;
+        }
+        .nick-name-input__info{
+          display: block;
+          @include validation();
+        }
       }
     }
   }
