@@ -4,6 +4,7 @@ import "../../styles/scss/main.scss";
 import { Title, Button, ModalTemplate } from "../../components/common";
 import useRegister from "../../hooks/useRegister";
 
+
 const Register = () => {
   const [submitErrMsg, setSubmitErrMsg] = useState("form 제출 에러 메시지");
   const [isSubmitErr, setIsSubmitErr] = useState(false);
@@ -27,7 +28,7 @@ const Register = () => {
   });
 
   const {userInfoRegist} = useRegister({
-    url: "http://146.56.185.52/restapi/user",
+    url: "http://146.56.185.52/regist",
     userInfo: {
       identity: userInfo.id,
       password: userInfo.pw,
