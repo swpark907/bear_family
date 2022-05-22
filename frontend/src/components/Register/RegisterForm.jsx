@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
-// import { TermsForm, EmailAuth, PwInput, IdInput, NickNameInput } from "./index";
+import React from "react";
 import TermsForm from "./TermsForm";
 import EmailAuth from "./EmailAuth";
 import PwInput from "./PwInput";
 import IdInput from "./IdInput";
 import NickNameInput from "./NickNameInput";
 
-
-const RegisterForm = ({...props}) => {
-
+const RegisterForm = ({ ...props }) => {
   return (
     <form className="register__form">
       <TermsForm {...props} />
