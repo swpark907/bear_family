@@ -608,3 +608,4 @@ backend/build/resources/main/static/application.properties
 backend/src/main/resources/application.properties
 .vscode/launch.json
 .vscode/settings.json
+backend/src/main/resources/static/test.html

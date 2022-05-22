@@ -10,10 +10,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+// 유효한 자격증명을 갖지 않고 접근할 때 401 에러를 리턴하기 위한 클래스
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
-    private static final long serialVersionUID = -7858869558953243875L;
+    private static final long serialVersionUID = -1855849528951247972L;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,

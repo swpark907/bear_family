@@ -18,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import dragonb.bearfamily.backend.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 
+// 프론트에서 요청을 보낼때 반드시 거치는 필터, 헤더에 담겨온 토큰정보가 유효한지 확인 후 요청사항 수행
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 

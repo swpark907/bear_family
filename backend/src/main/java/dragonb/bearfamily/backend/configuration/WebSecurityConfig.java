@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+// WebSecurity, HttpSecurity를 커스터마이징 하는 단계
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -32,9 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // configure AuthenticationManager so that it knows from where to load
-        // user for matching credentials
-        // Use BCryptPasswordEncoder
         PasswordEncoder pe = new BCryptPasswordEncoder();
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(pe);
     }
@@ -59,10 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/signon").permitAll()
-                .antMatchers("/restapi/user").permitAll()
-
+                .antMatchers("/regist").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/test.html").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()
 
