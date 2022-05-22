@@ -7,10 +7,9 @@ const useRegister = ({ url, userInfo }) => {
   const [loading, setLoading] = useState(false);
 
   const userInfoRegist = async () => {
-    console.log('실행')
     setLoading(true);
     try {
-      const response = await axios.get(url);
+      const response = await axios.post(url, userInfo);
       const {data} = response;
       console.log(data);
       setResponse(data.payload);
