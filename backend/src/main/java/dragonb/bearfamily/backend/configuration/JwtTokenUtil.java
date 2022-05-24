@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import io.jsonwebtoken.security.Keys;
 
 // JWT 토큰 관련 설정 담당하는 클래스
 @Component
+@PropertySource("classpath:jwt.properties")
 public class JwtTokenUtil implements Serializable{
     private static final long serialVersionUID = -8522131160021027358L;
     public static final long JWT_TOKEN_VALIDITY_MINUTE = 10;

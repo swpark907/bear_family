@@ -7,5 +7,5 @@ import dragonb.bearfamily.backend.model.User;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByIdentity(String identity);
+    Optional<User> findByIdentity(String identity);
 }

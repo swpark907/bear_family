@@ -46,7 +46,7 @@ public class User implements UserDetails{
     @Column(name = "user_auth")
     private String auth;
 
-    @Column(name = "user_created")
+    @Column(name = "user_created", updatable = false)
     @CreatedDate
     private Date created;
 
