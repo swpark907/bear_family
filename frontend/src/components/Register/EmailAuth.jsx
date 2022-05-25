@@ -5,7 +5,7 @@ import CodeInput from "./CodeInput";
 import EmailInput from "./EmailInput";
 
 const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
-  const [timer, setTimer] = useState(false);
+  const [timerState, setTimerState] = useState(false);
   const [codeInputActivate, setCodeInputActivate] = useState(false);
   const [errCode, setErrCode] = useState("hide");
   const [errMsg, setErrMsg] = useState("인증코드 관련 메시지");
@@ -35,16 +35,21 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
 
   const sendCodeHandler = (e) => {
     e.preventDefault();
+    if (validCheck.emailCode) {
+      return;
+    }
     set인증번호모달(true);
 
     if (!validCheck.email) {
       console.log("이메일 오류"); // 오류처리 로직으로 변경
       return;
     }
+
     setCodeInputActivate(true);
+    setTimerState(true);
     // 인증번호 전송 요청
     // 요청 완료 후,
-    // 인증번호 전송이 완료가 백에서 확인되면 true를 리턴하는 로직 추가
+    // 인증번호 전송이 완료가 되면 백에서 확인되면 true를 리턴하는 로직 추가
     // setInputActivate(false);
   };
 
@@ -59,9 +64,9 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     const result = true; // 인증번호 확인 결과
 
     if (result) {
-      // 성공했다면
       setValidCheck({ ...validCheck, emailCode: true });
       errMsgHandler("valid");
+      setTimerState(false);
       return;
     }
     // 실패했다면
@@ -74,7 +79,7 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     const result = EMAIL_REGEX.test(userInfo.email);
     result
       ? setValidCheck({ ...validCheck, email: true })
-      : setValidCheck({ ...validCheck, email: false });
+      : setValidCheck({ ...validCheck, email: false, emailCode: false });
   }, [userInfo.email]);
 
   return (
@@ -92,6 +97,7 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
         errMsg={errMsg}
         codeInputActivate={codeInputActivate}
         checkCodeHandler={checkCodeHandler}
+        timerState={timerState}
       />
       <ModalTemplate
         btnContent={"닫기"}

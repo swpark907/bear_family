@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../common";
+import useTimer from "../../hooks/useTimer";
 
 const CodeInput = ({
   validCheck,
@@ -7,7 +8,11 @@ const CodeInput = ({
   errMsg,
   codeInputActivate,
   checkCodeHandler,
+  timerState,
 }) => {
+  
+  const { timerMin, timerSec } = useTimer(3, 0, timerState);
+
   const classChanger = () => {
     switch (errCode) {
       case "hide":
@@ -37,7 +42,7 @@ const CodeInput = ({
               "input-box__timer" + (validCheck.emailCode ? " hide" : " active")
             }
           >
-            03:00
+            {timerMin}:{timerSec}
           </div>
         </div>
         <Button
