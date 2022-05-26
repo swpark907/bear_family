@@ -4,7 +4,9 @@ const EmailInput = ({
   userInfo,
   setUserInfo,
   validCheck,
-  sendCodeHandler,
+  sendTokenHandler,
+  tokenInputActivate,
+  errToken,
 }) => {
   return (
     <div className="email-input">
@@ -15,12 +17,18 @@ const EmailInput = ({
           id="emailInput"
           placeholder="인증 수단으로 이용 될 이메일입니다."
           onChange={({ target }) => {
-            setUserInfo({...userInfo, email: target.value});
+            setUserInfo({ ...userInfo, email: target.value });
           }}
-          disabled={validCheck.emailCode? true : false}
+          disabled={validCheck.emailToken ? true : false}
         />
 
-        <button className="input-box__button" onClick={sendCodeHandler}>
+        <button
+          className="input-box__button"
+          onClick={sendTokenHandler}
+          disabled={
+            !tokenInputActivate ? false : errToken === "timeOut" ? false : true
+          }
+        >
           인증번호 전송
         </button>
       </div>
