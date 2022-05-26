@@ -96,7 +96,7 @@
         }
       }
 
-      .code-input {
+      .token-input {
         &.hide {
           display: none;
         }
@@ -104,10 +104,10 @@
           display: block;
         }
 
-        .code-input__header {
+        .token-input__header {
           display: flex;
           justify-content: space-between;
-          .code-input__input-box {
+          .token-input__input-box {
             position: relative;
             width: 100%;
 
@@ -125,11 +125,11 @@
               @include validation();
             }
           }
-          .code-input__button {
+          .token-input__button {
             margin-right: 0;
           }
         }
-        .code-input__info {
+        .token-input__info {
           display: none;
           @include validation();
         }
