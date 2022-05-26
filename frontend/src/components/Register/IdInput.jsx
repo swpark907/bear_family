@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Title, Button } from "../common";
 import { ID_REGEX } from "../../constants/regex.js";
+import axios from "axios";
 
 const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [validErrMsg, setValidErrMsg] = useState("");
@@ -16,9 +17,8 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     setUserInfo({ ...userInfo, id: target.value });
   };
 
-  const idCheckHandler = (e) => {
+  const idCheckHandler = async (e) => {
     e.preventDefault();
-    // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
     if (!유효성검사) {
       setValidErrMsg("아이디 형식에 맞지 않습니다.");
@@ -26,9 +26,15 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
       return;
     }
 
-    const 중복확인통과 = false; // 중복확인 통신 로직 추가
+    // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
-    if (중복확인통과) {
+    const form = new FormData();
+    form.append("identity", userInfo.id);
+    const { data } = await axios.post("http://146.56.185.52/checkId", form);
+    console.log(data);
+    const 중복확인통과 = data.response; // 중복확인 통신 로직 추가
+
+    if (중복확인통과 === "non-existent") {
       setValidErrMsg("사용 가능한 아이디입니다.");
       setValidCheck({ ...validCheck, id: true });
     } else {
