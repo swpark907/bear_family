@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Title, Button } from "../common";
 import { ID_REGEX } from "../../constants/regex.js";
 import axios from "axios";
+import URL from "../../constants/url";
 
 const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [validErrMsg, setValidErrMsg] = useState("");
@@ -30,7 +31,7 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
 
     const form = new FormData();
     form.append("identity", userInfo.id);
-    const { data } = await axios.post("http://146.56.185.52/checkId", form);
+    const { data } = await axios.post(`${URL}/checkId`, form);
     console.log(data);
     const 중복확인통과 = data.response; // 중복확인 통신 로직 추가
 
