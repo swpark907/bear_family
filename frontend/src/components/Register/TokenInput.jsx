@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import { Button } from "../common";
 import useTimer from "../../hooks/useTimer";
 
-const CodeInput = ({
+const TokenInput = ({
   validCheck,
-  errCode,
+  errToken,
   errMsg,
-  codeInputActivate,
-  checkCodeHandler,
+  tokenInputActivate,
+  checkTokenHandler,
   timerState,
+  setCheckToken,
+  errMsgHandler,
+  timerMin,
+  timerSec,
 }) => {
-  
-  const { timerMin, timerSec } = useTimer(3, 0, timerState);
-
   const classChanger = () => {
-    switch (errCode) {
+    switch (errToken) {
       case "hide":
         return "hide";
       case "timeOut" || "invalid":
@@ -28,34 +29,37 @@ const CodeInput = ({
   };
 
   return (
-    <div className={"code-input" + (!codeInputActivate ? " hide" : " active")}>
-      <div className="code-input__header">
-        <div className="code-input__input-box">
+    <div className={"token-input" + (!tokenInputActivate ? " hide" : " active")}>
+      <div className="token-input__header">
+        <div className="token-input__input-box">
           <input
             type="number"
             className="input-box__input"
-            id="codeInput"
-            disabled={errCode === "valid" ? true : false}
+            id="tokenInput"
+            disabled={
+              errToken === "valid" || errToken === "timeOut" ? true : false
+            }
+            onChange={({ target }) => setCheckToken(target.value)}
           />
           <div
             className={
-              "input-box__timer" + (validCheck.emailCode ? " hide" : " active")
+              "input-box__timer" + (validCheck.emailToken ? " hide" : " active")
             }
           >
             {timerMin}:{timerSec}
           </div>
         </div>
         <Button
-          className={"code-input__button"}
+          className={"token-input__button"}
           variant={"secondary"}
-          onClick={checkCodeHandler}
+          onClick={checkTokenHandler}
         >
           인증번호 확인
         </Button>
       </div>
       <label
-        htmlFor="codeInput"
-        className={"code-input__info " + classChanger()}
+        htmlFor="tokenInput"
+        className={"token-input__info " + classChanger()}
       >
         {errMsg}
       </label>
@@ -63,4 +67,4 @@ const CodeInput = ({
   );
 };
 
-export default CodeInput;
+export default TokenInput;
