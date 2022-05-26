@@ -4,8 +4,9 @@ import "../../styles/scss/main.scss";
 import { Title, Button, ModalTemplate } from "../../components/common";
 import useRegister from "../../hooks/useRegister";
 
+const URL = process.env.REACT_APP_BASE_URL;
 
-const Register = () => {
+const Register = () => {  
   const [submitErrMsg, setSubmitErrMsg] = useState("form 제출 에러 메시지");
   const [isSubmitErr, setIsSubmitErr] = useState(false);
 
@@ -18,17 +19,17 @@ const Register = () => {
   });
 
   const [validCheck, setValidCheck] = useState({
-    reqTerms: false,
+    reqTerms: true,
     email: false,
-    emailCode: false,
+    emailToken: false,
     id: false,
     userName: false,
     pw: false,
     matchPw: false,
   });
 
-  const {userInfoRegist} = useRegister({
-    url: "http://146.56.185.52/regist",
+  const { userInfoRegist } = useRegister({
+    url: `${URL}/regist`,
     userInfo: {
       identity: userInfo.id,
       password: userInfo.pw,
@@ -41,7 +42,6 @@ const Register = () => {
     e.preventDefault();
     const validCheckToArray = Object.entries(validCheck);
     const item = validCheckToArray.find((element) => element[1] === false);
-    console.log("1");
     if (item) {
       switch (item[0]) {
         case "reqTerms":
@@ -52,7 +52,7 @@ const Register = () => {
           setIsSubmitErr(true);
           setSubmitErrMsg("이메일을 입력해주세요.");
           return;
-        case "emailCode":
+        case "emailToken":
           setIsSubmitErr(true);
           setSubmitErrMsg("이메일 인증을 완료해주세요.");
           return;
@@ -72,7 +72,7 @@ const Register = () => {
           break;
       }
     }
-    userInfoRegist(); 
+    userInfoRegist();
   };
 
   const props = { userInfo, setUserInfo, validCheck, setValidCheck };
