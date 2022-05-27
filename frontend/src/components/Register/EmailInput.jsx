@@ -6,7 +6,7 @@ const EmailInput = ({
   validCheck,
   sendTokenHandler,
   tokenInputActivate,
-  errToken,
+  errCode,
 }) => {
   return (
     <div className="email-input">
@@ -26,7 +26,7 @@ const EmailInput = ({
           className="input-box__button"
           onClick={sendTokenHandler}
           disabled={
-            !tokenInputActivate ? false : errToken === "timeOut" ? false : true
+            !tokenInputActivate ? false : errCode === "timeOut" ? false : true
           }
         >
           인증번호 전송
