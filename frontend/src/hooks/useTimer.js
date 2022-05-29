@@ -11,7 +11,7 @@ const useTimer = (min, sec, timerState, setTimerState, errMsgHandler) => {
   const initialTime = useRef(min * 60 + sec);
   const interval = useRef(null);
 
-  const [timerMin, setTimerMin] = useState(padNumber(tempMin, 2));
+  const [timerMin, setTimerMin] = useState(padNumber(tempMin, 1));
   const [timerSec, setTimerSec] = useState(padNumber(tempSec, 2));
 
   useEffect(() => {
