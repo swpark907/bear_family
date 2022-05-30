@@ -19,7 +19,7 @@ const Register = () => {
   });
 
   const [validCheck, setValidCheck] = useState({
-    reqTerms: true,
+    reqTerms: false,
     email: false,
     emailToken: false,
     id: false,
