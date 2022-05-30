@@ -14,7 +14,6 @@ const useRegister = ({ url, userInfo }) => {
     try {
       const response = await axios.post(url, userInfo);
       const { data } = response;
-      console.log(data);
       setResponse(data.payload);
       navigate("/register/success");
     } catch (err) {

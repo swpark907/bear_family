@@ -16,7 +16,6 @@ const Terms = ({ list, key, type, elementCheckHandler, checkedLists }) => {
     )
       ? true
       : false;
-    console.log(list);
   }, [checkedLists]);
 
   return (
