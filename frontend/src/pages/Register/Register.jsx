@@ -82,14 +82,6 @@ const Register = () => {
       <Title variant="primary" className="section-register__title">
         회원가입
       </Title>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          console.log(validCheck, userInfo);
-        }}
-      >
-        state check in console
-      </button>
       <RegisterForm {...props} />
       <Button
         className="form-submit-button"

@@ -32,7 +32,6 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     const form = new FormData();
     form.append("identity", userInfo.id);
     const { data } = await axios.post(`${URL}/checkId`, form);
-    console.log(data);
     const 중복확인통과 = data.response; // 중복확인 통신 로직 추가
 
     if (중복확인통과 === "non-existent") {

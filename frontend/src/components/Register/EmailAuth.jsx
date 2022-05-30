@@ -88,7 +88,6 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     });
 
     const result = response.data.data;
-    console.log(result)
 
     if (result === true) {
       setValidCheck({ ...validCheck, emailToken: true });

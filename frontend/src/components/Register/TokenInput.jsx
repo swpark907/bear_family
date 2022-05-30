@@ -17,7 +17,6 @@ const TokenInput = ({
   const [tokenInputClass, setTokenInputClass] = useState("");
 
   useEffect(() => {
-    console.log(errCode);
     switch (errCode) {
       case "hide":
         setTokenInputClass("hide");
