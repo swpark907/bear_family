@@ -23,6 +23,7 @@
   &::after{
     position: absolute;
     bottom: 0;
+    left: 0;
     content: '';
     background-color: $clr;
     width: 100%;
@@ -39,6 +40,12 @@
 
 @mixin flexCenter() {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexCenterColumn() {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

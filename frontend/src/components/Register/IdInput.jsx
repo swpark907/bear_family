@@ -2,38 +2,45 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Title, Button } from "../common";
 import { ID_REGEX } from "../../constants/regex.js";
+import axios from "axios";
+import URL from "../../constants/url";
 
-const IdInput = () => {
+const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [validErrMsg, setValidErrMsg] = useState("");
-  const [validChecked, setValidChecked] = useState(false);
-  const [is사용가능, setIs사용가능] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [validUserId, setValidUserId] = useState(false);
+  const [유효성검사, set유효성검사] = useState(false);
 
   useEffect(() => {
-    const result = ID_REGEX.test(userId);
-    result ? setValidUserId(true) : setValidUserId(false);
-    console.log({validUserId, validErrMsg});
-  }, [userId]);
+    const result = ID_REGEX.test(userInfo.id);
+    result ? set유효성검사(true) : set유효성검사(false);
+  }, [userInfo.id]);
 
-  const onClickHandler = (e) => {
+  const idInputHandler = ({ target }) => {
+    setUserInfo({ ...userInfo, id: target.value });
+  };
+
+  const idCheckHandler = async (e) => {
     e.preventDefault();
-    // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
-    if(!validUserId){
-      setValidErrMsg("아이디 형식에 맞지 않습니다.")
-      setIs사용가능(false);
+    if (!유효성검사) {
+      setValidErrMsg("아이디 형식에 맞지 않습니다.");
+      setValidCheck({ ...validCheck, id: false });
       return;
     }
 
-    const result = true;
-    setValidChecked(true);
-    if (result) {
+    // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
+
+    const form = new FormData();
+    form.append("identity", userInfo.id);
+    const { data } = await axios.post(`${URL}/checkId`, form);
+    console.log(data);
+    const 중복확인통과 = data.response; // 중복확인 통신 로직 추가
+
+    if (중복확인통과 === "non-existent") {
       setValidErrMsg("사용 가능한 아이디입니다.");
-      setIs사용가능(true);
+      setValidCheck({ ...validCheck, id: true });
     } else {
       setValidErrMsg("중복된 아이디입니다.");
-      setIs사용가능(false);
+      setValidCheck({ ...validCheck, id: false });
     }
   };
 
@@ -46,14 +53,12 @@ const IdInput = () => {
           className="id-input__input"
           id="idInput"
           placeholder="로그인 시 아이디 설정"
-          onChange={(e) => {
-            setUserId(e.target.value);
-          }}
+          onChange={idInputHandler}
         />
         <Button
           className={"id-input__id-check-button"}
           variant={"secondary"}
-          onClick={onClickHandler}
+          onClick={idCheckHandler}
         >
           아이디 중복 확인
         </Button>
@@ -63,10 +68,7 @@ const IdInput = () => {
       </label>
       <label
         htmlFor="idInput"
-        className={
-          "id-form__valid" +
-          (validChecked && is사용가능 ? " valid" : " invalid")
-        }
+        className={"id-form__valid" + (validCheck.id ? " valid" : " invalid")}
       >
         {validErrMsg}
       </label>

@@ -1,0 +1,24 @@
+@import "../abstracts/variables";
+@import "../abstracts/mixin";
+
+.section-register-success {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .register-success__title {
+    position: relative;
+    line-height: 3.5rem;
+    @include bottomLine($color-grey02);
+  }
+
+  .register-success__container{
+    height: 100%;
+    background-color: $color-light-blue;
+    @include flexCenterColumn();
+    .container__button{
+      margin-top: $margin-bottom03;
+      padding: $padding-em04;
+    }
+  }
+}
