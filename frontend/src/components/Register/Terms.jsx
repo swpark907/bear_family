@@ -1,34 +1,41 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import useToggle from "../../hooks/useToggle";
 
-const Terms = ({ term, key, type }) => {
+const Terms = ({ list, key, type, elementCheckHandler, checkedLists }) => {
+  const [more, moreToggle, setMore] = useToggle();
+  const checkBoxRef = useRef();
 
-  const [value, onToggle, setValue] = useToggle();
-  const [isChecked, setIsChecked] = useState(false);
-  
   const moreBtnHandler = (e) => {
     e.preventDefault();
-    onToggle();
+    moreToggle();
   };
+
+  useEffect(() => {
+    checkBoxRef.current.checked = checkedLists.find(
+      (element) => element.id === list.id
+    )
+      ? true
+      : false;
+    console.log(list);
+  }, [checkedLists]);
 
   return (
     <li key={key} className={type + "__terms"}>
       <div className="terms__header">
         <input
           type="checkbox"
-          onChange={() => {
-            setIsChecked(!isChecked);
-          }}
+          onChange={(e) => elementCheckHandler(e.currentTarget.checked, list)}
+          ref={checkBoxRef}
         />
         <label htmlFor={key} className="terms__terms-title">
-          {term.termsTitle}
+          {list.title}
         </label>
         <button className="terms__more-btn" onClick={moreBtnHandler}>
           약관 보기
         </button>
       </div>
-      <p className={"terms__content" + (!value ? "" : " active")}>
-        {term.termsContent}
+      <p className={"terms__content" + (!more ? "" : " active")}>
+        {list.content}
       </p>
     </li>
   );
