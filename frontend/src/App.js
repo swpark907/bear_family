@@ -7,7 +7,11 @@ import axios from 'axios';
 =======
 import RegisterSuccess from "./pages/Register/RegisterSuccess";
 import Login from "./pages/Login/Login";
+<<<<<<< HEAD
 >>>>>>> 95f38f6 (#2-0 [Update] 로그인 라우터 추가)
+=======
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+>>>>>>> 00926de (#9-0 [Add] NotFoundPage 라우팅 추가)
 
 function App() {
   READ();
@@ -20,6 +24,7 @@ function App() {
           <Route path="success" element={<RegisterSuccess />} />
         </Route>
         <Route path="login" element={<Login />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
