@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register/Register";
 import RegisterSuccess from "./pages/Register/RegisterSuccess";
 import Login from "./pages/Login/Login";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="success" element={<RegisterSuccess />} />
         </Route>
         <Route path="login" element={<Login />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
