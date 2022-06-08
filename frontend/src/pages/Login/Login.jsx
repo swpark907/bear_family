@@ -1,23 +1,75 @@
-import React from "react";
-import { Title, Button } from "../../components/common/index";
+import React, { useState } from "react";
+import { Title, Button, ModalTemplate } from "../../components/common/index";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import loginReducer, { login } from "../../reducers/loginReducer";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
+  const [userId, setUserId] = useState(null);
+  const [userPw, setUserPw] = useState(null);
+  const [isValid, setIsValid] = useState(true);
+
+  const loginState = useSelector(state=> state.loginReducer);
+  console.log(loginState)
+
+  const { onLogin } = useLogin();
+
+  const onUserIdHandler = ({ target }) => {
+    setUserId(target.value);
+  };
+
+  const onUserPwHandler = ({ target }) => {
+    setUserPw(target.value);
+  };
+
+  const onLoginHandler = (e) => {
+    e.preventDefault();
+    onLogin();
+
+    // 로그인에 실패 했을 경우
+    // 1. 서버에러
+    // 2. 아이디, 비밀번호 불일치
+
+    // const result = false;
+
+    // if (!result) {
+    //   setIsValid(false);
+    //   return;
+    // }
+  };
+
   return (
     <section className="section-login">
       <div>로고 들어갈 자리</div>
-      <Title variant="secondary">로그인</Title>
-      <form className="login__form">
-        <input type="text" className="login__id-input" />
-        <input type="password" className="login__pw-input" />
-        <Button variant={"primary"} className="login__button">
+      <form className="login__form" id="loginForm">
+        <input
+          type="text"
+          className="login__id-input"
+          onChange={onUserIdHandler}
+        />
+        <input
+          type="password"
+          className="login__pw-input"
+          onChange={onUserPwHandler}
+        />
+        <label
+          htmlFor="loginForm"
+          className={"login__info" + (isValid ? " hide" : " invalid")}
+        >
+          아이디 또는 비밀번호가 맞지 않습니다.
+        </label>
+        <Button
+          variant={"primary"}
+          className="login__button"
+          onClick={onLoginHandler}
+        >
           로그인
         </Button>
       </form>
-      <p>아직 회원이 아니신가요?</p>{" "}
       <p>
-        {" "}
-        <Link to="/register">회원가입</Link>
+        아직 회원이 아니신가요?<Link to="/register">회원가입</Link>
+        <span>{loginState.userInfo && loginState.userInfo.identity}</span>
       </p>
     </section>
   );

@@ -1,0 +1,29 @@
+@import "../abstracts/mixin", "../abstracts/variables";
+.section-login {
+  height: 100vh;
+  width: 100%;
+  @include flexCenterColumn();
+  .login__form {
+    @include flexCenterColumn();
+    width: 100%;
+    .login__id-input,
+    .login__pw-input {
+      font-size: $font-size-md;
+      padding: $padding-em03;
+      margin-bottom: $margin-bottom02;
+      margin-right: 0;
+      width: 100%;
+    }
+    .login__info {
+      @include validation();
+    }
+    .login__button {
+      font-size: $font-size-md;
+      width: 100%;
+      border-radius: $border-radius03;
+    }
+  }
+  .login__register-link {
+    padding: $padding02;
+  }
+}
