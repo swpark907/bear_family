@@ -64,3 +64,9 @@
   color: $color-white;
   font-size: $font-size-sm2;
 }
+
+@mixin buttonTertiary(){
+  background-color: transparent;
+  color: $color-grey02;
+  font-size: $font-size-sm;
+}
