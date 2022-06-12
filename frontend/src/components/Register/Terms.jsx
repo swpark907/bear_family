@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import useToggle from "../../hooks/useToggle";
 
-const Terms = ({ list, key, type, elementCheckHandler, checkedLists }) => {
+const Terms = ({ list, type, elementCheckHandler, checkedLists }) => {
   const [more, moreToggle, setMore] = useToggle();
   const checkBoxRef = useRef();
 
@@ -19,14 +19,14 @@ const Terms = ({ list, key, type, elementCheckHandler, checkedLists }) => {
   }, [checkedLists]);
 
   return (
-    <li key={key} className={type + "__terms"}>
+    <li className={type + "__terms"}>
       <div className="terms__header">
         <input
           type="checkbox"
           onChange={(e) => elementCheckHandler(e.currentTarget.checked, list)}
           ref={checkBoxRef}
         />
-        <label htmlFor={key} className="terms__terms-title">
+        <label className="terms__terms-title">
           {list.title}
         </label>
         <button className="terms__more-btn" onClick={moreBtnHandler}>
