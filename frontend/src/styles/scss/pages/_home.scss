@@ -1,0 +1,71 @@
+@import "../abstracts/mixin", "../abstracts/variables";
+
+.section-home {
+  min-height: 100vh;
+  .home__header {
+    width: 100%;
+    padding: $padding01 0;
+    display: flex;
+    justify-content: space-between;
+    .header__title {
+      margin: 0;
+    }
+    .header__config {
+      @include flexCenter();
+    }
+  }
+
+  .home__carousel {
+    // position: relative;
+    @include flexCenter();
+    flex-direction: column;
+    border: solid 1px $color-grey02;
+    padding: $padding-em01;
+    margin-bottom: $margin-bottom01;
+    border-radius: $border-radius01;
+    overflow: hidden;
+    .carousel__container {
+      width: 100%;
+      display: flex;
+      transform: translateX(-200%);
+      transition: 300ms;
+      .carousel {
+        width: 100%;
+        height: 250px;
+        flex-shrink: 0;
+        // flex-basis: 0;
+        background-color: $color-light-blue;
+        @include flexCenter();
+      }
+    }
+
+    .carousel__dot-nav{
+      width: 120px;
+      height: 30px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .dot-nav__dot{
+        cursor: pointer;
+        width: 10px;
+        height: 10px;
+        background-color: $color-grey02;
+        border-radius: 50%;
+        margin: 0;
+        transition: all 200ms linear;
+        &.active{
+          width: 13px;
+          height: 13px;
+          background-color: $color-black;
+        }
+      }
+    }
+  }
+
+  .home__random-info{
+    border-radius: $border-radius01;
+    width: 100%;
+    padding: $padding01;
+    background-color: $color-light-blue;
+  }
+}
