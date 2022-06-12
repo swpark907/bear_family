@@ -11,7 +11,11 @@ import Login from "./pages/Login/Login";
 >>>>>>> 95f38f6 (#2-0 [Update] 로그인 라우터 추가)
 =======
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+<<<<<<< HEAD
 >>>>>>> 00926de (#9-0 [Add] NotFoundPage 라우팅 추가)
+=======
+import Home from "./pages/Home/Home";
+>>>>>>> 2950f33 (#4-0 [Update] Home 라우팅 추가)
 
 function App() {
   READ();
@@ -19,6 +23,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route exact path="home" element={<Home />}></Route>
         <Route path="register">
           <Route path="" element={<Register />} />
           <Route path="success" element={<RegisterSuccess />} />
