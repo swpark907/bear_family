@@ -4,8 +4,6 @@ import "../../styles/scss/main.scss";
 import { Title, Button, ModalTemplate } from "../../components/common";
 import useRegister from "../../hooks/useRegister";
 
-const URL = process.env.REACT_APP_BASE_URL;
-
 const Register = () => {  
   const [submitErrMsg, setSubmitErrMsg] = useState("form 제출 에러 메시지");
   const [isSubmitErr, setIsSubmitErr] = useState(false);
@@ -29,7 +27,7 @@ const Register = () => {
   });
 
   const { userInfoRegist } = useRegister({
-    url: `${URL}/regist`,
+    url: `regist`,
     userInfo: {
       identity: userInfo.id,
       password: userInfo.pw,
