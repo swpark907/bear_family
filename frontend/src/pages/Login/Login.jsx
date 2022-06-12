@@ -10,9 +10,6 @@ const Login = () => {
   const [userPw, setUserPw] = useState(null);
   const [isValid, setIsValid] = useState(true);
 
-  const loginState = useSelector(state=> state.loginReducer);
-  console.log(loginState)
-
   const { onLogin } = useLogin();
 
   const onUserIdHandler = ({ target }) => {
@@ -25,7 +22,11 @@ const Login = () => {
 
   const onLoginHandler = (e) => {
     e.preventDefault();
-    onLogin();
+    const userInfo = {
+      identity: userId,
+      password: userPw,
+    };
+    onLogin(userInfo);
 
     // 로그인에 실패 했을 경우
     // 1. 서버에러
@@ -69,7 +70,6 @@ const Login = () => {
       </form>
       <p>
         아직 회원이 아니신가요?<Link to="/register">회원가입</Link>
-        <span>{loginState.userInfo && loginState.userInfo.identity}</span>
       </p>
     </section>
   );
