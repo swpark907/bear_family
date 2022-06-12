@@ -16,23 +16,25 @@ const initialState = {
 export const login =
   ({ identity, password }) =>
   async (dispatch) => {
-    console.log("login 액션 실행");
-
-    const form = new FormData();
-    form.append("identity", identity);
-    form.append("password", password);
-
     try {
-      const response = await axios.post(`${URL}/login`, {
-        data: form,
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `${URL}/login`,
+        {
+          identity,
+          password,
         },
-      });
-      const accessToken = response.accessToken;
-      const userId = response.identity;
+        {
+          headers: {
+            contentType: "application/json",
+          },
+        }
+      );
+
+      console.log(response);
+      const accessToken = response.data.jwttoken;
+
       localStorage.setItem("access-token", accessToken);
-      localStorage.setItem("userId", userId);
+      localStorage.setItem("userId", identity);
 
       dispatch({
         type: LOGIN,
@@ -45,11 +47,6 @@ export const login =
         payload: e,
       });
     }
-    console.log("login 액션 끝");
-    // return {
-    //   type: LOGIN,
-    //   payload: { identity },
-    // };
   };
 
 export const logout = () => {
@@ -77,7 +74,12 @@ export const getUserInfo = ({ userId }) => {
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      return { ...state, isLogin: true, userInfo: action.payload };
+      return {
+        ...state,
+        isLogin: true,
+        isLoginErr: false,
+        userInfo: action.payload,
+      };
     case LOGOUT:
       return {
         ...state,
