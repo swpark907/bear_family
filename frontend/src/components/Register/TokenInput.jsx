@@ -8,9 +8,7 @@ const TokenInput = ({
   errMsg,
   tokenInputActivate,
   checkTokenHandler,
-  timerState,
   setCheckToken,
-  errMsgHandler,
   timerMin,
   timerSec,
 }) => {

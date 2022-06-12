@@ -9,7 +9,6 @@ const RequiredTerms = ({
   validCheck,
   setValidCheck,
   reqTerms,
-  reqAllCheck,
 }) => {
   const [checkedLists, setCheckedLists] = useState([]);
 
