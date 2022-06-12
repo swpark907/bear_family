@@ -1,37 +1,37 @@
-@import './variables';
+@import "./variables";
 
 @mixin fontSize($fs: $font-size-sm2, $fw: 800) {
   font-size: $fs;
   font-weight: $fw;
 }
 
-@mixin validation () {
-  &.hide{
+@mixin validation() {
+  &.hide {
     display: none;
   }
-  &.valid{
+  &.valid {
     display: block;
     color: $color-green;
   }
-  &.invalid{
+  &.invalid {
     color: $color-red;
     display: block;
   }
 }
 
 @mixin bottomLine($clr: $color-grey01) {
-  &::after{
+  &::after {
     position: absolute;
     bottom: 0;
     left: 0;
-    content: '';
+    content: "";
     background-color: $clr;
     width: 100%;
     height: 2px;
   }
 }
 
-@mixin positionAbsoluteCenter(){
+@mixin positionAbsoluteCenter() {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -50,23 +50,28 @@
   align-items: center;
 }
 
-@mixin buttonPrimary(){
+@mixin buttonPrimary() {
   font-size: $font-size-h2;
   width: 40%;
   margin: 0;
   padding: $padding01;
-
+  cursor: pointer;
 }
 
-@mixin buttonSecondary(){
+@mixin buttonSecondary() {
   background-color: $color-light-blue;
   border: solid 1px $color-light-blue;
   color: $color-white;
   font-size: $font-size-sm2;
+  cursor: pointer;
 }
 
-@mixin buttonTertiary(){
+@mixin buttonTertiary() {
   background-color: transparent;
-  color: $color-grey02;
-  font-size: $font-size-sm;
+  color: $color-grey03;
+  font-size: $font-size-sm2;
+  border: none;
+  outline: none;
+  padding: $padding-em01 0;
+  cursor: pointer;
 }
