@@ -1,4 +1,4 @@
-package dragonb.bearfamily.backend.controller.restapi;
+package dragonb.bearfamily.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +21,7 @@ public class RestApiController {
             response.setResponse("success");
             response.setMessage("토큰 등록 완료");
         } catch (Exception e) {
-            response.setResponse("failed");
+            response.setResponse("fail");
             response.setMessage("토큰 등록 실패");
         }
         return response;

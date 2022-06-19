@@ -1,7 +1,7 @@
 package dragonb.bearfamily.backend.model;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,20 +40,23 @@ public class User implements UserDetails{
 	@Column(name = "user_name")
 	private String name;
 
-	@Column(name = "user_email", unique = true)
+	@Column(name = "user_email")
 	private String email;
 
-    @Column(name = "user_auth")
-    private String auth;
+    @Column(name = "user_grade_id")
+    private String gradeId;
 
     @Column(name = "user_created", updatable = false)
     @CreatedDate
-    private Date created;
+    private LocalDateTime created;
 
     @Column(name = "user_updated")
     @LastModifiedDate
-    private Date updated;
+    private LocalDateTime updated;
     
+    @Column(name = "user_auth")
+    private String auth;
+
     @Builder
     public User(String identity, String email, String password, String name) {
         this.identity = identity;
@@ -95,5 +98,4 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
 }

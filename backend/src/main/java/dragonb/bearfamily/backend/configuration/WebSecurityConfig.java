@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
     
-    @Autowired
+    // @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder pe = new BCryptPasswordEncoder();
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(pe);
@@ -59,11 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/regist").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/sendEmailToken").permitAll()
-                .antMatchers("/checkEmailToken").permitAll()
+                .antMatchers("/sendEmailauth").permitAll()
+                .antMatchers("/checkEmailauth").permitAll()
                 .antMatchers("/checkId").permitAll()
                 .antMatchers("/email.html").permitAll()
                 .antMatchers("/test.html").permitAll()
+                .antMatchers("/refresh").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()
 

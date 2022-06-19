@@ -25,9 +25,11 @@ public class EmailService {
     @Autowired
     TemplateEngine templateEngine;
     
-    public static final String OTP = createKey();
+    public static String OTP = createKey();
 
     private MimeMessage createMessage(String to)throws Exception{
+        OTP = createKey();
+        
         String mailSubject = "회원가입 이메일 인증";
         String from = "GGOMGGOM";
 
@@ -40,7 +42,7 @@ public class EmailService {
         Context context = new Context();
         context.setVariable("OTP", OTP);
         
-        String html = templateEngine.process("/email.html", context);
+        String html = templateEngine.process("email.html", context);
         helper.setText(html, true);
         helper.setFrom(new InternetAddress(to, from));
         

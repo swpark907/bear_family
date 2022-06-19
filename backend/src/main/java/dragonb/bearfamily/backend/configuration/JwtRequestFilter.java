@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import dragonb.bearfamily.backend.service.JwtUserDetailsService;
+import dragonb.bearfamily.backend.service.JwtUserService;
 import io.jsonwebtoken.ExpiredJwtException;
 
 // 프론트에서 요청을 보낼때 반드시 거치는 필터, 헤더에 담겨온 토큰정보가 유효한지 확인 후 요청사항 수행
@@ -23,7 +23,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private JwtUserService jwtUserDetailsService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
