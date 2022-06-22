@@ -5,7 +5,7 @@ import { login } from "../reducers/loginReducer";
 
 const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null);  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -13,19 +13,22 @@ const useLogin = () => {
 
   useEffect(() => {
     if (loginStore.isLoginErr !== null && loginStore.isLoginErr === false) {
+      setError(false);
       navigate("/home");
+    } else if(loginStore.isLoginErr === null){
+      setError(false);
+    } else{
+      setError(true);
     }
   }, [loginStore.isLoginErr]);
-  // isLoginErr가 아니라 isLogin이 되어야 되는 것이 아닌가 생각해봐야됨
 
   const onLogin = async ({ identity, password }) => {
     setIsLoading(true);
     dispatch(login({ identity, password }));
-    // action에서 store에 정보는 모두 전달
     setIsLoading(false);
   };
 
-  return { isLoading, error, onLogin };
+  return { isLoading, error, onLogin, setError };
 };
 
 export default useLogin;
