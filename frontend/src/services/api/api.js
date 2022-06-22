@@ -13,7 +13,7 @@ export const api = () => {
 };
 
 // 매 페이지 랜더링마다 실행되는 함수
-export const apiWithToken = async () => {
+export const apiWithToken = () => {
   const accessToken = localStorage.getItem("access-token");
 
   const instance = axios.create({
