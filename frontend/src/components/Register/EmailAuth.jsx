@@ -58,7 +58,7 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
       setTimerState(true);
       setSendTokenResult(true);
       const response = await axios.post(
-        `${URL}/sendEmailToken`,
+        `${URL}/sendEmailauth`,
         form
       );
     } catch (e) {
@@ -79,7 +79,7 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     e.preventDefault();
     const formdata = { email: userInfo.email, token: checkToken };
     const response = await axios({
-      url: `${URL}/checkEmailToken`,
+      url: `${URL}/checkEmailauth`,
       method: "post",
       data: JSON.stringify(formdata),
       headers: {
