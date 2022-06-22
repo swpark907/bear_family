@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "../services/api/api";
 
 const URL = process.env.REACT_APP_BASE_URL;
 
@@ -17,29 +18,29 @@ export const login =
   ({ identity, password }) =>
   async (dispatch) => {
     try {
-      const response = await axios.post(
-        `${URL}/login`,
-        {
-          identity,
-          password,
-        },
-        {
-          headers: {
-            contentType: "application/json",
-          },
-        }
-      );
+      const instance = api();
+      const { data } = await instance.post("/login", { identity, password });
+      console.log(data);
 
-      console.log(response);
-      const accessToken = response.data.jwttoken;
+      if (data.response === "success") {
+        const accessToken = data.data.accessToken;
+        const refreshToken = data.data.refreshToken;
+        const tokenExpiredTime = data.data.accessTokenExpiredTime;
+        const userInfo = data.data.user;
+        console.log(accessToken);
 
-      localStorage.setItem("access-token", accessToken);
-      localStorage.setItem("userId", identity);
+        localStorage.setItem("access-token", accessToken);
 
-      dispatch({
-        type: LOGIN,
-        payload: { identity },
-      });
+        dispatch({
+          type: LOGIN,
+          payload: { userInfo, refreshToken, tokenExpiredTime },
+        });
+      } else if (data.response === "fail") {
+        dispatch({
+          type: LOGIN_ERR,
+          payload: data.message,
+        });
+      }
     } catch (e) {
       console.log(e);
       dispatch({
@@ -57,28 +58,17 @@ export const logout = () => {
   };
 };
 
-export const getUserInfo = ({ userId }) => {
-  const accessToken = localStorage.getItem("access-token");
-  const config = {
-    headers: {
-      accessToken,
-    },
-  };
-
-  if (!accessToken) {
-    // 리프레시 토큰? 다시 요청?
-    console.log("존재하는 토큰이 없음");
-  }
-};
-
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
+      const payload = action.payload;
       return {
         ...state,
         isLogin: true,
         isLoginErr: false,
-        userInfo: action.payload,
+        userInfo: payload.userInfo,
+        refreshToken: payload.refreshToken,
+        tokenExpiredTime: payload.tokenExpiredTime,
       };
     case LOGOUT:
       return {
