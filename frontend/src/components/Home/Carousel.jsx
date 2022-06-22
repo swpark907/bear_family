@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Button } from "../common";
 
 const Carousel = () => {
   const TOTAL_SLIDE = 4;
