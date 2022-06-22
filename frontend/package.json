@@ -9,11 +9,16 @@
     "axios": "^0.27.2",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "http-proxy-middleware": "^2.0.6",
 =======
 >>>>>>> ce6c090 (#0-0 [Install] axios 설치)
 =======
     "dotenv": "^16.0.1",
+=======
+    "dotenv": "^16.0.1",
+
+>>>>>>> 7cf1a11 (#0-0 [Fix] packagejson 내에 conflict 메시지 삭제)
     "http-proxy-middleware": "^2.0.6",
 >>>>>>> 3eaa351 (#0-0 [Update] http proxy, dotenv 설치)
     "node-sass": "^7.0.1",
