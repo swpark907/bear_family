@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { Title, Button, ModalTemplate } from "../../components/common/index";
+import { Button } from "../../components/common/index";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import loginReducer, { login } from "../../reducers/loginReducer";
 import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
   const [userId, setUserId] = useState(null);
   const [userPw, setUserPw] = useState(null);
-  const [isValid, setIsValid] = useState(true);
 
-  const { onLogin } = useLogin();
+  const { onLogin, error, setError } = useLogin();
 
   const onUserIdHandler = ({ target }) => {
     setUserId(target.value);
@@ -56,7 +53,7 @@ const Login = () => {
         />
         <label
           htmlFor="loginForm"
-          className={"login__info" + (isValid ? " hide" : " invalid")}
+          className={"login__info" + (error ? " invalid" : " hide")}
         >
           아이디 또는 비밀번호가 맞지 않습니다.
         </label>
