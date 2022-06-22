@@ -7,4 +7,7 @@ button{
   &.secondary{
     @include buttonSecondary;
   }
+  &.tertiary{
+    @include buttonTertiary;
+  }
 }

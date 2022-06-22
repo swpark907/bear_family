@@ -1,10 +1,74 @@
-import React from 'react';
+import React, { useState } from "react";
+import { Button } from "../../components/common/index";
+import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
+  const [userId, setUserId] = useState(null);
+  const [userPw, setUserPw] = useState(null);
+
+  const { onLogin, error, setError } = useLogin();
+
+  const onUserIdHandler = ({ target }) => {
+    setUserId(target.value);
+  };
+
+  const onUserPwHandler = ({ target }) => {
+    setUserPw(target.value);
+  };
+
+  const onLoginHandler = (e) => {
+    e.preventDefault();
+    const userInfo = {
+      identity: userId,
+      password: userPw,
+    };
+    onLogin(userInfo);
+
+    // 로그인에 실패 했을 경우
+    // 1. 서버에러
+    // 2. 아이디, 비밀번호 불일치
+
+    // const result = false;
+
+    // if (!result) {
+    //   setIsValid(false);
+    //   return;
+    // }
+  };
+
   return (
-    <div>
-      Login 페이지
-    </div>
+    <section className="section-login">
+      <div>로고 들어갈 자리</div>
+      <form className="login__form" id="loginForm">
+        <input
+          type="text"
+          className="login__id-input"
+          onChange={onUserIdHandler}
+        />
+        <input
+          type="password"
+          className="login__pw-input"
+          onChange={onUserPwHandler}
+        />
+        <label
+          htmlFor="loginForm"
+          className={"login__info" + (error ? " invalid" : " hide")}
+        >
+          아이디 또는 비밀번호가 맞지 않습니다.
+        </label>
+        <Button
+          variant={"primary"}
+          className="login__button"
+          onClick={onLoginHandler}
+        >
+          로그인
+        </Button>
+      </form>
+      <p>
+        아직 회원이 아니신가요?<Link to="/register">회원가입</Link>
+      </p>
+    </section>
   );
 };
 

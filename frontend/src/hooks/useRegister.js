@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const URL = process.env.REACT_APP_BASE_URL;
+
 const useRegister = ({ url, userInfo }) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
@@ -12,7 +14,7 @@ const useRegister = ({ url, userInfo }) => {
   const userInfoRegist = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(url, userInfo);
+      const response = await axios.post(`${URL}/${url}`, userInfo);
       const { data } = response;
       setResponse(data.payload);
       navigate("/register/success");
