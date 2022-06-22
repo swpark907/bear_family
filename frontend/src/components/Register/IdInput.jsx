@@ -34,7 +34,9 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     const { data } = await axios.post(`${URL}/checkId`, form);
     const 중복확인통과 = data.response; // 중복확인 통신 로직 추가
 
-    if (중복확인통과 === "non-existent") {
+    console.log(중복확인통과);
+
+    if (중복확인통과 === "success") {
       setValidErrMsg("사용 가능한 아이디입니다.");
       setValidCheck({ ...validCheck, id: true });
     } else {
