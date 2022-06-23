@@ -5,7 +5,6 @@ const Button = ({ className, variant, children, onClick, disabled }) => {
   const [variantClass, setVariantClass] = useState("");
 
   useEffect(() => {
-    console.log(variant)
     if (
       variant === "primary" ||
       variant === "secondary" ||
