@@ -9,9 +9,11 @@ import Home from "./pages/Home/Home";
 import Calendar from "./pages/Calendar/Calendar";
 import PublicRoutes from "./route/PublicRoutes";
 import PrivateRoutes from "./route/PrivateRoutes";
+import { Loading } from "./components/common";
+import { useSelector } from "react-redux";
 
 function App() {
-  READ();
+  const loadingReducer = useSelector((state) => state.loadingReducer);
 
   return (
     <div className="App">
@@ -32,6 +34,7 @@ function App() {
         {/* <Route element={<PublicRoutes restricted={false} />}></Route> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Loading state={loadingReducer.isLoading} />
     </div>
   );
 }
