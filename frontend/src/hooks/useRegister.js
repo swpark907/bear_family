@@ -1,18 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loading, unloading } from "../reducers/loadingReducer";
 
 const URL = process.env.REACT_APP_BASE_URL;
 
 const useRegister = ({ url, userInfo }) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const userInfoRegist = async () => {
-    setLoading(true);
+    dispatch(loading())
     try {
       const response = await axios.post(`${URL}/${url}`, userInfo);
       const { data } = response;
@@ -21,7 +23,7 @@ const useRegister = ({ url, userInfo }) => {
     } catch (err) {
       setError(err);
     } finally {
-      setLoading(false);
+      dispatch(unloading());
     }
   };
 
