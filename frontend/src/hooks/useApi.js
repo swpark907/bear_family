@@ -5,7 +5,7 @@ import { apiWithToken, api } from "../services/api/api";
 const useApi = ({ url }) => {
   const [pageData, setPageData] = useState(null);
 
-  const getUserInfo = useSelector((state) => state.loginReducer);
+  const getUserInfo = useSelector((state) => state.userInfoReducer);
 
   const expiredTime = Date.parse(getUserInfo.tokenExpiredTime);
   const currentTime = Date.now();
