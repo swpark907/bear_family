@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
-import loginReducer from "./loginReducer";
+import { loginReducer, userInfoReducer } from "./loginReducer";
+import { loadingReducer } from "./loadingReducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -13,7 +14,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  loadingReducer,
   loginReducer,
+  userInfoReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
