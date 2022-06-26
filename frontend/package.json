@@ -17,8 +17,11 @@
     "dotenv": "^16.0.1",
 =======
     "dotenv": "^16.0.1",
+<<<<<<< HEAD
 
 >>>>>>> 7cf1a11 (#0-0 [Fix] packagejson 내에 conflict 메시지 삭제)
+=======
+>>>>>>> 43f641e (#0-0 [Add] 로그인 유지를 위한 redux-persist 적용)
     "http-proxy-middleware": "^2.0.6",
 >>>>>>> 3eaa351 (#0-0 [Update] http proxy, dotenv 설치)
     "node-sass": "^7.0.1",
@@ -30,6 +33,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "web-vitals": "^2.1.4"
   },
