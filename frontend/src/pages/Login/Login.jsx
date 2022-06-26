@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Button } from "../../components/common/index";
 import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [userId, setUserId] = useState(null);
   const [userPw, setUserPw] = useState(null);
+  const [errMsg, setErrMsg] = useState('');
 
   const { onLogin, error, setError } = useLogin();
 
@@ -36,6 +39,12 @@ const Login = () => {
     //   return;
     // }
   };
+
+  const getErr = useSelector(state => state.loginReducer);
+
+  useEffect(() => {
+    // 로그인 통신 장애 스테이터스에 따라 errMsg를 변경하는 로직 추가
+  }, [getErr])
 
   return (
     <section className="section-login">
