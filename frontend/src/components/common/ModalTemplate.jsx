@@ -1,4 +1,4 @@
-import { ReactPortal, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import reactDom from "react-dom";
 import "../../styles/scss/main.scss";
 import Button from "./Button";
