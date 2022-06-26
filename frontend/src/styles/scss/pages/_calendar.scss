@@ -1,0 +1,93 @@
+@import "../abstracts/mixin", "../abstracts/variables";
+
+.section-calendar {
+  .calendar__usage {
+    font-weight: 700;
+    padding: $padding01;
+    margin: $margin-bottom01 0;
+    font-size: $font-size-sm2;
+    .usage__current {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $margin-bottom01;
+      .current__total {
+        @include profitOrLoss;
+      }
+    }
+    .usage__prev {
+      display: flex;
+      justify-content: space-between;
+      .prev__title {
+        font-weight: 300;
+        color: $color-grey03;
+      }
+      .prev__total,
+      .prev__compare {
+        @include profitOrLoss;
+      }
+    }
+  }
+  .calendar__template {
+    width: 100%;
+    .template__weeks {
+      display: flex;
+      padding: 0;
+      .week {
+        font-size: $font-size-sm3;
+        width: calc(100% / 7);
+        text-align: center;
+        border-top: solid 1px $color-grey01;
+        border-bottom: solid 1px $color-grey01;
+        padding: $padding-em01 0;
+        margin-bottom: 0;
+        &:nth-child(7n + 1) {
+          color: $color-light-red;
+          // background-color: $color-grey01;
+        }
+        &:nth-child(7n) {
+          color: $color-light-blue;
+          // background-color: $color-grey01;
+        }
+      }
+    }
+
+    .template__date-container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      .date-container__date {
+        width: calc(100% / 7);
+        height: 50px;
+        border-bottom: solid 1px $color-grey01;
+        padding: 2px;
+        margin-bottom: 0;
+        .date__inner {
+          color: $color-grey01;
+          font-size: $font-size-sm3;
+          width: 100%;
+          height: 100%;
+          padding: 2px;
+          border-radius: $border-radius01;
+          .date{
+            
+          }
+          &.selected{
+            background-color: $color-light-blue;
+          }
+          &.today {
+            border: solid 2px $color-blue;
+          }
+          &.current {
+            color: $color-black;
+            &.sunday {
+              color: $color-red;
+            }
+            &.saturday {
+              color: $color-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+}
