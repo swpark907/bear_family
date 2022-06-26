@@ -15,7 +15,7 @@ const CalendarDate = () => {
   const [currentMonth, setCurrentMonth] = useState(MONTH);
   const [currentDate, setCurrentDate] = useState(DATE);
 
-  const [dateList, setDateList] = useState([{},{},{}]);
+  const [dateList, setDateList] = useState([]);
 
   // 첫번째 날의 요일이 목요일(4) 이상이면 6줄, 이하이면 5줄
   // 이번달의 첫번째 날을 구한다.
