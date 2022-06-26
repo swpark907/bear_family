@@ -5,7 +5,7 @@ import useTimer from "../../hooks/useTimer";
 const TokenInput = ({
   validCheck,
   errCode,
-  errMsg,
+  tokenErrMsg,
   tokenInputActivate,
   checkTokenHandler,
   setCheckToken,
@@ -70,7 +70,7 @@ const TokenInput = ({
         htmlFor="tokenInput"
         className={"token-input__info " + tokenInputClass}
       >
-        {errMsg}
+        {tokenErrMsg}
       </label>
     </div>
   );
