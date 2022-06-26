@@ -6,12 +6,20 @@ const URL = process.env.REACT_APP_BASE_URL;
 const LOGIN = "AUTH/LOGIN";
 const LOGOUT = "AUTH/LOGOUT";
 const LOGIN_ERR = "AUTH/LOGIN_ERR";
+const LOGIN_SERVER_ERR = "AUTH/LOGIN_SERVER_ERR";
 
-const initialState = {
+const loginInitState = {
   isLogin: false,
   isLoginErr: null,
+  isLoginServerErr: null,
   errMsg: null,
   userInfo: null,
+};
+
+const userInfoInitState = {
+  userInfo: null,
+  refreshToken: null,
+  tokenExpiredTime: null,
 };
 
 export const login =
@@ -27,7 +35,6 @@ export const login =
         const refreshToken = data.data.refreshToken;
         const tokenExpiredTime = data.data.accessTokenExpiredTime;
         const userInfo = data.data.user;
-        console.log(accessToken);
 
         localStorage.setItem("access-token", accessToken);
 
@@ -42,9 +49,9 @@ export const login =
         });
       }
     } catch (e) {
-      console.log(e);
+      console.log("로그인 에러 발생", e);
       dispatch({
-        type: LOGIN_ERR,
+        type: LOGIN_SERVER_ERR,
         payload: e,
       });
     }
@@ -58,7 +65,7 @@ export const logout = () => {
   };
 };
 
-const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = loginInitState, action) => {
   switch (action.type) {
     case LOGIN:
       const payload = action.payload;
@@ -66,16 +73,12 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         isLogin: true,
         isLoginErr: false,
-        userInfo: payload.userInfo,
-        refreshToken: payload.refreshToken,
-        tokenExpiredTime: payload.tokenExpiredTime,
       };
     case LOGOUT:
       return {
         ...state,
         isLogin: false,
         isLoginErr: false,
-        userInfo: null,
       };
     case LOGIN_ERR:
       return {
@@ -84,9 +87,36 @@ const loginReducer = (state = initialState, action) => {
         isLoginErr: true,
         errMsg: action.payload,
       };
+    case LOGIN_SERVER_ERR:
+      return {
+        ...state,
+        isLogin: false,
+        isLoginServerErr: true,
+        errMsg: action.payload,
+      };
     default:
       return state;
   }
 };
 
-export default loginReducer;
+export const userInfoReducer = (state = userInfoInitState, action) => {
+  switch (action.type) {
+    case LOGIN:
+      const payload = action.payload;
+      return {
+        ...state,
+        userInfo: payload.userInfo,
+        refreshToken: payload.refreshToken,
+        tokenExpiredTime: payload.tokenExpiredTime,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        userInfo: null,
+        refreshToken: null,
+        tokenExpiredTime: null,
+      };
+    default:
+      return state;
+  }
+};

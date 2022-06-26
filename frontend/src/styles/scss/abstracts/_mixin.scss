@@ -75,3 +75,22 @@
   padding: $padding-em01 0;
   cursor: pointer;
 }
+
+@mixin profitOrLoss {
+  &.profit {
+    color: $color-red;
+    font-weight: 500;
+    &.prev {
+      color: $color-light-red;
+      font-weight: 300;
+    }
+  }
+  &.loss {
+    color: $color-blue;
+    font-weight: 500;
+    &.prev {
+      color: $color-light-blue;
+      font-weight: 300;
+    }
+  }
+}
