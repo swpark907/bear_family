@@ -2,8 +2,10 @@
 @import "../abstracts/mixin";
 
 .section-register {
+  @include flexCenterColumn;
   .section-register__title {
     position: relative;
+    width: 100%;
     line-height: 3.5rem;
     @include bottomLine($color-grey02);
   }
@@ -13,6 +15,7 @@
   }
 
   .register__form {
+    width: 100%;
     .terms-form,
     .email-form,
     .id-form,
