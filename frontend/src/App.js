@@ -11,6 +11,7 @@ import PublicRoutes from "./route/PublicRoutes";
 import PrivateRoutes from "./route/PrivateRoutes";
 import { Loading } from "./components/common";
 import { useSelector } from "react-redux";
+import Create from "./components/Create/createModal";
 
 function App() {
   const loadingReducer = useSelector((state) => state.loadingReducer);
@@ -32,6 +33,7 @@ function App() {
         </Route>
 
         {/* <Route element={<PublicRoutes restricted={false} />}></Route> */}
+        <Route path="create" element={<Create />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Loading state={loadingReducer.isLoading} />
