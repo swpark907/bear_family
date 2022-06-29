@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,12 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import dragonb.bearfamily.backend.configuration.JwtTokenUtil;
 import dragonb.bearfamily.backend.model.Emailauth;
 import dragonb.bearfamily.backend.model.JwtToken;
+import dragonb.bearfamily.backend.model.Refreshtoken;
 import dragonb.bearfamily.backend.model.Response;
 import dragonb.bearfamily.backend.model.User;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
+import dragonb.bearfamily.backend.repository.RefreshtokenRepository;
 import dragonb.bearfamily.backend.repository.UserRepository;
 import dragonb.bearfamily.backend.service.EmailService;
 import dragonb.bearfamily.backend.service.JwtUserService;
@@ -47,6 +51,9 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RefreshtokenRepository refreshtokenRepository;
 
     @PostMapping("/regist")
     public Response signup(@RequestBody User user) {
@@ -147,6 +154,24 @@ public class LoginController {
             .loadUserByUsername(user.getIdentity());
             final JwtToken token = jwtTokenUtil.generateToken(userDetails);
             
+            Optional<Refreshtoken> refreshtokenByUserIdentity = refreshtokenRepository.findByUserIdentity(user.getIdentity());
+            Refreshtoken refreshtoken;
+            if(refreshtokenByUserIdentity.isPresent()){
+                refreshtoken = refreshtokenByUserIdentity.get();
+                refreshtoken.setToken(token.getRefreshToken());
+            }
+            else{
+                DecodedJWT decodedJWT = JWT.decode(token.getRefreshToken());
+                String guid = decodedJWT.getClaim("roles").toString().substring(2, 38);
+
+                refreshtoken = Refreshtoken.builder()
+                .userIdentity(user.getIdentity())
+                .token(token.getRefreshToken())
+                .guid(guid)
+                .build();
+            }
+            refreshtokenRepository.save(refreshtoken);
+
             User loginUser = userRepository.findByIdentity(user.getIdentity()).get();
             loginUser.setPassword(null);
 
@@ -171,11 +196,17 @@ public class LoginController {
         Response response = new Response();
 
         try{
+            DecodedJWT decodedJWT = JWT.decode(jwtToken.getRefreshToken());
+            String guid = decodedJWT.getClaim("roles").toString().substring(2, 38);
+
+            Optional<Refreshtoken> refreshtoken = refreshtokenRepository.findByTokenAndGuid(jwtToken.getRefreshToken(), guid);
+            if(!refreshtoken.isPresent()){
+                throw new Exception();
+            }
             String newAccessToken = jwtTokenUtil.validateRefreshToken(jwtToken);
             if(newAccessToken == null){
                 throw new Exception();
             }
-
             response.setResponse("success");
             response.setMessage("success token refresh");
             response.setData(newAccessToken);

@@ -6,6 +6,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,12 +27,11 @@ import io.jsonwebtoken.security.Keys;
 public class JwtTokenUtil implements Serializable{
     private static final long serialVersionUID = -8522131160021027358L;
     // public static final long JWT_ACCESS_TOKEN_VALIDITY_TIME = 30 * 60 * 1000; // 30minute
-    // public static final long JWT_REFRESH_TOKEN_VALIDITY_TIME = 15 * 24 * 60 * 60 * 1000; // 15day
-    public static final long JWT_ACCESS_TOKEN_VALIDITY_TIME = 60 * 1000; // 1minute
     public static final long JWT_REFRESH_TOKEN_VALIDITY_TIME = 15 * 24 * 60 * 60 * 1000; // 15day
+    public static final long JWT_ACCESS_TOKEN_VALIDITY_TIME = 10 * 1000; // 10 second
 
-    @Value("${jwt.secret}")
-    private String secret;
+    // @Value("${jwt.secret}")
+    // private String secret;
 
     @Value("${jwt.access.secret}")
     private String accessSecret;
@@ -54,12 +54,13 @@ public class JwtTokenUtil implements Serializable{
     // 토큰으로부터 정보 반환
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
+        System.out.println(claims.toString());
         return claimsResolver.apply(claims);
     }
 
     //for retrieveing any information from token we will need the secret key
     // 시크릿 키를 이용하여 토큰으로부터 정보를 획득
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigninKey(accessSecret)).build().parseClaimsJws(token).getBody();
     }
 
@@ -74,8 +75,10 @@ public class JwtTokenUtil implements Serializable{
     // 토큰 생성
     public JwtToken generateToken(UserDetails userDetails) {
         List<String> roles = new ArrayList<>();
-        roles.add("첫번째");
-        roles.add("두번째");
+
+        String uuid = UUID.randomUUID().toString();
+        
+        roles.add(uuid);
         return doGenerateToken(userDetails.getUsername(), roles);
     }
 

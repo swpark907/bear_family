@@ -1,7 +1,6 @@
 package dragonb.bearfamily.backend.repository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
