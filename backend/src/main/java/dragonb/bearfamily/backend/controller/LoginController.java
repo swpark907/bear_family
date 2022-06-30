@@ -156,14 +156,15 @@ public class LoginController {
             
             Optional<Refreshtoken> refreshtokenByUserIdentity = refreshtokenRepository.findByUserIdentity(user.getIdentity());
             Refreshtoken refreshtoken;
+            DecodedJWT decodedJWT = JWT.decode(token.getRefreshToken());
+            String guid = decodedJWT.getClaim("roles").toString().substring(2, 38);
+
             if(refreshtokenByUserIdentity.isPresent()){
                 refreshtoken = refreshtokenByUserIdentity.get();
                 refreshtoken.setToken(token.getRefreshToken());
+                refreshtoken.setGuid(guid);
             }
             else{
-                DecodedJWT decodedJWT = JWT.decode(token.getRefreshToken());
-                String guid = decodedJWT.getClaim("roles").toString().substring(2, 38);
-
                 refreshtoken = Refreshtoken.builder()
                 .userIdentity(user.getIdentity())
                 .token(token.getRefreshToken())
