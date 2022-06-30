@@ -2,7 +2,7 @@ package dragonb.bearfamily.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.Enumeration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +15,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import dragonb.bearfamily.backend.model.Ledger;
+import dragonb.bearfamily.backend.model.LedgerEx;
 import dragonb.bearfamily.backend.model.Response;
 import dragonb.bearfamily.backend.repository.LedgerRepository;
 
@@ -33,25 +34,29 @@ public class LedgerRestController {
     }
 
     @GetMapping("/item")
-    public Response getLedger(@ModelAttribute Ledger ledger, HttpServletRequest request){
+    public Response getLedger(@ModelAttribute LedgerEx ledger, HttpServletRequest request){
         Response response = new Response();
         String userIdentity = getIdentity(request);
 
         try {
-            Optional<Ledger> resultLedger = ledgerRepository.findByUserIdentity(userIdentity);
+            long id = ledger.getId();
+            Optional<Ledger> resultLedger = ledgerRepository.findByIdAndUserIdentity(id, userIdentity);
+            if(!resultLedger.isPresent()){
+                throw new Exception();
+            }
             response.setResponse("success");
             response.setMessage("success get ledger");
             response.setData(resultLedger);
         } catch (Exception e) {
             response.setResponse("fail");
             response.setMessage("fail get ledger");
-            response.setData(e.getMessage());
+            response.setData(null);
         }
         return response;
     }
 
     @GetMapping("/items")
-    public Response getLedgers(@ModelAttribute Ledger ledger, HttpServletRequest request){
+    public Response getLedgers(@ModelAttribute LedgerEx ledger, HttpServletRequest request){
         Response response = new Response();
         String userIdentity = getIdentity(request);
 
@@ -63,7 +68,7 @@ public class LedgerRestController {
         } catch (Exception e) {
             response.setResponse("fail");
             response.setMessage("fail get ledgers");
-            response.setData(e.getMessage());
+            response.setData(null);
         }
         return response;
     }
@@ -82,7 +87,7 @@ public class LedgerRestController {
         } catch (Exception e) {
             response.setResponse("fail");
             response.setMessage("fail post ledger");
-            response.setData(e.getMessage());
+            response.setData(null);
         }
         return response;
     }
@@ -90,27 +95,57 @@ public class LedgerRestController {
     @PutMapping("/item")
     public Response putLedger(@RequestBody Ledger ledger, HttpServletRequest request){
         Response response = new Response();
-
+        String userIdentity = getIdentity(request);
+        
         try {
+            long id = ledger.getId();
+            Optional<Ledger> resultLedger = ledgerRepository.findByIdAndUserIdentity(id, userIdentity);
+            if(!resultLedger.isPresent()){
+                throw new Exception();
+            }
+
+            Ledger saveLedger = resultLedger.get();
+            if(saveLedger.getCategoryId() != ledger.getCategoryId()) saveLedger.setCategoryId(ledger.getCategoryId());
+            if(saveLedger.getDate().equals(ledger.getDate())) saveLedger.setDate(ledger.getDate());
+            if(saveLedger.getDescription() != ledger.getDescription()) saveLedger.setDescription(ledger.getDescription());
+            if(saveLedger.getKind() != ledger.getKind()) saveLedger.setKind(ledger.getKind());
+            if(saveLedger.getLocation() != ledger.getLocation()) saveLedger.setLocation(ledger.getLocation());
+            if(saveLedger.getPayment() != ledger.getPayment()) saveLedger.setPayment(ledger.getPayment());
+            if(saveLedger.getPrice() != ledger.getPrice()) saveLedger.setPrice(ledger.getPrice());
+            if(saveLedger.getTitle() != ledger.getTitle()) saveLedger.setTitle(ledger.getTitle());
+            saveLedger.setUpdated(LocalDateTime.now());
+
+            ledgerRepository.save(saveLedger);
             response.setResponse("success");
-            response.setMessage("토큰 등록 완료");
+            response.setMessage("success put ledger");
+            response.setData(ledger);
         } catch (Exception e) {
             response.setResponse("fail");
-            response.setMessage("토큰 등록 실패");
+            response.setMessage("fail put ledger");
+            response.setData(null);
         }
         return response;
     }
 
     @DeleteMapping("/item")
-    public Response deleteLedger(@RequestBody Ledger ledger, HttpServletRequest request){
+    public Response deleteLedger(@RequestBody LedgerEx ledger, HttpServletRequest request){
         Response response = new Response();
+        String userIdentity = getIdentity(request);
 
         try {
+            long id = ledger.getId();
+            Optional<Ledger> resultLedger = ledgerRepository.findByIdAndUserIdentity(id, userIdentity);
+            if(!resultLedger.isPresent()){
+                throw new Exception();
+            }
+            ledgerRepository.delete(resultLedger.get());
             response.setResponse("success");
-            response.setMessage("토큰 등록 완료");
+            response.setMessage("success delete ledger");
+            response.setData(ledger);
         } catch (Exception e) {
             response.setResponse("fail");
-            response.setMessage("토큰 등록 실패");
+            response.setMessage("fail delete ledger");
+            response.setData(null);
         }
         return response;
     }

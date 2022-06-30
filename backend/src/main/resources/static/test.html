@@ -188,6 +188,7 @@
 
         $('#ledger > #getLedger').on("click", function () {
             targetUrl = '/api/ledger/item';
+            ledgerObject["id"] = 9;
             callLedger(targetUrl, 'get', ledgerObject);
         });
 
@@ -198,11 +199,15 @@
 
         $('#ledger > #putLedger').on("click", function () {
             targetUrl = '/api/ledger/item';
+            ledgerObject["id"] = 19;
+            ledgerObject["title"] = "appTestPut";
+            ledgerObject["categoryId"] = 2;
             callLedger(targetUrl, 'put', ledgerObject);
         });
 
         $('#ledger > #deleteLedger').on("click", function () {
             targetUrl = '/api/ledger/item';
+            ledgerObject["id"] = 19;
             callLedger(targetUrl, 'delete', ledgerObject);
         });
 

@@ -187,7 +187,7 @@ public class LoginController {
         catch(Exception e){
             response.setResponse("fail");
             response.setMessage("fail login");
-            response.setData(e.getMessage());
+            response.setData(null);
         }
         return response;
     }
@@ -215,7 +215,7 @@ public class LoginController {
         catch(Exception e){
             response.setResponse("fail");
             response.setMessage("fail token refresh");
-            response.setData(e.getMessage());
+            response.setData(null);
         }
         return response;
     }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import dragonb.bearfamily.backend.model.Ledger;
 
 public interface LedgerRepository extends JpaRepository<Ledger, Long>{
-    Optional<Ledger> findByUserIdentity(String userIdentity);
+    Optional<Ledger> findByIdAndUserIdentity(Long id, String userIdentity);
 
     List<Ledger> findAllByUserIdentity(String userIdentity);
 }
