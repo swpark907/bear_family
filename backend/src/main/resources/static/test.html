@@ -1,0 +1,251 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <style>
+        h4 {
+            margin-block-start: 2em;
+            margin-block-end: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="registForm" action="/regist" method="post">
+        <input id="registIdentity" type="text" name="identity" placeholder="id">
+        <input id="registPassword" type="password" name="password" placeholder="password">
+        <input id="registName" type="text" name="name" placeholder="name">
+        <input id="registEmail" type="text" name="email" placeholder="email">
+        <button type="button" id="idCheck">IdCheck</button>
+        <button type="button" id="sendMail">SendMail</button>
+        <input type="submit" value="regist">
+    </form>
+
+    <form id="emailForm" action="/checkEmailauth" method="post">
+        <input id="emailEmail" type="hidden" name="email">
+        <input id="emailToken" type="text" name="token" placeholder="emailToken">
+        <input type="submit" value="check">
+    </form>
+
+    <form id="loginForm" action="/login" method="post">
+        <input id="loginIdentity" type="text" name="identity" placeholder="id">
+        <input id="loginPassword" type="password" name="password" placeholder="password">
+        <input type="submit" value="login">
+    </form>
+
+    <!-- <div>
+        <button id="existToken">ExistToken</button>
+    </div> -->
+
+    <div>
+        <button id="refreshToken">RefreshToken</button>
+    </div>
+
+    <div id="ledger">
+        <h4>Ledger</h4>
+        <button id="getLedger">GET</button>
+        <button id="getLedgers">GETS</button>
+        <button id="postLedger">POST</button>
+        <button id="putLedger">PUT</button>
+        <button id="deleteLedger">DELETE</button>
+    </div>
+</body>
+
+<script>
+    var token;
+    var refreshToken;
+
+    $(function () {
+        $('#registForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'post',
+                url: '/regist',
+                data: JSON.stringify(dataFormToJson('#registForm')),
+                contentType: "application/json",
+                complete: function (json) {
+                    console.log(json.responseJSON);
+                }
+            });
+        });
+
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'post',
+                url: '/login',
+                data: JSON.stringify(dataFormToJson('#loginForm')),
+                contentType: "application/json",
+                success: function (json) {
+                    console.log(json);
+                    token = json.data.accessToken;
+                    refreshToken = json.data.refreshToken;
+                },
+                error: function (json) {
+                    console.log(json);
+                }
+            });
+        });
+
+        // $('#existToken').on('click', function (e) {
+        //     $.ajax({
+        //         type: 'post',
+        //         url: '/restapi/existToken',
+        //         beforeSend: function (xhr) {
+        //             xhr.setRequestHeader("Authorization", "Bearer " + token);
+        //         },
+        //         contentType: "application/json",
+        //         success: function (json) {
+        //             console.log(json);
+        //         },
+        //         error: function (json) {
+        //             console.log(json);
+        //         }
+        //     });
+        // });
+
+        $('#sendMail').on('click', function (e) {
+            $.ajax({
+                type: 'post',
+                url: '/sendEmailauth',
+                data: {
+                    to: $('#registEmail').val(),
+                },
+                success: function (json) {
+                    console.log(json);
+                    $('#emailEmail').val($('#registEmail').val());
+                },
+                error: function (json) {
+                    console.log(json);
+                }
+            });
+        });
+
+        $('#emailForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'post',
+                url: '/checkEmailauth',
+                data: JSON.stringify(dataFormToJson('#emailForm')),
+                contentType: "application/json",
+                success: function (json) {
+                    console.log(json);
+                },
+                error: function (json) {
+                    console.log(json);
+                }
+            });
+        });
+
+        $('#idCheck').on('click', function (e) {
+            $.ajax({
+                type: 'post',
+                url: '/checkId',
+                data: {
+                    identity: $('#registIdentity').val(),
+                },
+                complete: function (json) {
+                    console.log(json.responseJSON);
+                }
+                // success : function(json){
+                //     alert(json.message);
+                //     console.log(json);
+                // },
+                // error : function(json){
+                //     alert(json.message);
+                //     console.log(json);
+                // }
+            });
+        });
+
+        $('#refreshToken').on('click', function (e) {
+            $.ajax({
+                type: 'post',
+                url: '/refresh',
+                data: JSON.stringify({
+                    refreshToken: refreshToken,
+                }),
+                contentType: "application/json",
+                success: function (json) {
+                    console.log(json);
+                    token = json.data;
+                },
+                error: function (json) {
+                    console.log(json);
+                }
+            });
+        });
+
+        var ledgerObject = {
+            title: "appTest",
+            price: 99999999,
+            categoryId: 1
+        }
+
+        $('#ledger > #getLedger').on("click", function () {
+            targetUrl = '/api/ledger/item';
+            callLedger(targetUrl, 'get', ledgerObject);
+        });
+
+        $('#ledger > #postLedger').on("click", function () {
+            targetUrl = '/api/ledger/item';
+            callLedger(targetUrl, 'post', ledgerObject);
+        });
+
+        $('#ledger > #putLedger').on("click", function () {
+            targetUrl = '/api/ledger/item';
+            callLedger(targetUrl, 'put', ledgerObject);
+        });
+
+        $('#ledger > #deleteLedger').on("click", function () {
+            targetUrl = '/api/ledger/item';
+            callLedger(targetUrl, 'delete', ledgerObject);
+        });
+
+        $('#ledger > #getLedgers').on("click", function () {
+            targetUrl = '/api/ledger/items';
+            callLedger(targetUrl, 'get', ledgerObject);
+        });
+    });
+
+    function callLedger(targetUrl, methodType, ledgerObject){
+        var inputData;
+        if(methodType == 'get'){
+            inputData = ledgerObject;
+        }
+        else{
+            inputData = JSON.stringify(ledgerObject);
+        }
+
+        $.ajax({
+            type: methodType,
+            url: targetUrl,
+            data: inputData,
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
+            success: function (json) {
+                console.log(json);
+            },
+            error: function (json) {
+                console.log(json);
+            }
+        });
+    }
+
+    function dataFormToJson(formTag) {
+        var data = "";
+
+        $.each($(formTag).serializeArray(), function (key, val) {
+            data += ',"' + val['name'] + '":"' + val['value'] + '"';
+        });
+        data = '{' + data.substr(1) + '}';
+
+        return JSON.parse(data);
+    }
+</script>

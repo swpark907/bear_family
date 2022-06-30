@@ -26,8 +26,8 @@ public class Ledger {
     @Column(name = "ledger_id")
     private Long id;
 
-    @Column(name = "ledger_user_id")
-    private Long userId;
+    @Column(name = "ledger_user_identity")
+    private String userIdentity;
 
     @Column(name = "ledger_category_id")
     private int categoryId;
@@ -60,7 +60,4 @@ public class Ledger {
     @Column(name = "ledger_updated")
     @LastModifiedDate
     private LocalDateTime updated;
-
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
 }
