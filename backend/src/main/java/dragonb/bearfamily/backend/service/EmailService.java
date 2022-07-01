@@ -29,8 +29,6 @@ public class EmailService {
 
     @Async
     public void sendMessage(String to, String OTP)throws Exception{
-        OTP = createKey();
-        
         String mailSubject = "회원가입 이메일 인증";
         String from = "GGOMGGOM";
 
@@ -47,11 +45,7 @@ public class EmailService {
         helper.setText(html, true);
         helper.setFrom(new InternetAddress(to, from));
         
-        throw new Exception();
-        
-        //emailSender.send(message);
-
-        //return OTP;
+        emailSender.send(message);
     }
  
     public String createKey() {
