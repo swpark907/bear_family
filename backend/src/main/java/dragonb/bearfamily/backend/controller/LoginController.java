@@ -82,7 +82,9 @@ public class LoginController {
         Response response = new Response();
 
         try {
-            String OTP = emailService.sendSimpleMessage(to);
+            String OTP = emailService.createKey();
+
+            emailService.sendMessage(to, OTP);
             // String OTP = "123456";
             emailauthRepository.save(Emailauth.builder()
                     .email(to)

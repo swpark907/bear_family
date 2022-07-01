@@ -8,9 +8,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -25,9 +25,10 @@ public class EmailService {
     @Autowired
     TemplateEngine templateEngine;
     
-    public static String OTP = createKey();
+    //public static String OTP = createKey();
 
-    private MimeMessage createMessage(String to)throws Exception{
+    @Async
+    public void sendMessage(String to, String OTP)throws Exception{
         OTP = createKey();
         
         String mailSubject = "회원가입 이메일 인증";
@@ -46,12 +47,14 @@ public class EmailService {
         helper.setText(html, true);
         helper.setFrom(new InternetAddress(to, from));
         
-        emailSender.send(message);
+        throw new Exception();
         
-        return message;
+        //emailSender.send(message);
+
+        //return OTP;
     }
  
-    public static String createKey() {
+    public String createKey() {
         StringBuffer key = new StringBuffer();
         Random rnd = new Random();
 
@@ -62,14 +65,13 @@ public class EmailService {
         return key.toString();
     }
 
-    public String sendSimpleMessage(String to)throws Exception {
-        MimeMessage message = createMessage(to);
-        try{
-            emailSender.send(message);
-        }catch(MailException es){
-            es.printStackTrace();
-            throw new IllegalArgumentException();
-        }
-        return OTP;
-    }
+    // public String sendSimpleMessage(String to)throws Exception {
+    //     try{
+    //         sendMessage(to);
+    //     }catch(MailException es){
+    //         es.printStackTrace();
+    //         throw new IllegalArgumentException();
+    //     }
+    //     return OTP;
+    // }
 }
