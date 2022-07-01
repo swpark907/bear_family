@@ -27,7 +27,6 @@ public class EmailService {
     
     //public static String OTP = createKey();
 
-    @Async
     public void sendMessage(String to, String OTP)throws Exception{
         String mailSubject = "회원가입 이메일 인증";
         String from = "GGOMGGOM";
