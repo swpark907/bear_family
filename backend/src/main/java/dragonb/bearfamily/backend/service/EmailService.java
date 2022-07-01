@@ -10,7 +10,6 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -24,8 +23,6 @@ public class EmailService {
  
     @Autowired
     TemplateEngine templateEngine;
-    
-    //public static String OTP = createKey();
 
     public void sendMessage(String to, String OTP)throws Exception{
         String mailSubject = "회원가입 이메일 인증";
@@ -57,14 +54,4 @@ public class EmailService {
 
         return key.toString();
     }
-
-    // public String sendSimpleMessage(String to)throws Exception {
-    //     try{
-    //         sendMessage(to);
-    //     }catch(MailException es){
-    //         es.printStackTrace();
-    //         throw new IllegalArgumentException();
-    //     }
-    //     return OTP;
-    // }
 }
