@@ -29,8 +29,11 @@ public class Ledger {
     @Column(name = "ledger_user_identity")
     private String userIdentity;
 
-    @Column(name = "ledger_category_id")
-    private int categoryId;
+    //@Column(name = "ledger_category_id")
+    //private int categoryId;
+    @ManyToOne
+    @JoinColumn(name = "ledger_category_id", referencedColumnName = "category_id")
+    private Category category;
 
     @Column(name = "ledger_title")
     private String title;
@@ -38,19 +41,26 @@ public class Ledger {
     @Column(name = "ledger_price")
     private Long price;
 
-    @Column(name = "ledger_kind")
-    private int kind;
+    //@Column(name = "ledger_kind")
+    //private int kind;
+    @ManyToOne
+    @JoinColumn(name = "ledger_kind", referencedColumnName = "ledger_column_kind_id")
+    private LedgerColumnKind kind;
 
     @Column(name = "ledger_location")
     private String location;
 
-    @Column(name = "ledger_payment")
-    private int payment;
+    //@Column(name = "ledger_payment")
+    //private int payment;
+    @ManyToOne
+    @JoinColumn(name = "ledger_payment", referencedColumnName = "ledger_column_payment_id")
+    private LedgerColumnPayment payment;
 
     @Column(name = "ledger_description")
     private String description;
 
     @Column(name = "ledger_date")
+    @CreatedDate
     private LocalDateTime date;
 
     @Column(name = "ledger_created", updatable = false)

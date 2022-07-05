@@ -2,13 +2,14 @@ package dragonb.bearfamily.backend.model;
 
 import java.time.LocalDateTime;
 
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
 public class LedgerEx {
     private Long id;
     private String userIdentity;
-    private int categoryId;
+    private Long categoryId;
     private String title;
     private Long price;
     private int kind;
