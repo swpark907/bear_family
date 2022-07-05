@@ -11,11 +11,9 @@ import org.springframework.stereotype.Service;
 
 import dragonb.bearfamily.backend.model.User;
 import dragonb.bearfamily.backend.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 
 // DB에서 UserDetail을 얻어와 AuthenticationManager에게 제공하는 역할 수행
 @Service
-@RequiredArgsConstructor
 public class JwtUserService implements UserDetailsService{
 
     @Autowired

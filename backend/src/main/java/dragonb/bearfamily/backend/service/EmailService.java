@@ -2,6 +2,7 @@ package dragonb.bearfamily.backend.service;
 
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Random;
 
 import javax.mail.internet.InternetAddress;
@@ -13,18 +14,25 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import dragonb.bearfamily.backend.model.Emailauth;
+import dragonb.bearfamily.backend.repository.EmailauthRepository;
  
 @Service
-@AllArgsConstructor
 public class EmailService {
  
     @Autowired
-    JavaMailSender emailSender;
+    private JavaMailSender emailSender;
  
     @Autowired
-    TemplateEngine templateEngine;
+    private TemplateEngine templateEngine;
 
-    public void sendMessage(String to, String OTP)throws Exception{
+    @Autowired
+    private EmailauthRepository emailauthRepository;
+
+    public void sendMessage(String to)throws Exception{
+        String OTP = createKey();
+
         String mailSubject = "회원가입 이메일 인증";
         String from = "GGOMGGOM";
 
@@ -42,6 +50,11 @@ public class EmailService {
         helper.setFrom(new InternetAddress(to, from));
         
         emailSender.send(message);
+        
+        emailauthRepository.save(Emailauth.builder()
+        .email(to)
+        .token(OTP)
+        .created(LocalDateTime.now()).build());
     }
  
     public String createKey() {
@@ -53,5 +66,9 @@ public class EmailService {
         }
 
         return key.toString();
+    }
+
+    public boolean checkEmailauth(Emailauth emailauth){
+        return emailauthRepository.isValid(emailauth);
     }
 }

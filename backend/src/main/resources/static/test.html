@@ -50,6 +50,24 @@
         <button id="putLedger">PUT</button>
         <button id="deleteLedger">DELETE</button>
     </div>
+
+    <div id="category">
+        <h4>Category</h4>
+        <button id="getCategory">GET</button>
+        <button id="getCategorys">GETS</button>
+        <button id="postCategory">POST</button>
+        <button id="putCategory">PUT</button>
+        <button id="deleteCategory">DELETE</button>
+    </div>
+
+    <div id="terms">
+        <h4>Terms</h4>
+        <button id="getTerms">GET</button>
+        <button id="getTermss">GETS</button>
+        <button id="postTerms">POST</button>
+        <button id="putTerms">PUT</button>
+        <button id="deleteTerms">DELETE</button>
+    </div>
 </body>
 
 <script>
@@ -183,12 +201,14 @@
         var ledgerObject = {
             title: "appTest",
             price: 99999999,
-            categoryId: 1
+            categoryId: 1,
+            kind: 1,
+            payment: 1
         }
 
         $('#ledger > #getLedger').on("click", function () {
             targetUrl = '/api/ledger/item';
-            ledgerObject["id"] = 9;
+            ledgerObject["id"] = 19;
             callLedger(targetUrl, 'get', ledgerObject);
         });
 
@@ -215,6 +235,76 @@
             targetUrl = '/api/ledger/items';
             callLedger(targetUrl, 'get', ledgerObject);
         });
+
+        var categoryObject = {
+            name: "categoryTest",
+            color: "#FFFFFF"
+        }
+
+        $('#category > #getCategory').on("click", function () {
+            targetUrl = '/api/category/item';
+            categoryObject["id"] = 3;
+            callCategory(targetUrl, 'get', categoryObject);
+        });
+
+        $('#category > #postCategory').on("click", function () {
+            targetUrl = '/api/category/item';
+            callCategory(targetUrl, 'post', categoryObject);
+        });
+
+        $('#category > #putCategory').on("click", function () {
+            targetUrl = '/api/category/item';
+            categoryObject["id"] = 3;
+            categoryObject["name"] = "categoryTestPut";
+            categoryObject["color"] = "#000000";
+            callCategory(targetUrl, 'put', categoryObject);
+        });
+
+        $('#category > #deleteCategory').on("click", function () {
+            targetUrl = '/api/category/item';
+            categoryObject["id"] = 3;
+            callCategory(targetUrl, 'delete', categoryObject);
+        });
+
+        $('#category > #getCategorys').on("click", function () {
+            targetUrl = '/api/category/items';
+            callCategory(targetUrl, 'get', categoryObject);
+        });
+
+        var termsObject = {
+            content: "testContent",
+            require: true
+        }
+
+        $('#terms > #getTerms').on("click", function () {
+            targetUrl = '/api/terms/item';
+            termsObject["id"] = 1;
+            callTerms(targetUrl, 'get', termsObject);
+        });
+
+        $('#terms > #postTerms').on("click", function () {
+            targetUrl = '/api/terms/item';
+            callTerms(targetUrl, 'post', termsObject);
+        });
+
+        $('#terms > #putTerms').on("click", function () {
+            targetUrl = '/api/terms/item';
+            termsObject["id"] = 2;
+            termsObject["content"] = "testContentPut";
+            termsObject["require"] = false;
+            callTerms(targetUrl, 'put', termsObject);
+        });
+
+        $('#terms > #deleteTerms').on("click", function () {
+            targetUrl = '/api/terms/item';
+            termsObject["id"] = 2;
+            callTerms(targetUrl, 'delete', termsObject);
+        });
+
+        $('#terms > #getTermss').on("click", function () {
+            targetUrl = '/api/terms/items';
+            callTerms(targetUrl, 'get', termsObject);
+        });
     });
 
     function callLedger(targetUrl, methodType, ledgerObject){
@@ -224,6 +314,58 @@
         }
         else{
             inputData = JSON.stringify(ledgerObject);
+        }
+
+        $.ajax({
+            type: methodType,
+            url: targetUrl,
+            data: inputData,
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
+            success: function (json) {
+                console.log(json);
+            },
+            error: function (json) {
+                console.log(json);
+            }
+        });
+    }
+
+    function callCategory(targetUrl, methodType, categoryObject){
+        var inputData;
+        if(methodType == 'get'){
+            inputData = categoryObject;
+        }
+        else{
+            inputData = JSON.stringify(categoryObject);
+        }
+
+        $.ajax({
+            type: methodType,
+            url: targetUrl,
+            data: inputData,
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
+            success: function (json) {
+                console.log(json);
+            },
+            error: function (json) {
+                console.log(json);
+            }
+        });
+    }
+
+    function callTerms(targetUrl, methodType, termsObject){
+        var inputData;
+        if(methodType == 'get'){
+            inputData = termsObject;
+        }
+        else{
+            inputData = JSON.stringify(termsObject);
         }
 
         $.ajax({

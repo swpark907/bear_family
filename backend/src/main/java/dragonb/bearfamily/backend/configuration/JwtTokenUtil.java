@@ -54,7 +54,7 @@ public class JwtTokenUtil implements Serializable{
     // 토큰으로부터 정보 반환
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
-        System.out.println(claims.toString());
+        //System.out.println(claims.toString());
         return claimsResolver.apply(claims);
     }
 
