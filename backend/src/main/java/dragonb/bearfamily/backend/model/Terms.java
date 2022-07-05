@@ -2,6 +2,8 @@ package dragonb.bearfamily.backend.model;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import lombok.*;
 
 @Entity
@@ -10,6 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 public class Terms {
     
     @Id
