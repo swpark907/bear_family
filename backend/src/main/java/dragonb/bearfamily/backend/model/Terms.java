@@ -20,6 +20,9 @@ public class Terms {
     @Column(name = "terms_id")
     private int id;
 
+    @Column(name = "terms_title")
+    private String title;
+
     @Column(name = "terms_content")
     private String content;
 

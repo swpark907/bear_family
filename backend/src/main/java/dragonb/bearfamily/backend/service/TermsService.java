@@ -40,6 +40,7 @@ public class TermsService {
         }
 
         Terms saveTerms = resultTerms.get();
+        if(terms.getTitle() != null) saveTerms.setTitle(terms.getTitle());
         if(terms.getContent() != null) saveTerms.setContent(terms.getContent());
         if(terms.isRequire() != saveTerms.isRequire()) saveTerms.setRequire(terms.isRequire());
         Terms test = termsRepository.save(saveTerms);
