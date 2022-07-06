@@ -45,7 +45,7 @@ public class LoginService {
 
     public void regist(User user) throws Exception{
         if(!emailauthRepository.isChecked(user.getEmail())){
-            throw new Exception();
+            throw new Exception("test");
         }
 
         emailauthRepository.deleteByEmail(user.getEmail());
@@ -53,8 +53,9 @@ public class LoginService {
         jwtUserService.save(user);
     }
 
-    public void checkId(String identity) throws Exception{
-        jwtUserService.loadUserByUsername(identity);
+    public Optional<User> checkId(String identity) throws Exception{
+        //jwtUserService.loadUserByUsername(identity);
+        return userRepository.findByIdentity(identity);
     }
 
     public JwtToken login(User user) throws Exception{

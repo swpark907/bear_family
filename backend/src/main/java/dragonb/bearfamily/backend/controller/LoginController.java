@@ -1,5 +1,7 @@
 package dragonb.bearfamily.backend.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,17 +44,21 @@ public class LoginController {
         try {
             if(identity == "" || identity == null){
                 response.setMessage("identity is null");
+                throw new Exception();
             }
             else{
-                loginService.checkId(identity);
-                response.setMessage("already exist");
+                Optional<User> user = loginService.checkId(identity);
+                if(user.isPresent()){
+                    response.setMessage("already exist");
+                    throw new Exception();
+                }
             }
-            response.setData(identity);
-            response.setResponse("fail");
-        } catch (Exception e) {
             response.setResponse("success");
             response.setMessage("available");
             response.setData(identity);
+        } catch (Exception e) {
+            response.setData(identity);
+            response.setResponse("fail");
         }
         return response;
     }
