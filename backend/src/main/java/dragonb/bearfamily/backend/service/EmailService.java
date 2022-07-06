@@ -1,7 +1,5 @@
 package dragonb.bearfamily.backend.service;
 
-import lombok.AllArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.Random;
 

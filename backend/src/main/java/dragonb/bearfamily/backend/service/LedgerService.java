@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
-
 import dragonb.bearfamily.backend.model.Category;
 import dragonb.bearfamily.backend.model.Ledger;
 import dragonb.bearfamily.backend.model.LedgerColumnKind;
@@ -27,14 +24,8 @@ public class LedgerService {
     
     private String userIdentity;
 
-    public String getUserIdentity(HttpServletRequest request){
-        String accesstoken = request.getHeader("authorization").substring(7);
-        DecodedJWT decodedJWT = JWT.decode(accesstoken);
-        return decodedJWT.getSubject();
-    }
-
     public Ledger getLedger(HttpServletRequest request, LedgerEx ledgerEx) throws Exception{
-        userIdentity = getUserIdentity(request);
+        userIdentity = CommonService.getUserIdentity(request);
         long id = ledgerEx.getId();
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
@@ -46,18 +37,18 @@ public class LedgerService {
     }
 
     public List<Ledger> getLedgers(HttpServletRequest request, LedgerEx ledgerEx) throws Exception{
-        userIdentity = getUserIdentity(request);
+        userIdentity = CommonService.getUserIdentity(request);
         return ledgerRepository.findLedgersFetch(userIdentity);
     }
 
     public Ledger postLedger(HttpServletRequest request, LedgerEx ledgerEx){
-        userIdentity = getUserIdentity(request);
+        userIdentity = CommonService.getUserIdentity(request);
         ledgerEx.setUserIdentity(userIdentity);
         return ledgerRepository.save(ledgerByEx(ledgerEx));
     }
 
     public Ledger putLedger(HttpServletRequest request, LedgerEx ledgerEx) throws Exception{
-        userIdentity = getUserIdentity(request);
+        userIdentity = CommonService.getUserIdentity(request);
         long id = ledgerEx.getId();
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
@@ -80,7 +71,7 @@ public class LedgerService {
     }
 
     public void deleteLedger(HttpServletRequest request, LedgerEx ledgerEx) throws Exception{
-        userIdentity = getUserIdentity(request);
+        userIdentity = CommonService.getUserIdentity(request);
         long id = ledgerEx.getId();
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){

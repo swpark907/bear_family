@@ -99,8 +99,10 @@
                 contentType: "application/json",
                 success: function (json) {
                     console.log(json);
-                    token = json.data.accessToken;
-                    refreshToken = json.data.refreshToken;
+                    if(json.response == "success"){
+                        token = json.data.accessToken;
+                        refreshToken = json.data.refreshToken;
+                    }
                 },
                 error: function (json) {
                     console.log(json);
@@ -243,7 +245,7 @@
 
         $('#category > #getCategory').on("click", function () {
             targetUrl = '/api/category/item';
-            categoryObject["id"] = 3;
+            categoryObject["id"] = 14;
             callCategory(targetUrl, 'get', categoryObject);
         });
 
@@ -254,7 +256,7 @@
 
         $('#category > #putCategory').on("click", function () {
             targetUrl = '/api/category/item';
-            categoryObject["id"] = 3;
+            categoryObject["id"] = 14;
             categoryObject["name"] = "categoryTestPut";
             categoryObject["color"] = "#000000";
             callCategory(targetUrl, 'put', categoryObject);
@@ -262,7 +264,7 @@
 
         $('#category > #deleteCategory').on("click", function () {
             targetUrl = '/api/category/item';
-            categoryObject["id"] = 3;
+            categoryObject["id"] = 14;
             callCategory(targetUrl, 'delete', categoryObject);
         });
 
@@ -272,13 +274,14 @@
         });
 
         var termsObject = {
+            title: "testTitle",
             content: "testContent",
             require: true
         }
 
         $('#terms > #getTerms').on("click", function () {
             targetUrl = '/api/terms/item';
-            termsObject["id"] = 1;
+            termsObject["id"] = 5;
             callTerms(targetUrl, 'get', termsObject);
         });
 
@@ -289,7 +292,7 @@
 
         $('#terms > #putTerms').on("click", function () {
             targetUrl = '/api/terms/item';
-            termsObject["id"] = 2;
+            termsObject["id"] = 5;
             termsObject["content"] = "testContentPut";
             termsObject["require"] = false;
             callTerms(targetUrl, 'put', termsObject);
@@ -297,7 +300,7 @@
 
         $('#terms > #deleteTerms').on("click", function () {
             targetUrl = '/api/terms/item';
-            termsObject["id"] = 2;
+            termsObject["id"] = 5;
             callTerms(targetUrl, 'delete', termsObject);
         });
 
