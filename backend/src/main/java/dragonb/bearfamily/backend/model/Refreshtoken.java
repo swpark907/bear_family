@@ -23,6 +23,6 @@ public class Refreshtoken {
     @Column(name = "refreshtoken_token")
 	private String token;
 
-    @Column(name = "refreshtoken_guid")
-    private String guid;
+    @Column(name = "refreshtoken_uuid")
+    private String uuid;
 }

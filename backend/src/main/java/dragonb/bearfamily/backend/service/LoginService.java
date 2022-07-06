@@ -67,18 +67,18 @@ public class LoginService {
             Optional<Refreshtoken> refreshtokenByUserIdentity = refreshtokenRepository.findByUserIdentity(user.getIdentity());
             Refreshtoken refreshtoken;
             DecodedJWT decodedJWT = JWT.decode(token.getRefreshToken());
-            String guid = decodedJWT.getClaim("roles").toString().substring(2, 38);
+            String uuid = decodedJWT.getClaim("uuid").toString().substring(1, 37);
 
             if(refreshtokenByUserIdentity.isPresent()){
                 refreshtoken = refreshtokenByUserIdentity.get();
                 refreshtoken.setToken(token.getRefreshToken());
-                refreshtoken.setGuid(guid);
+                refreshtoken.setUuid(uuid);
             }
             else{
                 refreshtoken = Refreshtoken.builder()
                 .userIdentity(user.getIdentity())
                 .token(token.getRefreshToken())
-                .guid(guid)
+                .uuid(uuid)
                 .build();
             }
             refreshtokenRepository.save(refreshtoken);
@@ -96,9 +96,9 @@ public class LoginService {
 
     public String refresh(JwtToken jwtToken) throws Exception{
         DecodedJWT decodedJWT = JWT.decode(jwtToken.getRefreshToken());
-        String guid = decodedJWT.getClaim("roles").toString().substring(2, 38);
+        String uuid = decodedJWT.getClaim("uuid").toString().substring(1, 37);
 
-        Optional<Refreshtoken> refreshtoken = refreshtokenRepository.findByTokenAndGuid(jwtToken.getRefreshToken(), guid);
+        Optional<Refreshtoken> refreshtoken = refreshtokenRepository.findByTokenAndUuid(jwtToken.getRefreshToken(), uuid);
         if(!refreshtoken.isPresent()){
             throw new Exception();
         }

@@ -74,12 +74,12 @@ public class JwtTokenUtil implements Serializable{
     //generate token for user
     // 토큰 생성
     public JwtToken generateToken(UserDetails userDetails) {
-        List<String> roles = new ArrayList<>();
+        //List<String> roles = new ArrayList<>();
 
         String uuid = UUID.randomUUID().toString();
         
-        roles.add(uuid);
-        return doGenerateToken(userDetails.getUsername(), roles);
+        //roles.add(uuid);
+        return doGenerateToken(userDetails.getUsername(), uuid);
     }
 
     //while creating the token -
@@ -106,10 +106,11 @@ public class JwtTokenUtil implements Serializable{
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public JwtToken doGenerateToken(String userEmail, List<String> roles) {
+    public JwtToken doGenerateToken(String userEmail, String uuid){
+    // List<String> roles) {
 
         Claims claims = Jwts.claims().setSubject(userEmail); // JWT payload 에 저장되는 정보단위
-        claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
+        claims.put("uuid", uuid); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
 
         //Access Token

@@ -43,8 +43,11 @@ public class User implements UserDetails{
 	@Column(name = "user_email")
 	private String email;
 
-    @Column(name = "user_grade_id")
-    private String gradeId;
+    //@Column(name = "user_grade_id")
+    //private String gradeId;
+    @ManyToOne
+    @JoinColumn(name = "user_grade_id", referencedColumnName = "grade_id")
+    private Grade gradeId;
 
     @Column(name = "user_created", updatable = false)
     @CreatedDate
@@ -54,8 +57,8 @@ public class User implements UserDetails{
     @LastModifiedDate
     private LocalDateTime updated;
     
-    @Column(name = "user_auth")
-    private String auth;
+    // @Column(name = "user_auth")
+    // private String auth;
 
     @Builder
     public User(String identity, String email, String password, String name) {
@@ -67,11 +70,11 @@ public class User implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        for (String role : auth.split(",")) {
-            roles.add(new SimpleGrantedAuthority(role));
-        }
-        return roles;
+        // Set<GrantedAuthority> roles = new HashSet<>();
+        // for (String role : auth.split(",")) {
+        //     roles.add(new SimpleGrantedAuthority(role));
+        // }
+        return null;
     }
 
     @Override

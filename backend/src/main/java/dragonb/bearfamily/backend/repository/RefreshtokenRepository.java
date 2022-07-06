@@ -9,5 +9,5 @@ import dragonb.bearfamily.backend.model.Refreshtoken;
 public interface RefreshtokenRepository extends JpaRepository<Refreshtoken, Long>{
     Optional<Refreshtoken> findByUserIdentity(String UserIdentity);
 
-    Optional<Refreshtoken> findByTokenAndGuid(String token, String guid);
+    Optional<Refreshtoken> findByTokenAndUuid(String token, String uuid);
 }
