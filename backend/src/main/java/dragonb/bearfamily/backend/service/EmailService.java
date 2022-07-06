@@ -68,7 +68,10 @@ public class EmailService {
         return key.toString();
     }
 
-    public boolean checkEmailauth(Emailauth emailauth){
-        return emailauthRepository.isValid(emailauth);
+    public void checkEmailauth(Emailauth emailauth) throws Exception{
+        boolean result = emailauthRepository.isValid(emailauth);
+        if(!result){
+            throw new Exception();
+        }
     }
 }

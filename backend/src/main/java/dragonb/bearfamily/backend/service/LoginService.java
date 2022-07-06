@@ -45,7 +45,7 @@ public class LoginService {
 
     public void regist(User user) throws Exception{
         if(!emailauthRepository.isChecked(user.getEmail())){
-            throw new Exception("test");
+            throw new Exception();
         }
 
         emailauthRepository.deleteByEmail(user.getEmail());

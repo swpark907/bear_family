@@ -19,7 +19,7 @@ public interface EmailauthRepository extends JpaRepository<Emailauth, String> {
     @Param("email") String email, @Param("token") String token);
 
     default boolean isValid(Emailauth emailauth) {
-        long minutesGap = 1;
+        long minutesGap = 3;
         
         updateEmailauthChecked(emailauth.getEmail(), emailauth.getToken());
 
@@ -37,10 +37,12 @@ public interface EmailauthRepository extends JpaRepository<Emailauth, String> {
     @Query(value = "update emailauth set emailauth_checked = true where emailauth_email = :email and emailauth_token = :token", nativeQuery = true)
     void updateEmailauthChecked(@Param("email") String email, @Param("token") String token);
 
-    @Query(value="select count(*) from emailauth where emailauth_email = :email", nativeQuery = true)
-    int existCheckedEmailauth(@Param("email") String email);
+    @Query(value="select count(*) from emailauth where emailauth_created > :threshold and emailauth_email = :email and emailauth_checked = true", nativeQuery = true)
+    int existCheckedEmailauth(@Param("threshold") LocalDateTime threshold, @Param("email") String email);
 
     default boolean isChecked(String email) {
-        return existCheckedEmailauth(email) > 0;
+        long minutesGap = 3;
+
+        return existCheckedEmailauth(LocalDateTime.now().minusMinutes(minutesGap), email) > 0;
     }
 }

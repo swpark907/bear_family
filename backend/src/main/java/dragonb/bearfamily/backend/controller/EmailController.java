@@ -39,17 +39,17 @@ public class EmailController {
     public Response checkEmailauth(@RequestBody Emailauth emailauth) {
         Response response = new Response();
 
-        boolean result = emailService.checkEmailauth(emailauth);
-
         try {
-            response.setData(result);
+            emailService.checkEmailauth(emailauth);
+
+            response.setData(true);
             response.setResponse("success");
             response.setMessage("success checkEmailToken");
 
         } catch (Exception e) {
             response.setResponse("fail");
             response.setMessage("fail checkEmailToken");
-            response.setData(result);
+            response.setData(false);
         }
         return response;
     }
