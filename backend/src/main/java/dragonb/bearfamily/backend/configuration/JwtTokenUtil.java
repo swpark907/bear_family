@@ -145,7 +145,7 @@ public class JwtTokenUtil implements Serializable{
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(refreshSecret.getBytes()).build().parseClaimsJws(refreshToken);
             //refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다.
             if (!claims.getBody().getExpiration().before(new Date())) {
-                return recreationAccessToken(claims.getBody().get("sub").toString(), claims.getBody().get("roles"));
+                return recreationAccessToken(claims.getBody().get("sub").toString(), claims.getBody().get("uuid"));
             }
         }catch (Exception e) {
             //refresh 토큰이 만료되었을 경우, 로그인이 필요합니다.
@@ -155,10 +155,10 @@ public class JwtTokenUtil implements Serializable{
         return null;
     }
 
-    public String recreationAccessToken(String userEmail, Object roles){
+    public String recreationAccessToken(String userEmail, Object uuid){
 
         Claims claims = Jwts.claims().setSubject(userEmail); // JWT payload 에 저장되는 정보단위
-        claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
+        claims.put("uuid", uuid); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
 
         //Access Token
