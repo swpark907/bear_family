@@ -17,6 +17,9 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
+    @Column(name = "category_user_identity")
+    private String userIdentity;
+
     @Column(name = "category_name")
     private String name;
 

@@ -2,6 +2,8 @@ package dragonb.bearfamily.backend.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,11 +44,11 @@ public class CategoryController {
     }
 
     @GetMapping("/items")
-    public Response getCategorys(){
+    public Response getCategorys(HttpServletRequest request){
         Response response = new Response();
 
         try {
-            List<Category> resultCategorys = categoryService.getCategorys();
+            List<Category> resultCategorys = categoryService.getCategorys(request);
             
             response.setResponse("success");
             response.setMessage("success get categorys");
@@ -60,11 +62,11 @@ public class CategoryController {
     }
 
     @PostMapping("/item")
-    public Response postCategory(@RequestBody Category category){
+    public Response postCategory(@RequestBody Category category, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            Category resultCategory = categoryService.postCategory(category);
+            Category resultCategory = categoryService.postCategory(category, request);
 
             response.setResponse("success");
             response.setMessage("success post category");
@@ -78,11 +80,11 @@ public class CategoryController {
     }
 
     @PutMapping("/item")
-    public Response putCategory(@RequestBody Category category){
+    public Response putCategory(@RequestBody Category category, HttpServletRequest request){
         Response response = new Response();
         
         try {
-            Category resultCategory = categoryService.putCategory(category);
+            Category resultCategory = categoryService.putCategory(category, request);
 
             response.setResponse("success");
             response.setMessage("success put category");
@@ -96,11 +98,11 @@ public class CategoryController {
     }
     
     @DeleteMapping("/item")
-    public Response deleteCategory(@RequestBody Category category){
+    public Response deleteCategory(@RequestBody Category category, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            categoryService.deleteCategory(category);
+            categoryService.deleteCategory(category, request);
 
             response.setResponse("success");
             response.setMessage("success delete category");
