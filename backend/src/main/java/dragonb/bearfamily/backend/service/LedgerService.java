@@ -44,7 +44,10 @@ public class LedgerService {
     public Ledger postLedger(HttpServletRequest request, LedgerEx ledgerEx){
         userIdentity = CommonService.getUserIdentity(request);
         ledgerEx.setUserIdentity(userIdentity);
-        return ledgerRepository.save(ledgerByEx(ledgerEx));
+
+        Ledger test = ledgerByEx(ledgerEx);
+
+        return ledgerRepository.save(test);
     }
 
     public Ledger putLedger(HttpServletRequest request, LedgerEx ledgerEx) throws Exception{
@@ -92,5 +95,10 @@ public class LedgerService {
             .category(Category.builder().id(ledgerEx.getCategoryId()).build())
             .userIdentity(userIdentity)
             .build();
+    }
+
+    public List<Object> getLedgersSumGroupByMonth(HttpServletRequest request) throws Exception{
+        userIdentity = CommonService.getUserIdentity(request);
+        return ledgerRepository.findLedgersSumGroupByMonth(userIdentity);
     }
 }

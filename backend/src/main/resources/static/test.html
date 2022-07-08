@@ -49,6 +49,7 @@
         <button id="postLedger">POST</button>
         <button id="putLedger">PUT</button>
         <button id="deleteLedger">DELETE</button>
+        <button id="getLedgersSumGroupByMonth">GET SUM GROUP BY MONTH</button>
     </div>
 
     <div id="category">
@@ -203,9 +204,10 @@
         var ledgerObject = {
             title: "appTest",
             price: 99999999,
-            categoryId: 1,
-            kind: 1,
-            payment: 1
+            categoryId: 11,
+            kind: 2,
+            payment: 2,
+            date: new Date('2022-07-08 10:50:00')
         }
 
         $('#ledger > #getLedger').on("click", function () {
@@ -221,9 +223,9 @@
 
         $('#ledger > #putLedger').on("click", function () {
             targetUrl = '/api/ledger/item';
-            ledgerObject["id"] = 19;
+            ledgerObject["id"] = 55;
             ledgerObject["title"] = "appTestPut";
-            ledgerObject["categoryId"] = 2;
+            ledgerObject["categoryId"] = 11;
             callLedger(targetUrl, 'put', ledgerObject);
         });
 
@@ -236,6 +238,11 @@
         $('#ledger > #getLedgers').on("click", function () {
             targetUrl = '/api/ledger/items';
             callLedger(targetUrl, 'get', ledgerObject);
+        });
+
+        $('#ledger > #getLedgersSumGroupByMonth').on("click", function () {
+            targetUrl = '/api/ledger/items/groupbymonth';
+            callLedger(targetUrl, 'get');
         });
 
         var categoryObject = {

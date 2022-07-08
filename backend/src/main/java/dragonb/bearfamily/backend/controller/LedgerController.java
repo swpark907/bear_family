@@ -107,4 +107,22 @@ public class LedgerController {
         }
         return response;
     }
+
+    @GetMapping("/items/groupbymonth")
+    public Response getLedgersSumGroupByMonth(HttpServletRequest request){
+        Response response = new Response();
+
+        try {
+            List<Object> resultLedgers = ledgerService.getLedgersSumGroupByMonth(request);
+            
+            response.setResponse("success");
+            response.setMessage("success get ledgers sum group by month");
+            response.setData(resultLedgers);
+        } catch (Exception e) {
+            response.setResponse("fail");
+            response.setMessage("fail get ledgers sum group by month");
+            response.setData(null);
+        }
+        return response;
+    }
 }

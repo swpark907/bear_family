@@ -17,4 +17,7 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long>{
     List<Ledger> findLedgersFetch(@Param("userIdentity") String userIdentity);
 
     List<Ledger> findAllByUserIdentity(String userIdentity);
+
+    @Query("select to_char(l.date, 'YYYY-MM') as date, sum(l.price) as price from Ledger l group by to_char(l.date, 'YYYY-MM') order by date asc")
+    List<Object> findLedgersSumGroupByMonth(String userIdentity);
 }

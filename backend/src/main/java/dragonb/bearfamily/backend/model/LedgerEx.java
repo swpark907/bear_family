@@ -19,4 +19,8 @@ public class LedgerEx {
     private LocalDateTime date;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+
+    public void setDate(LocalDateTime date) {
+        this.date = date.plusHours(9);
+    }
 }
