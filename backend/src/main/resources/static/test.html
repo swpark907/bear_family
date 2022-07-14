@@ -50,6 +50,7 @@
         <button id="putLedger">PUT</button>
         <button id="deleteLedger">DELETE</button>
         <button id="getLedgersSumGroupByMonth">GET SUM GROUP BY MONTH</button>
+        <button id="getLedgersTop5">GET TOP 5</button>
     </div>
 
     <div id="category">
@@ -207,7 +208,7 @@
             categoryId: 11,
             kind: 2,
             payment: 2,
-            date: new Date('2022-07-08 10:50:00')
+            date: "2022-07-08T14:27:16"
         }
 
         $('#ledger > #getLedger').on("click", function () {
@@ -244,6 +245,12 @@
             targetUrl = '/api/ledger/items/groupbymonth';
             callLedger(targetUrl, 'get');
         });
+
+        $('#ledger > #getLedgersTop5').on("click", function () {
+            targetUrl = '/api/ledger/items/top5';
+            callLedger(targetUrl, 'get');
+        });
+
 
         var categoryObject = {
             name: "categoryTest",

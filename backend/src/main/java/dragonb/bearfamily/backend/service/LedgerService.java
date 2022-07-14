@@ -101,4 +101,9 @@ public class LedgerService {
         userIdentity = CommonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByMonth(userIdentity);
     }
+
+    public List<Ledger> getTop5ByUserIdentityOrderByPriceDesc(HttpServletRequest request) throws Exception{
+        userIdentity = CommonService.getUserIdentity(request);
+        return ledgerRepository.findTop5ByUserIdentityOrderByPriceDesc(userIdentity);
+    }
 }

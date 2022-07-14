@@ -2,6 +2,8 @@ package dragonb.bearfamily.backend.model;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.*;
 
 @Getter
@@ -16,11 +18,8 @@ public class LedgerEx {
     private String location;
     private int payment;
     private String description;
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-
-    public void setDate(LocalDateTime date) {
-        this.date = date.plusHours(9);
-    }
 }
