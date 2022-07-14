@@ -19,6 +19,10 @@
         <input id="registEmail" type="text" name="email" placeholder="email">
         <button type="button" id="idCheck">IdCheck</button>
         <button type="button" id="sendMail">SendMail</button>
+
+        <div id="termsList" style="margin: 1em;">
+        </div>
+
         <input type="submit" value="regist">
     </form>
 
@@ -34,10 +38,6 @@
         <input type="submit" value="login">
     </form>
 
-    <!-- <div>
-        <button id="existToken">ExistToken</button>
-    </div> -->
-
     <div>
         <button id="refreshToken">RefreshToken</button>
     </div>
@@ -49,8 +49,10 @@
         <button id="postLedger">POST</button>
         <button id="putLedger">PUT</button>
         <button id="deleteLedger">DELETE</button>
-        <button id="getLedgersSumGroupByMonth">GET SUM GROUP BY MONTH</button>
         <button id="getLedgersTop5">GET TOP 5</button>
+        <button id="getLedgersSumGroupByYear">GET SUM GROUP BY YEAR</button>
+        <button id="getLedgersSumGroupByMonth">GET SUM GROUP BY MONTH</button>
+        <button id="getLedgersSumGroupByDate">GET SUM GROUP BY DATE</button>
     </div>
 
     <div id="category">
@@ -77,6 +79,43 @@
     var refreshToken;
 
     $(function () {
+        String.prototype.format = function() {
+            var formatted = this;
+            for (var i = 0; i < arguments.length; i++) {
+                var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+                formatted = formatted.replace(regexp, arguments[i]);
+            }
+            return formatted;
+        };
+
+        $(document).on('click', '.showTermsContent', function(e){
+            var termsId = $(e.currentTarget).attr('data-id');
+            var targetDiv = $('.termsContentDiv[data-id="{0}"]'.format(termsId));
+            var targetBtn = $(this);
+
+            targetBtn.text(targetBtn.text() == 'show' ? 'hide' : 'show');
+            targetDiv.toggle();
+        });
+
+        $.ajax({
+            type: 'get',
+            url: '/api/terms/items',
+            contentType: "application/json",
+            success: function (json) {
+                var datas = json.data;
+
+                for(var i = 0 ; i < datas.length ; i++){
+                    console.log(datas[i]);
+
+                    $('#termsList').append('<div><input type="checkbox" data-id="{0}" name="{1}"> <label for="{1}">{1} ({2}) </label><button class="showTermsContent" data-id="{0}">show</button></div>'.format(datas[i].id, datas[i].title, datas[i].require == true ? "required" : "option"));
+                    $('#termsList').append('<div class="termsContentDiv" style="display: none;" data-id="{0}"><p>{1}</p></div>'.format(datas[i].id, datas[i].content));
+                }
+            },
+            error: function (json) {
+                console.log(json);
+            }
+        });
+
         $('#registForm').on('submit', function (e) {
             e.preventDefault();
 
@@ -241,13 +280,23 @@
             callLedger(targetUrl, 'get', ledgerObject);
         });
 
+        $('#ledger > #getLedgersTop5').on("click", function () {
+            targetUrl = '/api/ledger/items/top5';
+            callLedger(targetUrl, 'get');
+        });
+
+        $('#ledger > #getLedgersSumGroupByYear').on("click", function () {
+            targetUrl = '/api/ledger/items/groupbyyear';
+            callLedger(targetUrl, 'get');
+        });
+
         $('#ledger > #getLedgersSumGroupByMonth').on("click", function () {
             targetUrl = '/api/ledger/items/groupbymonth';
             callLedger(targetUrl, 'get');
         });
 
-        $('#ledger > #getLedgersTop5').on("click", function () {
-            targetUrl = '/api/ledger/items/top5';
+        $('#ledger > #getLedgersSumGroupByDate').on("click", function () {
+            targetUrl = '/api/ledger/items/groupbydate';
             callLedger(targetUrl, 'get');
         });
 

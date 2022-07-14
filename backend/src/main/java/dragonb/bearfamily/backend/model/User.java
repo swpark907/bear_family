@@ -42,7 +42,7 @@ public class User implements UserDetails{
 
     //@Column(name = "user_grade_id")
     //private String gradeId;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_grade_id", referencedColumnName = "grade_id")
     private Grade gradeId;
 

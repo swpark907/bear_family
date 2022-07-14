@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import dragonb.bearfamily.backend.model.Ledger;
-import dragonb.bearfamily.backend.model.LedgerEx;
+import dragonb.bearfamily.backend.model.LedgerMath;
+import dragonb.bearfamily.backend.model.LedgerDTO;
 import dragonb.bearfamily.backend.model.Response;
 import dragonb.bearfamily.backend.service.LedgerService;
 
@@ -19,11 +20,11 @@ public class LedgerController {
     LedgerService ledgerService;
 
     @GetMapping("/item")
-    public Response getLedger(@ModelAttribute LedgerEx ledgerEx, HttpServletRequest request){
+    public Response getLedger(@ModelAttribute LedgerDTO ledgerDTO, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            Ledger resultLedger = ledgerService.getLedger(request, ledgerEx);
+            Ledger resultLedger = ledgerService.getLedger(request, ledgerDTO);
 
             response.setResponse("success");
             response.setMessage("success get ledger");
@@ -37,11 +38,11 @@ public class LedgerController {
     }
 
     @GetMapping("/items")
-    public Response getLedgers(@ModelAttribute LedgerEx ledgerEx, HttpServletRequest request){
+    public Response getLedgers(@ModelAttribute LedgerDTO ledgerDTO, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            List<Ledger> resultLedgers = ledgerService.getLedgers(request, ledgerEx);
+            List<Ledger> resultLedgers = ledgerService.getLedgers(request, ledgerDTO);
             
             response.setResponse("success");
             response.setMessage("success get ledgers");
@@ -55,11 +56,11 @@ public class LedgerController {
     }
 
     @PostMapping("/item")
-    public Response postLedger(@RequestBody LedgerEx ledgerEx, HttpServletRequest request){
+    public Response postLedger(@RequestBody LedgerDTO ledgerDTO, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            Ledger resultLedger = ledgerService.postLedger(request, ledgerEx);
+            Ledger resultLedger = ledgerService.postLedger(request, ledgerDTO);
 
             response.setResponse("success");
             response.setMessage("success post ledger");
@@ -73,11 +74,11 @@ public class LedgerController {
     }
 
     @PutMapping("/item")
-    public Response putLedger(@RequestBody LedgerEx ledgerEx, HttpServletRequest request){
+    public Response putLedger(@RequestBody LedgerDTO ledgerDTO, HttpServletRequest request){
         Response response = new Response();
         
         try {
-            Ledger resultLedger = ledgerService.putLedger(request, ledgerEx);
+            Ledger resultLedger = ledgerService.putLedger(request, ledgerDTO);
 
             response.setResponse("success");
             response.setMessage("success put ledger");
@@ -91,36 +92,18 @@ public class LedgerController {
     }
 
     @DeleteMapping("/item")
-    public Response deleteLedger(@RequestBody LedgerEx ledgerEx, HttpServletRequest request){
+    public Response deleteLedger(@RequestBody LedgerDTO ledgerDTO, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            ledgerService.deleteLedger(request, ledgerEx);
+            ledgerService.deleteLedger(request, ledgerDTO);
 
             response.setResponse("success");
             response.setMessage("success delete ledger");
-            response.setData(ledgerEx);
+            response.setData(ledgerDTO);
         } catch (Exception e) {
             response.setResponse("fail");
             response.setMessage("fail delete ledger");
-            response.setData(null);
-        }
-        return response;
-    }
-
-    @GetMapping("/items/groupbymonth")
-    public Response getLedgersSumGroupByMonth(HttpServletRequest request){
-        Response response = new Response();
-
-        try {
-            List<Object> resultLedgers = ledgerService.getLedgersSumGroupByMonth(request);
-            
-            response.setResponse("success");
-            response.setMessage("success get ledgers sum group by month");
-            response.setData(resultLedgers);
-        } catch (Exception e) {
-            response.setResponse("fail");
-            response.setMessage("fail get ledgers sum group by month");
             response.setData(null);
         }
         return response;
@@ -139,6 +122,60 @@ public class LedgerController {
         } catch (Exception e) {
             response.setResponse("fail");
             response.setMessage("fail get ledgers sum group by month");
+            response.setData(null);
+        }
+        return response;
+    }
+
+    @GetMapping("/items/groupbyyear")
+    public Response getLedgersSumGroupByYear(HttpServletRequest request){
+        Response response = new Response();
+
+        try {
+            List<LedgerMath> resultLedgers = ledgerService.getLedgersSumGroupByYear(request);
+            
+            response.setResponse("success");
+            response.setMessage("success get ledgers sum group by year");
+            response.setData(resultLedgers);
+        } catch (Exception e) {
+            response.setResponse("fail");
+            response.setMessage("fail get ledgers sum group by year");
+            response.setData(null);
+        }
+        return response;
+    }
+
+    @GetMapping("/items/groupbymonth")
+    public Response getLedgersSumGroupByMonth(HttpServletRequest request){
+        Response response = new Response();
+
+        try {
+            List<LedgerMath> resultLedgers = ledgerService.getLedgersSumGroupByMonth(request);
+            
+            response.setResponse("success");
+            response.setMessage("success get ledgers sum group by month");
+            response.setData(resultLedgers);
+        } catch (Exception e) {
+            response.setResponse("fail");
+            response.setMessage("fail get ledgers sum group by month");
+            response.setData(null);
+        }
+        return response;
+    }
+
+    @GetMapping("/items/groupbydate")
+    public Response getLedgersSumGroupByDate(HttpServletRequest request){
+        Response response = new Response();
+
+        try {
+            List<LedgerMath> resultLedgers = ledgerService.getLedgersSumGroupByDate(request);
+            
+            response.setResponse("success");
+            response.setMessage("success get ledgers sum group by date");
+            response.setData(resultLedgers);
+        } catch (Exception e) {
+            response.setResponse("fail");
+            response.setMessage("fail get ledgers sum group by date");
             response.setData(null);
         }
         return response;
