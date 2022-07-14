@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dragonb.bearfamily.backend.model.JwtToken;
 import dragonb.bearfamily.backend.model.Response;
 import dragonb.bearfamily.backend.model.User;
+import dragonb.bearfamily.backend.model.UserDTO;
 import dragonb.bearfamily.backend.service.LoginService;
 
 @RestController
@@ -20,11 +21,11 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping("/regist")
-    public Response signup(@RequestBody User user) {
+    public Response signup(@RequestBody UserDTO userDTO) {
         Response response = new Response();
         
         try {
-            loginService.regist(user);
+            loginService.regist(userDTO);
             
             response.setResponse("success");
             response.setMessage("success Regist");

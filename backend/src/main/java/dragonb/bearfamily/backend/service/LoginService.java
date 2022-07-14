@@ -16,6 +16,7 @@ import dragonb.bearfamily.backend.configuration.JwtTokenUtil;
 import dragonb.bearfamily.backend.model.JwtToken;
 import dragonb.bearfamily.backend.model.Refreshtoken;
 import dragonb.bearfamily.backend.model.User;
+import dragonb.bearfamily.backend.model.UserDTO;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
 import dragonb.bearfamily.backend.repository.RefreshtokenRepository;
 import dragonb.bearfamily.backend.repository.UserRepository;
@@ -43,14 +44,19 @@ public class LoginService {
     @Autowired
     private RefreshtokenRepository refreshtokenRepository;
 
-    public void regist(User user) throws Exception{
-        if(!emailauthRepository.isChecked(user.getEmail())){
+    public void regist(UserDTO userDTO) throws Exception{
+        if(!emailauthRepository.isChecked(userDTO.getEmail())){
             throw new Exception();
         }
 
-        emailauthRepository.deleteByEmail(user.getEmail());
+        emailauthRepository.deleteByEmail(userDTO.getEmail());
         
-        jwtUserService.save(user);
+        jwtUserService.save(User.builder()
+        .identity(userDTO.getIdentity())
+        .password(userDTO.getPassword())
+        .email(userDTO.getEmail())
+        .name(userDTO.getName())
+        .build());
     }
 
     public Optional<User> checkId(String identity) throws Exception{
