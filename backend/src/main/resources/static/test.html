@@ -107,7 +107,7 @@
                 for(var i = 0 ; i < datas.length ; i++){
                     console.log(datas[i]);
 
-                    $('#termsList').append('<div><input type="checkbox" data-id="{0}" name="{1}"> <label for="{1}">{1} ({2}) </label><button class="showTermsContent" data-id="{0}">show</button></div>'.format(datas[i].id, datas[i].title, datas[i].require == true ? "required" : "option"));
+                    $('#termsList').append('<div><input type="checkbox" data-id="{0}" name="{1}"> <label for="{1}">{1} ({2}) </label><button type="button" class="showTermsContent" data-id="{0}">show</button></div>'.format(datas[i].id, datas[i].title, datas[i].require == true ? "required" : "option"));
                     $('#termsList').append('<div class="termsContentDiv" style="display: none;" data-id="{0}"><p>{1}</p></div>'.format(datas[i].id, datas[i].content));
                 }
             },
