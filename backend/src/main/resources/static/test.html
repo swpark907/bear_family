@@ -19,12 +19,11 @@
         <input id="registEmail" type="text" name="email" placeholder="email">
         <button type="button" id="idCheck">IdCheck</button>
         <button type="button" id="sendMail">SendMail</button>
-
-        <div id="termsList" style="margin: 1em;">
-        </div>
-
         <input type="submit" value="regist">
     </form>
+
+    <div id="termsList" style="margin: 1em;">
+    </div>
 
     <form id="emailForm" action="/checkEmailauth" method="post">
         <input id="emailEmail" type="hidden" name="email">
@@ -105,7 +104,7 @@
                 var datas = json.data;
 
                 for(var i = 0 ; i < datas.length ; i++){
-                    $('#termsList').append('<div><input type="checkbox" data-id="{0}" name="{1}"> <label for="{1}">{1} ({2}) </label><button type="button" class="showTermsContent" data-id="{0}">show</button></div>'.format(datas[i].id, datas[i].title, datas[i].require == true ? "required" : "option"));
+                    $('#termsList').append('<div><input type="checkbox" id="{0}" data-id={3} name="terms" value="{0}"> <label for="{0}">{1} ({2}) </label><button type="button" class="showTermsContent" data-id="{0}">show</button></div>'.format(datas[i].id, datas[i].title, datas[i].required == true ? "required" : "option", datas[i].required));
                     $('#termsList').append('<div class="termsContentDiv" style="display: none;" data-id="{0}"><p>{1}</p></div>'.format(datas[i].id, datas[i].content));
                 }
             },
@@ -117,10 +116,26 @@
         $('#registForm').on('submit', function (e) {
             e.preventDefault();
 
+            var termsList = [];
+            
+            inputTermsList = $('input:checkbox[name="terms"]');
+            
+            for(var i = 0 ; i < inputTermsList.length ; i++){
+                var userTermsData = {
+                    id: $($('input:checkbox[name="terms"]')[i]).attr('id'),
+                    required: $($('input:checkbox[name="terms"]')[i]).attr('data-id'),
+                    checked: $($('input:checkbox[name="terms"]')[i]).is(':checked')
+                }
+                termsList.push(userTermsData);
+            }
+
+            var formData = dataFormToJson('#registForm');
+            formData["termsList"] = termsList;
+
             $.ajax({
                 type: 'post',
                 url: '/regist',
-                data: JSON.stringify(dataFormToJson('#registForm')),
+                data: JSON.stringify(formData),
                 contentType: "application/json",
                 complete: function (json) {
                     console.log(json.responseJSON);
@@ -337,7 +352,7 @@
         var termsObject = {
             title: "testTitle",
             content: "testContent",
-            require: true
+            required: true
         }
 
         $('#terms > #getTerms').on("click", function () {
@@ -355,7 +370,7 @@
             targetUrl = '/api/terms/item';
             termsObject["id"] = 5;
             termsObject["content"] = "testContentPut";
-            termsObject["require"] = false;
+            termsObject["required"] = false;
             callTerms(targetUrl, 'put', termsObject);
         });
 

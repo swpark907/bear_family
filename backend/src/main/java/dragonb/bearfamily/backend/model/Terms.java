@@ -1,5 +1,8 @@
 package dragonb.bearfamily.backend.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -18,7 +21,7 @@ public class Terms {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "terms_id")
-    private int id;
+    private Long id;
 
     @Column(name = "terms_title")
     private String title;
@@ -26,6 +29,8 @@ public class Terms {
     @Column(name = "terms_content")
     private String content;
 
-    @Column(name = "terms_require")
-    private boolean require;
+    @Column(name = "terms_required")
+    private boolean required;
+
+    //private boolean checked;
 }

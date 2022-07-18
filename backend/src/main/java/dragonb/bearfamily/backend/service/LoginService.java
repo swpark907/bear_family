@@ -1,6 +1,7 @@
 package dragonb.bearfamily.backend.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,14 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import dragonb.bearfamily.backend.configuration.JwtTokenUtil;
 import dragonb.bearfamily.backend.model.JwtToken;
 import dragonb.bearfamily.backend.model.Refreshtoken;
+import dragonb.bearfamily.backend.model.TermsDTO;
 import dragonb.bearfamily.backend.model.User;
 import dragonb.bearfamily.backend.model.UserDTO;
+import dragonb.bearfamily.backend.model.UserTerms;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
 import dragonb.bearfamily.backend.repository.RefreshtokenRepository;
 import dragonb.bearfamily.backend.repository.UserRepository;
+import dragonb.bearfamily.backend.repository.UserTermsRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -44,6 +48,9 @@ public class LoginService {
     @Autowired
     private RefreshtokenRepository refreshtokenRepository;
 
+    @Autowired
+    private UserTermsRepository userTermsRepository;
+
     public void regist(UserDTO userDTO) throws Exception{
         if(!emailauthRepository.isChecked(userDTO.getEmail())){
             throw new Exception();
@@ -51,12 +58,30 @@ public class LoginService {
 
         emailauthRepository.deleteByEmail(userDTO.getEmail());
         
-        jwtUserService.save(User.builder()
+        List<TermsDTO> termsList = userDTO.getTermsList();
+
+        for(int i = 0 ; i < termsList.size() ; i++){
+            if(termsList.get(i).isRequired() == true){
+                if(termsList.get(i).isChecked() == false){
+                    throw new Exception();
+                }
+            }
+        }
+        
+        Long userId = jwtUserService.save(User.builder()
         .identity(userDTO.getIdentity())
         .password(userDTO.getPassword())
         .email(userDTO.getEmail())
         .name(userDTO.getName())
         .build());
+
+        for(int i = 0 ; i < termsList.size() ; i++){
+            userTermsRepository.save(UserTerms.builder()
+            .userId(userId)
+            .termsId(termsList.get(i).getId())   
+            .checked(termsList.get(i).isChecked())
+            .build());
+        }
     }
 
     public Optional<User> checkId(String identity) throws Exception{
