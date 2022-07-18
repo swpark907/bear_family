@@ -43,23 +43,15 @@ public class LoginController {
         Response response = new Response();
 
         try {
-            if(identity == "" || identity == null){
-                response.setMessage("identity is null");
-                throw new Exception();
-            }
-            else{
-                Optional<User> user = loginService.checkId(identity);
-                if(user.isPresent()){
-                    response.setMessage("already exist");
-                    throw new Exception();
-                }
-            }
+            loginService.checkId(identity);
+
             response.setResponse("success");
             response.setMessage("available");
             response.setData(identity);
         } catch (Exception e) {
             response.setData(identity);
             response.setResponse("fail");
+            response.setMessage(e.getMessage());
         }
         return response;
     }

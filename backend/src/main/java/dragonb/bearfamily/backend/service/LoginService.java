@@ -53,7 +53,7 @@ public class LoginService {
 
     public void regist(UserDTO userDTO) throws Exception{
         if(!emailauthRepository.isChecked(userDTO.getEmail())){
-            throw new Exception();
+            throw new Exception("check emailauth error");
         }
 
         emailauthRepository.deleteByEmail(userDTO.getEmail());
@@ -84,9 +84,16 @@ public class LoginService {
         }
     }
 
-    public Optional<User> checkId(String identity) throws Exception{
-        //jwtUserService.loadUserByUsername(identity);
-        return userRepository.findByIdentity(identity);
+    public void checkId(String identity) throws Exception{
+        if(identity == "" || identity == null){
+            throw new Exception("identity is null");
+        }
+        else{
+            Optional<User> user = userRepository.findByIdentity(identity);
+            if(user.isPresent()){
+                throw new Exception("already exist");
+            }
+        }
     }
 
     public JwtToken login(User user) throws Exception{
