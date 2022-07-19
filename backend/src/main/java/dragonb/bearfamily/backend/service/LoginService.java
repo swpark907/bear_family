@@ -14,12 +14,15 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import dragonb.bearfamily.backend.configuration.JwtTokenUtil;
-import dragonb.bearfamily.backend.model.JwtToken;
-import dragonb.bearfamily.backend.model.Refreshtoken;
 import dragonb.bearfamily.backend.model.TermsDTO;
-import dragonb.bearfamily.backend.model.User;
-import dragonb.bearfamily.backend.model.UserDTO;
 import dragonb.bearfamily.backend.model.UserTerms;
+import dragonb.bearfamily.backend.model.common.JwtToken;
+import dragonb.bearfamily.backend.model.common.Refreshtoken;
+import dragonb.bearfamily.backend.model.login.CheckIdDTO;
+import dragonb.bearfamily.backend.model.login.LoginDTO;
+import dragonb.bearfamily.backend.model.login.RefreshDTO;
+import dragonb.bearfamily.backend.model.login.RegistDTO;
+import dragonb.bearfamily.backend.model.login.User;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
 import dragonb.bearfamily.backend.repository.RefreshtokenRepository;
 import dragonb.bearfamily.backend.repository.UserRepository;
@@ -51,14 +54,14 @@ public class LoginService {
     @Autowired
     private UserTermsRepository userTermsRepository;
 
-    public void regist(UserDTO userDTO) throws Exception{
-        if(!emailauthRepository.isChecked(userDTO.getEmail())){
+    public void regist(RegistDTO registDTO) throws Exception{
+        if(!emailauthRepository.isChecked(registDTO.getEmail())){
             throw new Exception("check emailauth error");
         }
 
-        emailauthRepository.deleteByEmail(userDTO.getEmail());
+        emailauthRepository.deleteByEmail(registDTO.getEmail());
         
-        List<TermsDTO> termsList = userDTO.getTermsList();
+        List<TermsDTO> termsList = registDTO.getTermsList();
 
         for(int i = 0 ; i < termsList.size() ; i++){
             if(termsList.get(i).isRequired() == true){
@@ -69,10 +72,10 @@ public class LoginService {
         }
         
         Long userId = jwtUserService.save(User.builder()
-        .identity(userDTO.getIdentity())
-        .password(userDTO.getPassword())
-        .email(userDTO.getEmail())
-        .name(userDTO.getName())
+        .identity(registDTO.getIdentity())
+        .password(registDTO.getPassword())
+        .email(registDTO.getEmail())
+        .name(registDTO.getName())
         .build());
 
         for(int i = 0 ; i < termsList.size() ; i++){
@@ -84,7 +87,8 @@ public class LoginService {
         }
     }
 
-    public void checkId(String identity) throws Exception{
+    public void checkId(CheckIdDTO checkIdDTO) throws Exception{
+        String identity = checkIdDTO.getIdentity();
         if(identity == "" || identity == null){
             throw new Exception("identity is null");
         }
@@ -96,13 +100,13 @@ public class LoginService {
         }
     }
 
-    public JwtToken login(User user) throws Exception{
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getIdentity(), user.getPassword()));
+    public JwtToken login(LoginDTO loginDTO) throws Exception{
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getIdentity(), loginDTO.getPassword()));
             final UserDetails userDetails = jwtUserService
-            .loadUserByUsername(user.getIdentity());
+            .loadUserByUsername(loginDTO.getIdentity());
             final JwtToken token = jwtTokenUtil.generateToken(userDetails);
             
-            Optional<Refreshtoken> refreshtokenByUserIdentity = refreshtokenRepository.findByUserIdentity(user.getIdentity());
+            Optional<Refreshtoken> refreshtokenByUserIdentity = refreshtokenRepository.findByUserIdentity(loginDTO.getIdentity());
             Refreshtoken refreshtoken;
             DecodedJWT decodedJWT = JWT.decode(token.getRefreshToken());
             String uuid = decodedJWT.getClaim("uuid").toString().substring(1, 37);
@@ -114,14 +118,14 @@ public class LoginService {
             }
             else{
                 refreshtoken = Refreshtoken.builder()
-                .userIdentity(user.getIdentity())
+                .userIdentity(loginDTO.getIdentity())
                 .token(token.getRefreshToken())
                 .uuid(uuid)
                 .build();
             }
             refreshtokenRepository.save(refreshtoken);
 
-            User loginUser = userRepository.findByIdentity(user.getIdentity()).get();
+            User loginUser = userRepository.findByIdentity(loginDTO.getIdentity()).get();
             loginUser.setPassword(null);
 
             token.setUser(loginUser);
@@ -132,15 +136,17 @@ public class LoginService {
             return token;
     }
 
-    public String refresh(JwtToken jwtToken) throws Exception{
-        DecodedJWT decodedJWT = JWT.decode(jwtToken.getRefreshToken());
+    public String refresh(RefreshDTO refreshDTO) throws Exception{
+        //DecodedJWT decodedJWT = JWT.decode(jwtToken.getRefreshToken());
+        String refreshToken = refreshDTO.getRefreshToken();
+        DecodedJWT decodedJWT = JWT.decode(refreshToken);
         String uuid = decodedJWT.getClaim("uuid").toString().substring(1, 37);
 
-        Optional<Refreshtoken> refreshtoken = refreshtokenRepository.findByTokenAndUuid(jwtToken.getRefreshToken(), uuid);
+        Optional<Refreshtoken> refreshtoken = refreshtokenRepository.findByTokenAndUuid(refreshToken, uuid);
         if(!refreshtoken.isPresent()){
             throw new Exception();
         }
-        String newAccessToken = jwtTokenUtil.validateRefreshToken(jwtToken);
+        String newAccessToken = jwtTokenUtil.validateRefreshToken(refreshToken);
         if(newAccessToken == null){
             throw new Exception();
         }

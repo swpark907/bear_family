@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import dragonb.bearfamily.backend.model.Ledger;
-import dragonb.bearfamily.backend.model.LedgerMath;
+import dragonb.bearfamily.backend.model.ledger.Ledger;
+import dragonb.bearfamily.backend.model.ledger.LedgerMath;
 
 public interface LedgerRepository extends JpaRepository<Ledger, Long>{
     @Query("select l from Ledger l join fetch l.category join fetch l.kind where l.id = :id and l.userIdentity = :userIdentity")
@@ -20,15 +20,15 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long>{
     List<Ledger> findAllByUserIdentity(String userIdentity);
 
     //@Query("select to_char(l.date, 'YYYY-MM') as date, sum(l.price) as price from Ledger l where l.userIdentity = :userIdentity group by to_char(l.date, 'YYYY-MM') order by date asc")
-    @Query("select new dragonb.bearfamily.backend.model.LedgerMath(to_char(l.date, 'YYYY-MM') as date, sum(l.price)) " +
+    @Query("select new dragonb.bearfamily.backend.model.ledger.LedgerMath(to_char(l.date, 'YYYY-MM') as date, sum(l.price)) " +
     "from Ledger l where l.userIdentity = :userIdentity group by to_char(l.date, 'YYYY-MM') order by date asc")
     List<LedgerMath> findLedgersSumGroupByMonth(@Param("userIdentity") String userIdentity);
 
-    @Query("select new dragonb.bearfamily.backend.model.LedgerMath(to_char(l.date, 'YYYY-MM-DD') as date, sum(l.price)) " +
+    @Query("select new dragonb.bearfamily.backend.model.ledger.LedgerMath(to_char(l.date, 'YYYY-MM-DD') as date, sum(l.price)) " +
     "from Ledger l where l.userIdentity = :userIdentity group by to_char(l.date, 'YYYY-MM-DD') order by date asc")
     List<LedgerMath> findLedgersSumGroupByDate(@Param("userIdentity") String userIdentity);
 
-    @Query("select new dragonb.bearfamily.backend.model.LedgerMath(to_char(l.date, 'YYYY') as date, sum(l.price)) " +
+    @Query("select new dragonb.bearfamily.backend.model.ledger.LedgerMath(to_char(l.date, 'YYYY') as date, sum(l.price)) " +
     "from Ledger l where l.userIdentity = :userIdentity group by to_char(l.date, 'YYYY') order by date asc")
     List<LedgerMath> findLedgersSumGroupByYear(@Param("userIdentity") String userIdentity);
 

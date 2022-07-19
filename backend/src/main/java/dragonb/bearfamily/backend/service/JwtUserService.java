@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dragonb.bearfamily.backend.model.User;
+import dragonb.bearfamily.backend.model.login.User;
 import dragonb.bearfamily.backend.repository.UserRepository;
 
 // DB에서 UserDetail을 얻어와 AuthenticationManager에게 제공하는 역할 수행

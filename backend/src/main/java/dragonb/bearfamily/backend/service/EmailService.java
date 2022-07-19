@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import dragonb.bearfamily.backend.model.Emailauth;
+import dragonb.bearfamily.backend.model.email.CheckEmailAuthDTO;
+import dragonb.bearfamily.backend.model.email.Emailauth;
+import dragonb.bearfamily.backend.model.email.SendEmailAuthDTO;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
  
 @Service
@@ -28,7 +30,8 @@ public class EmailService {
     @Autowired
     private EmailauthRepository emailauthRepository;
 
-    public void sendMessage(String to)throws Exception{
+    public void sendMessage(SendEmailAuthDTO sendEmailAuthDTO)throws Exception{
+        String to = sendEmailAuthDTO.getTo();
         String OTP = createKey();
 
         String mailSubject = "회원가입 이메일 인증";
@@ -66,8 +69,8 @@ public class EmailService {
         return key.toString();
     }
 
-    public void checkEmailauth(Emailauth emailauth) throws Exception{
-        boolean result = emailauthRepository.isValid(emailauth);
+    public void checkEmailauth(CheckEmailAuthDTO CheckEmailAuthDTO) throws Exception{
+        boolean result = emailauthRepository.isValid(CheckEmailAuthDTO);
         if(!result){
             throw new Exception();
         }

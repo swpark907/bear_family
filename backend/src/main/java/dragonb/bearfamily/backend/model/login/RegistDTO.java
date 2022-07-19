@@ -1,14 +1,15 @@
-package dragonb.bearfamily.backend.model;
+package dragonb.bearfamily.backend.model.login;
 
 import java.util.List;
 
-import lombok.*;
+import dragonb.bearfamily.backend.model.TermsDTO;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO {
-	// User
-	private String id;
+public class RegistDTO {
+    // User
 	private String identity;
 	private String password;
 	private String name;

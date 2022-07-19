@@ -1,4 +1,4 @@
-package dragonb.bearfamily.backend.model;
+package dragonb.bearfamily.backend.model.common;
 
 import lombok.*;
 

@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import dragonb.bearfamily.backend.model.Emailauth;
+import dragonb.bearfamily.backend.model.email.CheckEmailAuthDTO;
+import dragonb.bearfamily.backend.model.email.Emailauth;
 
 public interface EmailauthRepository extends JpaRepository<Emailauth, String> {
 
@@ -18,13 +19,13 @@ public interface EmailauthRepository extends JpaRepository<Emailauth, String> {
     int existValidToken(@Param("threshold") LocalDateTime threshold,
     @Param("email") String email, @Param("token") String token);
 
-    default boolean isValid(Emailauth emailauth) {
+    default boolean isValid(CheckEmailAuthDTO checkEmailAuthDTO) {
         long minutesGap = 3;
         
-        updateEmailauthChecked(emailauth.getEmail(), emailauth.getToken());
+        updateEmailauthChecked(checkEmailAuthDTO.getEmail(), checkEmailAuthDTO.getToken());
 
         return existValidToken(LocalDateTime.now().minusMinutes(minutesGap), 
-        emailauth.getEmail(), emailauth.getToken()) > 0;
+        checkEmailAuthDTO.getEmail(), checkEmailAuthDTO.getToken()) > 0;
     }
 
     @Transactional

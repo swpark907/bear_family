@@ -6,19 +6,24 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import dragonb.bearfamily.backend.model.Ledger;
-import dragonb.bearfamily.backend.model.LedgerMath;
-import dragonb.bearfamily.backend.model.LedgerDTO;
-import dragonb.bearfamily.backend.model.Response;
+
+import dragonb.bearfamily.backend.model.common.Response;
+import dragonb.bearfamily.backend.model.ledger.Ledger;
+import dragonb.bearfamily.backend.model.ledger.LedgerDTO;
+import dragonb.bearfamily.backend.model.ledger.LedgerMath;
 import dragonb.bearfamily.backend.service.LedgerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/ledger")
+@Tag(name = "Ledger Controller", description = "ledger api")
 public class LedgerController {
 
     @Autowired
     LedgerService ledgerService;
 
+    @Operation(summary = "ledger get method", description = "get ledger by ledgerDTO and login information in httpservletrequest")
     @GetMapping("/item")
     public Response getLedger(@ModelAttribute LedgerDTO ledgerDTO, HttpServletRequest request){
         Response response = new Response();

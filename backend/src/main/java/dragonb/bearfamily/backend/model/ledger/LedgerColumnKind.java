@@ -1,22 +1,22 @@
-package dragonb.bearfamily.backend.model;
+package dragonb.bearfamily.backend.model.ledger;
 
 import javax.persistence.*;
 
 import lombok.*;
 
 @Entity
-@Table(name="ledger_column_payment", schema = "public")
+@Table(name="ledger_column_kind", schema = "public")
 @Getter @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LedgerColumnPayment {
+public class LedgerColumnKind {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ledger_column_payment_id")
+    @Column(name = "ledger_column_kind_id")
     private int id;
 
-    @Column(name = "ledger_column_payment_name")
+    @Column(name = "ledger_column_kind_name")
     private String name;
 }

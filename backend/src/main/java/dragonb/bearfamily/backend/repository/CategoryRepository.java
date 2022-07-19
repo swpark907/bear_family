@@ -1,17 +1,14 @@
 package dragonb.bearfamily.backend.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import dragonb.bearfamily.backend.model.Category;
+import dragonb.bearfamily.backend.model.category.Category;
 
-public interface CategoryRepository extends JpaRepository<Category, Long>{
-    Optional<Category> findByIdAndUserIdentityOrUserIdentityIsNull(Long id, String userIdentity);
-
+public interface CategoryRepository extends JpaRepository<Category, Long>{;
     List<Category> findAllByUserIdentityOrUserIdentityIsNull(String userIdentity);
 
     @Transactional

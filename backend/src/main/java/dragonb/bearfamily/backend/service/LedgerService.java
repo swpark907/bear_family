@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dragonb.bearfamily.backend.model.Category;
-import dragonb.bearfamily.backend.model.Ledger;
-import dragonb.bearfamily.backend.model.LedgerMath;
-import dragonb.bearfamily.backend.model.LedgerColumnKind;
-import dragonb.bearfamily.backend.model.LedgerColumnPayment;
-import dragonb.bearfamily.backend.model.LedgerDTO;
+import dragonb.bearfamily.backend.model.category.Category;
+import dragonb.bearfamily.backend.model.ledger.Ledger;
+import dragonb.bearfamily.backend.model.ledger.LedgerColumnKind;
+import dragonb.bearfamily.backend.model.ledger.LedgerColumnPayment;
+import dragonb.bearfamily.backend.model.ledger.LedgerDTO;
+import dragonb.bearfamily.backend.model.ledger.LedgerMath;
 import dragonb.bearfamily.backend.repository.LedgerRepository;
 
 @Service

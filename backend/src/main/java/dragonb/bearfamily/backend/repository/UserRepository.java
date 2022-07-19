@@ -2,7 +2,7 @@ package dragonb.bearfamily.backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import dragonb.bearfamily.backend.model.User;
+import dragonb.bearfamily.backend.model.login.User;
 
 import java.util.Optional;
 

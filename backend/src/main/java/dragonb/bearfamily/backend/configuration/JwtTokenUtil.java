@@ -3,9 +3,7 @@ package dragonb.bearfamily.backend.configuration;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -14,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import dragonb.bearfamily.backend.model.JwtToken;
+import dragonb.bearfamily.backend.model.common.JwtToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -136,9 +134,9 @@ public class JwtTokenUtil implements Serializable{
         return JwtToken.builder().accessToken(accessToken).refreshToken(refreshToken).key(userEmail).build();
     }
 
-    public String validateRefreshToken(JwtToken jwtToken){
+    public String validateRefreshToken(String refreshToken){
         // refresh 객체에서 refreshToken 추출
-        String refreshToken = jwtToken.getRefreshToken();
+        //String refreshToken = jwtToken.getRefreshToken();
 
         try {
             // 검증

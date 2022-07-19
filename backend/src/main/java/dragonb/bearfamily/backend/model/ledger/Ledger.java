@@ -1,4 +1,4 @@
-package dragonb.bearfamily.backend.model;
+package dragonb.bearfamily.backend.model.ledger;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import dragonb.bearfamily.backend.model.category.Category;
 import lombok.*;
 
 @Entity

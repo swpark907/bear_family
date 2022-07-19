@@ -1,7 +1,8 @@
-package dragonb.bearfamily.backend.model;
+package dragonb.bearfamily.backend.model.common;
 
 import java.util.Date;
 
+import dragonb.bearfamily.backend.model.login.User;
 import lombok.*;
 
 @Data
