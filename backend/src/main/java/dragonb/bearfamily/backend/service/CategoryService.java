@@ -51,7 +51,7 @@ public class CategoryService {
         .build());
     }
 
-    public Category putCategory(CategoryDTO categoryDTO, HttpServletRequest request, Long id) throws Exception{
+    public Category putCategory(CategoryDTO categoryDTO, Long id, HttpServletRequest request) throws Exception{
         userIdentity = CommonService.getUserIdentity(request);
         Optional<Category> resultCategory = categoryRepository.findById(id);
         if(!resultCategory.isPresent()){

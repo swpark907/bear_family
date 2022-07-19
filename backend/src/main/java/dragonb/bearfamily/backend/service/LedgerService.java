@@ -25,9 +25,8 @@ public class LedgerService {
     
     private String userIdentity;
 
-    public Ledger getLedger(HttpServletRequest request, LedgerDTO ledgerDTO) throws Exception{
+    public Ledger getLedger(Long id, HttpServletRequest request) throws Exception{
         userIdentity = CommonService.getUserIdentity(request);
-        long id = ledgerDTO.getId();
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
             throw new Exception();
@@ -37,23 +36,22 @@ public class LedgerService {
         }
     }
 
-    public List<Ledger> getLedgers(HttpServletRequest request, LedgerDTO ledgerDTO) throws Exception{
+    public List<Ledger> getLedgers(HttpServletRequest request) throws Exception{
         userIdentity = CommonService.getUserIdentity(request);
         return ledgerRepository.findLedgersFetch(userIdentity);
     }
 
-    public Ledger postLedger(HttpServletRequest request, LedgerDTO ledgerDTO){
+    public Ledger postLedger(LedgerDTO ledgerDTO, HttpServletRequest request){
         userIdentity = CommonService.getUserIdentity(request);
-        ledgerDTO.setUserIdentity(userIdentity);
 
-        Ledger test = ledgerByEx(ledgerDTO);
+        Ledger saveLedger = ledgerByEx(ledgerDTO);
+        saveLedger.setUserIdentity(userIdentity);
 
-        return ledgerRepository.save(test);
+        return ledgerRepository.save(saveLedger);
     }
 
-    public Ledger putLedger(HttpServletRequest request, LedgerDTO ledgerDTO) throws Exception{
+    public Ledger putLedger(LedgerDTO ledgerDTO, Long id, HttpServletRequest request) throws Exception{
         userIdentity = CommonService.getUserIdentity(request);
-        long id = ledgerDTO.getId();
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
             throw new Exception();
@@ -74,14 +72,17 @@ public class LedgerService {
         return ledgerRepository.save(saveLedger);
     }
 
-    public void deleteLedger(HttpServletRequest request, LedgerDTO ledgerDTO) throws Exception{
+    public void deleteLedger(Long id, HttpServletRequest request) throws Exception{
         userIdentity = CommonService.getUserIdentity(request);
-        long id = ledgerDTO.getId();
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
             throw new Exception();
         }
         ledgerRepository.delete(resultLedger.get());
+
+        if(ledgerRepository.findLedgerFetch(id, userIdentity).isPresent()){
+            throw new Exception();
+        }
     }
 
     private Ledger ledgerByEx(LedgerDTO ledgerDTO){

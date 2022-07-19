@@ -2,7 +2,7 @@ package dragonb.bearfamily.backend.model.login;
 
 import java.util.List;
 
-import dragonb.bearfamily.backend.model.TermsDTO;
+import dragonb.bearfamily.backend.model.terms.TermsDTO;
 import lombok.Getter;
 import lombok.Setter;
 

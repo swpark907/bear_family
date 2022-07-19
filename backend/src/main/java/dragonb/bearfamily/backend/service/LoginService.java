@@ -14,8 +14,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import dragonb.bearfamily.backend.configuration.JwtTokenUtil;
-import dragonb.bearfamily.backend.model.TermsDTO;
-import dragonb.bearfamily.backend.model.UserTerms;
 import dragonb.bearfamily.backend.model.common.JwtToken;
 import dragonb.bearfamily.backend.model.common.Refreshtoken;
 import dragonb.bearfamily.backend.model.login.CheckIdDTO;
@@ -23,6 +21,8 @@ import dragonb.bearfamily.backend.model.login.LoginDTO;
 import dragonb.bearfamily.backend.model.login.RefreshDTO;
 import dragonb.bearfamily.backend.model.login.RegistDTO;
 import dragonb.bearfamily.backend.model.login.User;
+import dragonb.bearfamily.backend.model.terms.TermsDTO;
+import dragonb.bearfamily.backend.model.terms.UserTerms;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
 import dragonb.bearfamily.backend.repository.RefreshtokenRepository;
 import dragonb.bearfamily.backend.repository.UserRepository;

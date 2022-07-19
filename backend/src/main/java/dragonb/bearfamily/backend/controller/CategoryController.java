@@ -89,11 +89,11 @@ public class CategoryController {
 
     @Operation(summary = "category put method", description = "카테고리 한 건의 정보를 수정합니다.")
     @PutMapping("/item/{id}")
-    public Response putCategory(@RequestBody CategoryDTO categoryDTO, HttpServletRequest request, @PathVariable Long id){
+    public Response putCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id, HttpServletRequest request){
         Response response = new Response();
         
         try {
-            Category resultCategory = categoryService.putCategory(categoryDTO, request, id);
+            Category resultCategory = categoryService.putCategory(categoryDTO, id, request);
 
             response.setResponse("success");
             response.setMessage("success put category");

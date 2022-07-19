@@ -7,8 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 public class LedgerDTO {
-    private Long id;
-    private String userIdentity;
     private Long categoryId;
     private String title;
     private Long price;
