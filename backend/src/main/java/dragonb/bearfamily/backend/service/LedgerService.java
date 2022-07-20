@@ -129,7 +129,7 @@ public class LedgerService {
         if(ledgerDate.getYear() == null || ledgerDate.getYear().toString() == ""){
             year = "";
         }
-        else if(ledgerDate.getYear() >= 1000 && ledgerDate.getYear() <= 9999){
+        else if(ledgerDate.getYear() > 999 && ledgerDate.getYear() < 10000){
             year = ledgerDate.getYear().toString();
         }
         else{
@@ -139,7 +139,10 @@ public class LedgerService {
         if(ledgerDate.getMonth() == null || ledgerDate.getMonth().toString() == ""){
             month = "";
         }
-        else if(ledgerDate.getMonth() >= 1 && ledgerDate.getMonth() <= 12){
+        else if(ledgerDate.getMonth() > 0 && ledgerDate.getMonth() < 10){
+            month = "0" + String.valueOf(ledgerDate.getMonth());
+        }
+        else if(ledgerDate.getMonth() >= 10 && ledgerDate.getMonth() <= 12){
             month = String.valueOf(ledgerDate.getMonth());
         }
         else{
@@ -149,7 +152,10 @@ public class LedgerService {
         if(ledgerDate.getDate() == null || ledgerDate.getDate().toString() == ""){
             date = "";
         }
-        else if(ledgerDate.getDate() >= 1 && ledgerDate.getDate() <= 31){
+        else if(ledgerDate.getDate() > 0 && ledgerDate.getDate() < 10){
+            date = "0" + String.valueOf(ledgerDate.getDate());
+        }
+        else if(ledgerDate.getDate() >= 10 && ledgerDate.getDate() <= 31){
             date = String.valueOf(ledgerDate.getDate());
         }
         else{
