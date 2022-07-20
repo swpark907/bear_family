@@ -15,7 +15,7 @@ import dragonb.bearfamily.backend.model.ledger.LedgerColumnKind;
 import dragonb.bearfamily.backend.model.ledger.LedgerColumnPayment;
 import dragonb.bearfamily.backend.model.ledger.LedgerDTO;
 import dragonb.bearfamily.backend.model.ledger.LedgerMath;
-import dragonb.bearfamily.backend.repository.LedgerRepository;
+import dragonb.bearfamily.backend.repository.LedgerRepository.LedgerRepository;
 
 @Service
 public class LedgerService {

@@ -1,4 +1,4 @@
-package dragonb.bearfamily.backend.controller.Ledger;
+package dragonb.bearfamily.backend.controller.LedgerController;
 
 import java.util.List;
 

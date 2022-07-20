@@ -2,6 +2,8 @@ package dragonb.bearfamily.backend.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,13 +67,14 @@ public class TermsController {
         return response;
     }
 
-    @Operation(summary = "terms post method", description = "약관 한 건의 정보를 등록합니다.")
+    @Operation(summary = "terms post method", description = "약관 한 건의 정보를 등록합니다."
+    +"<br/> 약관을 관리하려면 관리자 권한이 필요합니다.")
     @PostMapping("/item")
-    public Response postTerms(@RequestBody TermsDTO termsDTO){
+    public Response postTerms(@RequestBody TermsDTO termsDTO, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            Terms resultTerms = termsService.postTerms(termsDTO);
+            Terms resultTerms = termsService.postTerms(termsDTO, request);
 
             response.setResponse("success");
             response.setMessage("success post terms");
@@ -84,13 +87,14 @@ public class TermsController {
         return response;
     }
 
-    @Operation(summary = "terms put method", description = "약관 한 건의 정보를 수정합니다.")
+    @Operation(summary = "terms put method", description = "약관 한 건의 정보를 수정합니다."
+    +"<br/> 약관을 관리하려면 관리자 권한이 필요합니다.")
     @PutMapping("/item/{id}")
-    public Response putTerms(@RequestBody TermsDTO termsDTO, @PathVariable Long id){
+    public Response putTerms(@RequestBody TermsDTO termsDTO, @PathVariable Long id, HttpServletRequest request){
         Response response = new Response();
         
         try {
-            Terms resultTerms = termsService.putTerms(termsDTO, id);
+            Terms resultTerms = termsService.putTerms(termsDTO, id, request);
 
             response.setResponse("success");
             response.setMessage("success put terms");
@@ -103,13 +107,14 @@ public class TermsController {
         return response;
     }
     
-    @Operation(summary = "terms delete method", description = "약관 한 건의 정보를 삭제합니다.")
+    @Operation(summary = "terms delete method", description = "약관 한 건의 정보를 삭제합니다."
+    +"<br/> 약관을 관리하려면 관리자 권한이 필요합니다.")
     @DeleteMapping("/item/{id}")
-    public Response deleteTerms(@PathVariable Long id){
+    public Response deleteTerms(@PathVariable Long id, HttpServletRequest request){
         Response response = new Response();
 
         try {
-            termsService.deleteTerms(id);
+            termsService.deleteTerms(id, request);
 
             response.setResponse("success");
             response.setMessage("success delete terms");

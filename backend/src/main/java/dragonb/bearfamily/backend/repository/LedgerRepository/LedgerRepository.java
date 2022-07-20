@@ -1,4 +1,4 @@
-package dragonb.bearfamily.backend.repository;
+package dragonb.bearfamily.backend.repository.LedgerRepository;
 
 import java.util.List;
 import java.util.Optional;
