@@ -1,4 +1,4 @@
-package dragonb.bearfamily.backend.controller;
+package dragonb.bearfamily.backend.interfaces;
 
 import java.lang.annotation.*;
 
