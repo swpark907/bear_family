@@ -79,7 +79,7 @@ public class LedgerController {
         return response;
     }
 
-    @Operation(summary = "ledger post method", description = "장부 한 건의 정보를 수정합니다.")
+    @Operation(summary = "ledger put method", description = "장부 한 건의 정보를 수정합니다.")
     @PutMapping("/item/{id}")
     public Response putLedger(@RequestBody LedgerDTO ledgerDTO, @PathVariable Long id, HttpServletRequest request){
         Response response = new Response();
@@ -98,7 +98,7 @@ public class LedgerController {
         return response;
     }
 
-    @Operation(summary = "ledger post method", description = "장부 한 건의 정보를 삭제합니다.")
+    @Operation(summary = "ledger delete method", description = "장부 한 건의 정보를 삭제합니다.")
     @DeleteMapping("/item/{id}")
     public Response deleteLedger(@PathVariable Long id, HttpServletRequest request){
         Response response = new Response();

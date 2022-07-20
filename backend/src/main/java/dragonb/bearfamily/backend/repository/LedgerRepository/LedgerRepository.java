@@ -11,10 +11,10 @@ import dragonb.bearfamily.backend.model.ledger.Ledger;
 import dragonb.bearfamily.backend.model.ledger.LedgerMath;
 
 public interface LedgerRepository extends JpaRepository<Ledger, Long>{
-    @Query("select l from Ledger l join fetch l.category join fetch l.kind where l.id = :id and l.userIdentity = :userIdentity")
+    @Query("select l from Ledger l join fetch l.category join fetch l.kind join fetch l.payment where l.id = :id and l.userIdentity = :userIdentity")
     Optional<Ledger> findLedgerFetch(@Param("id") Long id, @Param("userIdentity") String userIdentity);
 
-    @Query("select l from Ledger l join fetch l.category join fetch l.kind where l.userIdentity = :userIdentity")
+    @Query("select l from Ledger l join fetch l.category join fetch l.kind join fetch l.payment where l.userIdentity = :userIdentity")
     List<Ledger> findLedgersFetch(@Param("userIdentity") String userIdentity);
 
     List<Ledger> findAllByUserIdentity(String userIdentity);
@@ -33,4 +33,13 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long>{
     List<LedgerMath> findLedgersSumGroupByYear(@Param("userIdentity") String userIdentity);
 
     List<Ledger> findTop5ByUserIdentityOrderByPriceDesc(String userIdentity);
+
+    @Query("select l from Ledger l join fetch l.category join fetch l.kind join fetch l.payment where l.userIdentity = :userIdentity and to_char(l.date, 'YYYY') = :year")
+    List<Ledger> findLedgersByUserIdentityAndYear(@Param("userIdentity") String userIdentity, @Param("year") String year);
+
+    @Query("select l from Ledger l join fetch l.category join fetch l.kind join fetch l.payment where l.userIdentity = :userIdentity and to_char(l.date, 'YYYYMM') = :month")
+    List<Ledger> findLedgersByUserIdentityAndMonth(@Param("userIdentity") String userIdentity, @Param("month") String month);
+
+    @Query("select l from Ledger l join fetch l.category join fetch l.kind join fetch l.payment where l.userIdentity = :userIdentity and to_char(l.date, 'YYYYMMDD') = :date")
+    List<Ledger> findLedgersByUserIdentityAndDate(@Param("userIdentity") String userIdentity, @Param("date") String date);
 }
