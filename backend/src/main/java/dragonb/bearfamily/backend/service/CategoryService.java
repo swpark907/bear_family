@@ -87,9 +87,5 @@ public class CategoryService {
                 categoryRepository.deleteByIdAndUserIdentity(id, userIdentity);
             }
         }
-
-        if(categoryRepository.findById(id).isPresent()){
-            throw new Exception();
-        }
     }
 }

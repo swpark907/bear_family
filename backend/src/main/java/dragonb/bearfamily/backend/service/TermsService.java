@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dragonb.bearfamily.backend.model.terms.Terms;
+import dragonb.bearfamily.backend.model.terms.TermsDTO;
 import dragonb.bearfamily.backend.repository.TermsRepository;
 
 @Service
@@ -15,8 +16,10 @@ public class TermsService {
     @Autowired
     TermsRepository termsRepository;
 
-    public Terms getTerms(Terms terms) throws Exception{
-        Optional<Terms> resultTerms = termsRepository.findById(terms.getId());
+    public Terms getTerms(Long id) throws Exception{
+
+        
+        Optional<Terms> resultTerms = termsRepository.findById(id);
         if(!resultTerms.isPresent()){
             throw new Exception();
         }
@@ -29,26 +32,30 @@ public class TermsService {
         return termsRepository.findAll();
     }
 
-    public Terms postTerms(Terms terms) throws Exception{
-        return termsRepository.save(terms);
+    public Terms postTerms(TermsDTO termsDTO) throws Exception{
+        return termsRepository.save(Terms.builder()
+        .title(termsDTO.getTitle())
+        .content(termsDTO.getContent())
+        .required(termsDTO.isRequired())
+        .build());
     }
 
-    public Terms putTerms(Terms terms) throws Exception{
-        Optional<Terms> resultTerms = termsRepository.findById(terms.getId());
+    public Terms putTerms(TermsDTO termsDTO, Long id) throws Exception{
+        Optional<Terms> resultTerms = termsRepository.findById(id);
         if(!resultTerms.isPresent()){
             throw new Exception();
         }
 
         Terms saveTerms = resultTerms.get();
-        if(terms.getTitle() != null) saveTerms.setTitle(terms.getTitle());
-        if(terms.getContent() != null) saveTerms.setContent(terms.getContent());
-        if(terms.isRequired() != saveTerms.isRequired()) saveTerms.setRequired(terms.isRequired());
+        if(termsDTO.getTitle() != null) saveTerms.setTitle(termsDTO.getTitle());
+        if(termsDTO.getContent() != null) saveTerms.setContent(termsDTO.getContent());
+        if(termsDTO.isRequired() != saveTerms.isRequired()) saveTerms.setRequired(termsDTO.isRequired());
         Terms test = termsRepository.save(saveTerms);
 
         return test;
     }
 
-    public void deleteTerms(Terms Terms) throws Exception{
-        termsRepository.deleteById(Terms.getId());
+    public void deleteTerms(Long id) throws Exception{
+        termsRepository.deleteById(id);
     }
 }

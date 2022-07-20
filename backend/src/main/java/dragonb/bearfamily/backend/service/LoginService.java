@@ -21,7 +21,7 @@ import dragonb.bearfamily.backend.model.login.LoginDTO;
 import dragonb.bearfamily.backend.model.login.RefreshDTO;
 import dragonb.bearfamily.backend.model.login.RegistDTO;
 import dragonb.bearfamily.backend.model.login.User;
-import dragonb.bearfamily.backend.model.terms.TermsDTO;
+import dragonb.bearfamily.backend.model.terms.UserTermsDTO;
 import dragonb.bearfamily.backend.model.terms.UserTerms;
 import dragonb.bearfamily.backend.repository.EmailauthRepository;
 import dragonb.bearfamily.backend.repository.RefreshtokenRepository;
@@ -61,11 +61,11 @@ public class LoginService {
 
         emailauthRepository.deleteByEmail(registDTO.getEmail());
         
-        List<TermsDTO> termsList = registDTO.getTermsList();
+        List<UserTermsDTO> userTermsList = registDTO.getUserTermsList();
 
-        for(int i = 0 ; i < termsList.size() ; i++){
-            if(termsList.get(i).isRequired() == true){
-                if(termsList.get(i).isChecked() == false){
+        for(int i = 0 ; i < userTermsList.size() ; i++){
+            if(userTermsList.get(i).isRequired() == true){
+                if(userTermsList.get(i).isChecked() == false){
                     throw new Exception();
                 }
             }
@@ -78,11 +78,11 @@ public class LoginService {
         .name(registDTO.getName())
         .build());
 
-        for(int i = 0 ; i < termsList.size() ; i++){
+        for(int i = 0 ; i < userTermsList.size() ; i++){
             userTermsRepository.save(UserTerms.builder()
             .userId(userId)
-            .termsId(termsList.get(i).getId())   
-            .checked(termsList.get(i).isChecked())
+            .termsId(userTermsList.get(i).getId())   
+            .checked(userTermsList.get(i).isChecked())
             .build());
         }
     }

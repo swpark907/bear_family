@@ -48,7 +48,7 @@ public class CategoryController {
         return response;
     }
 
-    @Operation(summary = "categories get method", description = "카테고리 여러 건의 정보를 조회합니다."
+    @Operation(summary = "all category get method", description = "카테고리 여러 건의 정보를 조회합니다."
     +"<br/> 아이디가 설정되어 있지 않은 공용 카테고리와, 로그인한 아이디가 설정된 개인 카테고리가 조회됩니다.")
     @GetMapping("/items")
     public Response getCategorys(HttpServletRequest request){

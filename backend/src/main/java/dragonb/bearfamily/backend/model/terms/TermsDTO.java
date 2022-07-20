@@ -1,11 +1,12 @@
 package dragonb.bearfamily.backend.model.terms;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 public class TermsDTO {
-    private Long id;
+    private String title;
+    private String content;
     private boolean required;
-    private boolean checked;
 }

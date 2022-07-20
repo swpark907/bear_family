@@ -79,10 +79,6 @@ public class LedgerService {
             throw new Exception();
         }
         ledgerRepository.delete(resultLedger.get());
-
-        if(ledgerRepository.findLedgerFetch(id, userIdentity).isPresent()){
-            throw new Exception();
-        }
     }
 
     private Ledger ledgerByEx(LedgerDTO ledgerDTO){

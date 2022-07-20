@@ -2,7 +2,7 @@ package dragonb.bearfamily.backend.model.login;
 
 import java.util.List;
 
-import dragonb.bearfamily.backend.model.terms.TermsDTO;
+import dragonb.bearfamily.backend.model.terms.UserTermsDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +16,5 @@ public class RegistDTO {
 	private String email;
 
 	//Terms
-    private List<TermsDTO> termsList;
+    private List<UserTermsDTO> userTermsList;
 }

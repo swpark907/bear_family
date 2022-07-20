@@ -42,7 +42,7 @@ public class LedgerController {
         return response;
     }
 
-    @Operation(summary = "ledgers get method", description = "장부 여러 건의 정보를 조회합니다.")
+    @Operation(summary = "all ledger get method", description = "장부 여러 건의 정보를 조회합니다.")
     @GetMapping("/items")
     public Response getLedgers(HttpServletRequest request){
         Response response = new Response();
