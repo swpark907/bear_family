@@ -87,7 +87,8 @@ public class CategoryController {
         return response;
     }
 
-    @Operation(summary = "category put method", description = "카테고리 한 건의 정보를 수정합니다.")
+    @Operation(summary = "category put method", description = "카테고리 한 건의 정보를 수정합니다."
+    +"<br/> 아이디가 설정되어 있지 않은 공용 카테고리를 관리하려면 관리자 권한이 필요합니다.")
     @PutMapping("/item/{id}")
     public Response putCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long id, HttpServletRequest request){
         Response response = new Response();
@@ -106,7 +107,8 @@ public class CategoryController {
         return response;
     }
     
-    @Operation(summary = "category delete method", description = "카테고리 한 건의 정보를 삭제합니다.")
+    @Operation(summary = "category delete method", description = "카테고리 한 건의 정보를 삭제합니다."
+    +"<br/> 아이디가 설정되어 있지 않은 공용 카테고리를 관리하려면 관리자 권한이 필요합니다.")
     @DeleteMapping("/item/{id}")
     public Response deleteCategory(@PathVariable Long id, HttpServletRequest request){
         Response response = new Response();

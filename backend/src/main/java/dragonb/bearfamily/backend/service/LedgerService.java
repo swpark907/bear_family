@@ -23,10 +23,13 @@ public class LedgerService {
     @Autowired
     LedgerRepository ledgerRepository;
     
+    @Autowired
+    CommonService commonService;
+
     private String userIdentity;
 
     public Ledger getLedger(Long id, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
             throw new Exception();
@@ -37,12 +40,12 @@ public class LedgerService {
     }
 
     public List<Ledger> getLedgers(HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersFetch(userIdentity);
     }
 
     public Ledger postLedger(LedgerDTO ledgerDTO, HttpServletRequest request){
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
 
         Ledger saveLedger = ledgerByEx(ledgerDTO);
         saveLedger.setUserIdentity(userIdentity);
@@ -51,7 +54,7 @@ public class LedgerService {
     }
 
     public Ledger putLedger(LedgerDTO ledgerDTO, Long id, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
             throw new Exception();
@@ -73,7 +76,7 @@ public class LedgerService {
     }
 
     public void deleteLedger(Long id, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         Optional<Ledger> resultLedger = ledgerRepository.findLedgerFetch(id, userIdentity);
         if(!resultLedger.isPresent()){
             throw new Exception();
@@ -96,22 +99,22 @@ public class LedgerService {
     }
 
     public List<Ledger> getTop5ByUserIdentityOrderByPriceDesc(HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findTop5ByUserIdentityOrderByPriceDesc(userIdentity);
     }
 
     public List<LedgerMath> getLedgersSumGroupByYear(HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByYear(userIdentity);
     }
 
     public List<LedgerMath> getLedgersSumGroupByMonth(HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByMonth(userIdentity);
     }
 
     public List<LedgerMath> getLedgersSumGroupByDate(HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByDate(userIdentity);
     }
 }

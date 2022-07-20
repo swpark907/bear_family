@@ -44,7 +44,7 @@ public class User implements UserDetails{
     //private String gradeId;
     @OneToOne
     @JoinColumn(name = "user_grade_id", referencedColumnName = "grade_id")
-    private Grade gradeId;
+    private Grade grade;
 
     @Column(name = "user_created", updatable = false)
     @CreatedDate

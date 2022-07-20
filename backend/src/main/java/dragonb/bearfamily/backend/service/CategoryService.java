@@ -18,10 +18,13 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    CommonService commonService;
+
     private String userIdentity;
 
     public Category getCategory(Long id, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         Optional<Category> resultCategory = categoryRepository.findById(id);
         
         if(!resultCategory.isPresent()){
@@ -38,12 +41,12 @@ public class CategoryService {
     }
 
     public List<Category> getCategorys(HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return categoryRepository.findAllByUserIdentityOrUserIdentityIsNull(userIdentity);
     }
 
     public Category postCategory(CategoryDTO categoryDTO, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         return categoryRepository.save(Category.builder()
         .userIdentity(userIdentity)
         .name(categoryDTO.getName())
@@ -52,14 +55,19 @@ public class CategoryService {
     }
 
     public Category putCategory(CategoryDTO categoryDTO, Long id, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
         Optional<Category> resultCategory = categoryRepository.findById(id);
         if(!resultCategory.isPresent()){
             throw new Exception();
         }
 
         Category saveCategory = resultCategory.get();
-        if(!saveCategory.getUserIdentity().equals(userIdentity)){
+        if(saveCategory.getUserIdentity() == null){
+            if(!commonService.isAdmin(request)){
+                throw new Exception();
+            }
+        }
+        else if(!saveCategory.getUserIdentity().equals(userIdentity)){
             throw new Exception();
         }
 
@@ -72,7 +80,7 @@ public class CategoryService {
     }
 
     public void deleteCategory(Long id, HttpServletRequest request) throws Exception{
-        userIdentity = CommonService.getUserIdentity(request);
+        userIdentity = commonService.getUserIdentity(request);
 
         Optional<Category> targetCategory = categoryRepository.findById(id);
 
@@ -80,7 +88,10 @@ public class CategoryService {
             throw new Exception();
         }
         else{
-            if(!targetCategory.get().getUserIdentity().equals(userIdentity)){
+            if(targetCategory.get().getUserIdentity() == null && commonService.isAdmin(request)){
+                categoryRepository.deleteById(id);
+            }
+            else if(!targetCategory.get().getUserIdentity().equals(userIdentity)){
                 throw new Exception();
             }
             else{
