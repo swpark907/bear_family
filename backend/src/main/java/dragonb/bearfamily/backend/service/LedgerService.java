@@ -121,17 +121,48 @@ public class LedgerService {
 
     public List<Ledger> getLedgersDate(LedgerDate ledgerDate, HttpServletRequest request) throws Exception{
         userIdentity = commonService.getUserIdentity(request);
-        
-        if(ledgerDate.getYear() != null && ledgerDate.getMonth() != null && ledgerDate.getDate() != null){
-            String date = ledgerDate.getYear() + ledgerDate.getMonth() + ledgerDate.getDate();
-            return ledgerRepository.findLedgersByUserIdentityAndDate(userIdentity, date);
+
+        String year;
+        String month;
+        String date;
+
+        if(ledgerDate.getYear() == null || ledgerDate.getYear().toString() == ""){
+            year = "";
         }
-        else if(ledgerDate.getYear() != null && ledgerDate.getMonth() != null ){
-            String month = ledgerDate.getYear() + ledgerDate.getMonth();
-            return ledgerRepository.findLedgersByUserIdentityAndMonth(userIdentity, month);
+        else if(ledgerDate.getYear() >= 1000 && ledgerDate.getYear() <= 9999){
+            year = ledgerDate.getYear().toString();
         }
-        else if(ledgerDate.getYear() != null){
-            String year = ledgerDate.getYear();
+        else{
+            throw new Exception();
+        }
+
+        if(ledgerDate.getMonth() == null || ledgerDate.getMonth().toString() == ""){
+            month = "";
+        }
+        else if(ledgerDate.getMonth() >= 1 && ledgerDate.getMonth() <= 12){
+            month = String.valueOf(ledgerDate.getMonth());
+        }
+        else{
+            throw new Exception();
+        }
+
+        if(ledgerDate.getDate() == null || ledgerDate.getDate().toString() == ""){
+            date = "";
+        }
+        else if(ledgerDate.getDate() >= 1 && ledgerDate.getDate() <= 31){
+            date = String.valueOf(ledgerDate.getDate());
+        }
+        else{
+            throw new Exception();
+        }
+
+        if(year != "" && month != "" && date != ""){
+            return ledgerRepository.findLedgersByUserIdentityAndDate(userIdentity, year + month + date);
+        }
+        else if(year != "" && month != ""){
+            return ledgerRepository.findLedgersByUserIdentityAndMonth(userIdentity, year + month);
+        }
+        else if(year != ""){
             return ledgerRepository.findLedgersByUserIdentityAndYear(userIdentity, year);
         }
         else{
