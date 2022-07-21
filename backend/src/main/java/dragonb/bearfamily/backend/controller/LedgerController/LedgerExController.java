@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import dragonb.bearfamily.backend.model.common.Response;
 import dragonb.bearfamily.backend.model.ledger.Ledger;
 import dragonb.bearfamily.backend.model.ledger.LedgerDate;
-import dragonb.bearfamily.backend.model.ledger.LedgerMath;
+import dragonb.bearfamily.backend.model.ledger.LedgerGroupByCategory;
+import dragonb.bearfamily.backend.model.ledger.LedgerGroupByDate;
 import dragonb.bearfamily.backend.service.LedgerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,7 +51,7 @@ public class LedgerExController {
         Response response = new Response();
 
         try {
-            List<LedgerMath> resultLedgers = ledgerService.getLedgersSumGroupByYear(request);
+            List<LedgerGroupByDate> resultLedgers = ledgerService.getLedgersSumGroupByYear(request);
             
             response.setResponse("success");
             response.setMessage("success get ledgers sum group by year");
@@ -69,7 +70,7 @@ public class LedgerExController {
         Response response = new Response();
 
         try {
-            List<LedgerMath> resultLedgers = ledgerService.getLedgersSumGroupByMonth(request);
+            List<LedgerGroupByDate> resultLedgers = ledgerService.getLedgersSumGroupByMonth(request);
             
             response.setResponse("success");
             response.setMessage("success get ledgers sum group by month");
@@ -88,7 +89,7 @@ public class LedgerExController {
         Response response = new Response();
 
         try {
-            List<LedgerMath> resultLedgers = ledgerService.getLedgersSumGroupByDate(request);
+            List<LedgerGroupByDate> resultLedgers = ledgerService.getLedgersSumGroupByDate(request);
             
             response.setResponse("success");
             response.setMessage("success get ledgers sum group by date");
@@ -108,6 +109,25 @@ public class LedgerExController {
 
         try {
             List<Ledger> resultLedgers = ledgerService.getLedgersDate(ledgerDate, request);
+            
+            response.setResponse("success");
+            response.setMessage("success get target ledgers");
+            response.setData(resultLedgers);
+        } catch (Exception e) {
+            response.setResponse("fail");
+            response.setMessage("fail get target ledgers");
+            response.setData(null);
+        }
+        return response;
+    }
+
+    @Operation(summary = "all ledger get method group by category at specific date", description = "특정 날짜의 카테고리별 장부 결제 금액 합계 정보를 조회합니다.")
+    @GetMapping("/items/groupbycategory")
+    public Response getLedgersSumGroupByCategoryAndDate(LedgerDate ledgerDate, HttpServletRequest request){
+        Response response = new Response();
+
+        try {
+            List<LedgerGroupByCategory> resultLedgers = ledgerService.getLedgersSumGroupByCategoryAndDate(ledgerDate, request);
             
             response.setResponse("success");
             response.setMessage("success get target ledgers");

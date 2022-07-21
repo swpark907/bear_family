@@ -4,12 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
-public class LedgerMath {
+@AllArgsConstructor
+public class LedgerGroupByDate {
     private String date;
     private Long price;
-
-    public LedgerMath(String date, Long price){
-        this.date = date;
-        this.price = price;
-    }
 }
