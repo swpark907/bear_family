@@ -15,7 +15,8 @@ import dragonb.bearfamily.backend.model.ledger.LedgerColumnKind;
 import dragonb.bearfamily.backend.model.ledger.LedgerColumnPayment;
 import dragonb.bearfamily.backend.model.ledger.LedgerDTO;
 import dragonb.bearfamily.backend.model.ledger.LedgerDate;
-import dragonb.bearfamily.backend.model.ledger.LedgerMath;
+import dragonb.bearfamily.backend.model.ledger.LedgerGroupByCategory;
+import dragonb.bearfamily.backend.model.ledger.LedgerGroupByDate;
 import dragonb.bearfamily.backend.repository.LedgerRepository.LedgerRepository;
 
 @Service
@@ -104,17 +105,17 @@ public class LedgerService {
         return ledgerRepository.findTop5ByUserIdentityOrderByPriceDesc(userIdentity);
     }
 
-    public List<LedgerMath> getLedgersSumGroupByYear(HttpServletRequest request) throws Exception{
+    public List<LedgerGroupByDate> getLedgersSumGroupByYear(HttpServletRequest request) throws Exception{
         userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByYear(userIdentity);
     }
 
-    public List<LedgerMath> getLedgersSumGroupByMonth(HttpServletRequest request) throws Exception{
+    public List<LedgerGroupByDate> getLedgersSumGroupByMonth(HttpServletRequest request) throws Exception{
         userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByMonth(userIdentity);
     }
 
-    public List<LedgerMath> getLedgersSumGroupByDate(HttpServletRequest request) throws Exception{
+    public List<LedgerGroupByDate> getLedgersSumGroupByDate(HttpServletRequest request) throws Exception{
         userIdentity = commonService.getUserIdentity(request);
         return ledgerRepository.findLedgersSumGroupByDate(userIdentity);
     }
@@ -122,45 +123,9 @@ public class LedgerService {
     public List<Ledger> getLedgersDate(LedgerDate ledgerDate, HttpServletRequest request) throws Exception{
         userIdentity = commonService.getUserIdentity(request);
 
-        String year;
-        String month;
-        String date;
-
-        if(ledgerDate.getYear() == null || ledgerDate.getYear().toString() == ""){
-            year = "";
-        }
-        else if(ledgerDate.getYear() > 999 && ledgerDate.getYear() < 10000){
-            year = ledgerDate.getYear().toString();
-        }
-        else{
-            throw new Exception();
-        }
-
-        if(ledgerDate.getMonth() == null || ledgerDate.getMonth().toString() == ""){
-            month = "";
-        }
-        else if(ledgerDate.getMonth() > 0 && ledgerDate.getMonth() < 10){
-            month = "0" + String.valueOf(ledgerDate.getMonth());
-        }
-        else if(ledgerDate.getMonth() >= 10 && ledgerDate.getMonth() <= 12){
-            month = String.valueOf(ledgerDate.getMonth());
-        }
-        else{
-            throw new Exception();
-        }
-
-        if(ledgerDate.getDate() == null || ledgerDate.getDate().toString() == ""){
-            date = "";
-        }
-        else if(ledgerDate.getDate() > 0 && ledgerDate.getDate() < 10){
-            date = "0" + String.valueOf(ledgerDate.getDate());
-        }
-        else if(ledgerDate.getDate() >= 10 && ledgerDate.getDate() <= 31){
-            date = String.valueOf(ledgerDate.getDate());
-        }
-        else{
-            throw new Exception();
-        }
+        String year = getYear(ledgerDate);
+        String month = getMonth(ledgerDate);
+        String date = getDate(ledgerDate);
 
         if(year != "" && month != "" && date != ""){
             return ledgerRepository.findLedgersByUserIdentityAndDate(userIdentity, year + month + date);
@@ -174,5 +139,62 @@ public class LedgerService {
         else{
             throw new Exception();
         }
+    }
+
+    public List<LedgerGroupByCategory> getLedgersSumGroupByCategoryAndDate(LedgerDate ledgerDate, HttpServletRequest request) throws Exception{
+        userIdentity = commonService.getUserIdentity(request);
+
+        String year = getYear(ledgerDate);
+        String month = getMonth(ledgerDate);
+        String date = getDate(ledgerDate);
+
+        if(year != "" && month != "" && date != ""){
+            return ledgerRepository.findLedgersSumGroupByCategoryAndDate(userIdentity, year + month + date);
+        }
+        else if(year != "" && month != ""){
+            return ledgerRepository.findLedgersSumGroupByCategoryAndMonth(userIdentity, year + month);
+        }
+        else if(year != ""){
+            return ledgerRepository.findLedgersSumGroupByCategoryAndYear(userIdentity, year);
+        }
+        else{
+            throw new Exception();
+        }
+    }
+
+    public String getYear(LedgerDate ledgerDate){
+        String year = "";
+
+        if(ledgerDate.getYear() != null && ledgerDate.getYear() > 999 && ledgerDate.getYear() < 10000){
+            year = ledgerDate.getYear().toString();
+        }
+
+        return year;
+    }
+
+    public String getMonth(LedgerDate ledgerDate){
+        String month = "";
+
+        if(ledgerDate.getMonth() != null && ledgerDate.getMonth() > 0 && ledgerDate.getMonth() < 10){
+            month = "0" + String.valueOf(ledgerDate.getMonth());
+        }
+        else if(ledgerDate.getMonth() != null && ledgerDate.getMonth() >= 10 && ledgerDate.getMonth() <= 12){
+            month = String.valueOf(ledgerDate.getMonth());
+        }
+
+        return month;
+    }
+
+    public String getDate(LedgerDate ledgerDate){
+        String date = "";
+
+        if(ledgerDate.getDate() != null && ledgerDate.getDate() > 0 && ledgerDate.getDate() < 10){
+            date = "0" + String.valueOf(ledgerDate.getDate());
+        }
+        else if(ledgerDate.getDate() != null && ledgerDate.getDate() >= 10 && ledgerDate.getDate() <= 31){
+            date = String.valueOf(ledgerDate.getDate());
+        }
+
+        return date;
     }
 }
