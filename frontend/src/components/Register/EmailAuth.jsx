@@ -14,7 +14,7 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
   const [tokenInputActivate, setTokenInputActivate] = useState(false);
   const [errCode, setErrCode] = useState("hide");
   const [tokenErrMsg, setTokenErrMsg] = useState("인증코드 관련 메시지");
-  const [sendErrMsg, setSendErrMsg] = useState("번호 전송 관련 에러")
+  const [sendErrMsg, setSendErrMsg] = useState("번호 전송 관련 에러");
   const [인증번호모달, set인증번호모달] = useState(false);
   const [sendTokenResult, setSendTokenResult] = useState(false);
   const [checkToken, setCheckToken] = useState("");
@@ -45,28 +45,24 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
 
   const sendTokenHandler = async (e) => {
     e.preventDefault();
+    tokenErrMsgHandler("hide");
     if (validCheck.emailToken) {
       // 이미 인증을 받은상태
       return;
     }
-    
+
     if (!validCheck.email) {
       set인증번호모달(true);
-      setSendErrMsg("이메일 형식에 맞게 입력해주세요.")
+      setSendErrMsg("이메일 형식에 맞게 입력해주세요.");
       return;
     }
-
-    const form = new FormData();
-    form.append("to", userInfo.email);
     dispatch(loading());
     try {
-      
-      const response = await axios.post(
-        `${URL}/sendEmailauth`,
-        form
-      );
-      
-      setSendErrMsg("인증번호가 전송되었습니다.")
+      const response = await axios.post(`${URL}/sendEmailauth`, {
+        to: userInfo.email,
+      });
+
+      setSendErrMsg("인증번호가 전송되었습니다.");
       set인증번호모달(true);
       setTokenInputActivate(true);
       setTimerState(true);
@@ -74,8 +70,8 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
     } catch (e) {
       set인증번호모달(true);
       setTokenInputActivate(false);
-      setSendErrMsg("잠시 후 다시 시도해주세요.")
-    } finally{
+      setSendErrMsg("잠시 후 다시 시도해주세요.");
+    } finally {
       dispatch(unloading());
     }
   };
@@ -90,6 +86,7 @@ const EmailAuth = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
 
   const checkTokenHandler = async (e) => {
     e.preventDefault();
+
     const formdata = { email: userInfo.email, token: checkToken };
     const response = await axios({
       url: `${URL}/checkEmailauth`,
