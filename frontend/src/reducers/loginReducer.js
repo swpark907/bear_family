@@ -13,7 +13,6 @@ const loginInitState = {
   isLoginErr: null,
   isLoginServerErr: null,
   errMsg: null,
-  userInfo: null,
 };
 
 const userInfoInitState = {
@@ -28,7 +27,6 @@ export const login =
     try {
       const instance = api();
       const { data } = await instance.post("/login", { identity, password });
-      console.log(data);
 
       if (data.response === "success") {
         const accessToken = data.data.accessToken;
@@ -59,7 +57,7 @@ export const login =
 
 export const logout = () => {
   localStorage.removeItem("access-token");
-  localStorage.removeItem("userId");
+  localStorage.removeItem("persist:root");  
   return {
     type: LOGOUT,
   };
@@ -68,7 +66,6 @@ export const logout = () => {
 export const loginReducer = (state = loginInitState, action) => {
   switch (action.type) {
     case LOGIN:
-      const payload = action.payload;
       return {
         ...state,
         isLogin: true,
