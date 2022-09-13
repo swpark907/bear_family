@@ -1,65 +1,41 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useRef } from "react";
 import { Button } from "../common";
+import useGetDate from "../../hooks/useGetDate";
 
 const CalendarDate = () => {
+  const {
+    dateList,
+    currentYear,
+    currentMonth,
+    currentDataset,
+    goToNextMonth,
+    goToPrevMonth,
+    formChanger,
+    dateOnclick,
+  } = useGetDate();
+
   const NOW = new Date();
   const YEAR = NOW.getFullYear();
   const DATE = NOW.getDate();
   const MONTH = NOW.getMonth() + 1;
-  const LAST = new Date(YEAR, MONTH - 1, 0);
-  const LASTDATE = LAST.getDate();
-  const DAYOFFIRST = new Date(YEAR, MONTH - 1, 1).getDay();
 
-  const [currentYear, setCurrentYear] = useState(YEAR);
-  const [currentMonth, setCurrentMonth] = useState(MONTH);
-  const [currentDate, setCurrentDate] = useState(DATE);
-
-  const [dateList, setDateList] = useState([]);
-
-  // 첫번째 날의 요일이 목요일(4) 이상이면 6줄, 이하이면 5줄
-  // 이번달의 첫번째 날을 구한다.
-
-  const getCalendarLine = () => {
-    // 현재 달의 첫째날의 요일
-    const dayOfFirst = new Date(currentYear, currentMonth - 1).getDay();
-
-    let dateOfCount = 0;
-    dayOfFirst >= 4 ? (dateOfCount = 41) : (dateOfCount = 34);
-
-    const data = [];
-
-    for (let i = -dayOfFirst + 1; i <= dateOfCount - dayOfFirst + 1; i++) {
-      const day = new Date(currentYear, currentMonth - 1, i);
-      data.push(day);
-    }
-    setDateList(data);
-  };
-
-  useEffect(() => {
-    getCalendarLine();
-  }, [currentMonth]);
-
-  // useEffect(() => {
-  //   console.log(dateList);
-  // }, [dateList]);
-
-  const goToNextMonth = () => {
-    setCurrentMonth(currentMonth + 1);
-  };
-
-  const goToPrevMonth = () => {
-    setCurrentMonth(currentMonth - 1);
-  };
+  const dateRefs = useRef([]);
 
   return (
     <ul className="template__date-container">
+      <span></span>
       {dateList.map((date, key) => {
         return (
           <li
-            className={"date-container__date"}
+            className={
+              "date-container__date" +
+              (formChanger(date) === Number(currentDataset) ? " selected" : "")
+            }
             key={key}
-            id={Date.parse(date)}
+            // id={Date.parse(date)}
+            data-date={formChanger(date)}
+            onClick={dateOnclick}
+            ref={(el) => dateRefs.current.push(el)}
           >
             <div
               className={
@@ -74,11 +50,14 @@ const CalendarDate = () => {
                   : "")
               }
             >
-              <span className="date">{date.getDate()}</span>
+              <div className="date">{date.getDate()}</div>
+              <div className="usage">-10000</div>
+              <div className="tags"></div>
             </div>
           </li>
         );
       })}
+      {currentYear}년 {currentMonth} 월
       <Button onClick={goToPrevMonth}>이전</Button>
       <Button onClick={goToNextMonth}>다음</Button>
     </ul>

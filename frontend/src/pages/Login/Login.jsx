@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useCallback } from "react";
 
 const Login = () => {
   const [userId, setUserId] = useState(null);
   const [userPw, setUserPw] = useState(null);
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState("");
 
   const { onLogin, error, setError } = useLogin();
 
@@ -20,7 +21,7 @@ const Login = () => {
     setUserPw(target.value);
   };
 
-  const onLoginHandler = (e) => {
+  const onLoginHandler = useCallback((e) => {
     e.preventDefault();
     const userInfo = {
       identity: userId,
@@ -38,13 +39,13 @@ const Login = () => {
     //   setIsValid(false);
     //   return;
     // }
-  };
+  }, [userId, userPw]);
 
-  const getErr = useSelector(state => state.loginReducer);
+  const getErr = useSelector((state) => state.loginReducer);
 
   useEffect(() => {
     // 로그인 통신 장애 스테이터스에 따라 errMsg를 변경하는 로직 추가
-  }, [getErr])
+  }, [getErr]);
 
   return (
     <section className="section-login">

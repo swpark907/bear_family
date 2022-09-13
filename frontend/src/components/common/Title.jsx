@@ -40,4 +40,4 @@ const Title = ({variant, children, className}) => {
   );
 };
 
-export default Title;
+export default React.memo(Title);

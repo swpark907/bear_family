@@ -29,9 +29,9 @@ const IdInput = ({ userInfo, setUserInfo, validCheck, setValidCheck }) => {
 
     // 버튼이 클릭되면 백엔드에 중복확인 한 후 받아온 응답에 따른 클래스명 조정
 
-    const form = new FormData();
-    form.append("identity", userInfo.id);
-    const { data } = await axios.post(`${URL}/checkId`, form);
+    const { data } = await axios.post(`${URL}/checkId`, {
+      identity: userInfo.id,
+    });
     const 중복확인통과 = data.response; // 중복확인 통신 로직 추가
 
     if (중복확인통과 === "success") {
