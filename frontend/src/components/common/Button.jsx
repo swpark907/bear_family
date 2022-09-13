@@ -25,4 +25,4 @@ const Button = ({ className, variant, children, onClick, disabled }) => {
   );
 };
 
-export default Button;
+export default React.memo(Button);
