@@ -26,8 +26,10 @@
     border-radius: $border-radius02;
     padding: $padding02;
     width: 300px;
+    overflow: scroll;
     .modal-content {
       margin-bottom: $margin-bottom04;
+      max-height: 500px;
     }
     .modal-button {
       width: 100%;

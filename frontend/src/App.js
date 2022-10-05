@@ -11,7 +11,7 @@ import PublicRoutes from "./route/PublicRoutes";
 import PrivateRoutes from "./route/PrivateRoutes";
 import { Loading } from "./components/common";
 import { useSelector } from "react-redux";
-import Create from "./components/Create/createModal";
+import Create from "./components/Create/CreateModal";
 
 function App() {
   const loadingReducer = useSelector((state) => state.loadingReducer);
