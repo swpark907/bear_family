@@ -25,8 +25,8 @@ function ModalTemplate({ className, btnContent, state, setState, children }) {
         onClick={modalClose}
       >
         <div className={"modal-content-box " + (className ? className : "")}>
-          <p className="modal-content">{children}</p>
-          <Button className="modal-button" variant="secondary">{btnContent}</Button>
+          <div className="modal-content">{children}</div>
+          {btnContent && <Button className="modal-button" variant="secondary">{btnContent}</Button>}
         </div>
       </div>
     </ModalPortal>

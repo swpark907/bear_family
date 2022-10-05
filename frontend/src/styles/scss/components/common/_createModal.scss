@@ -1,0 +1,53 @@
+@import "../../abstracts/variables";
+@import "../../abstracts/mixin";
+
+.memo {
+  font-size: $font-size-md;
+  padding: $padding-em03;
+  width: 100%;
+  max-width: 386px;
+  border-color: tomato;
+  border-radius: $border-radius01;
+}
+
+.category-card {
+  width: 71px;
+  height: 71px;
+  background-color: $color-white;
+  border: 2px solid black;
+  border-radius: $border-radius01;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 4px 4px #c0c0c0;
+  .card-img {
+    width: 47px;
+  }
+}
+.color2 {
+  border: 2px solid transparent;
+  border-radius: $border-radius01;
+  background-image: linear-gradient(#ffffff, #ffffff),
+    linear-gradient(
+      to bottom right,
+      #ffd900d3 25%,
+      #fdea89d3,
+      #f7eec0d3,
+      transparent
+    );
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+.category-btn {
+  outline: none;
+  padding: $padding-rem01;
+  border: solid 2px $color-light-blue;
+  margin-right: 1em;
+  border-radius: 5px; // 변수로 수정요망
+  line-height: 1.2;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
+}
